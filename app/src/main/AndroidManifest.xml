@@ -13,10 +13,10 @@
         android:theme="@style/Theme.Hrd_final_project"
         tools:targetApi="31">
         <activity
-            android:name=".TimerDrug"
+            android:name=".layout.TimerDrug"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".layout.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
