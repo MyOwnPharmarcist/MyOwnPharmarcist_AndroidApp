@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_search_pharmacy"
+        android:title="약국 검색"
+        android:icon="@drawable/search_pharmacy"
+        />
+
+    <item
+        android:id="@+id/navigation_search_drugs"
+        android:title="알약 검색"
+        android:icon="@drawable/main_logo"
+        />
+
+    <item
+        android:id="@+id/navigation_timer"
+        android:title="복용 알리미"
+        android:icon="@drawable/timer_drug"
+        />
+
+</menu>
