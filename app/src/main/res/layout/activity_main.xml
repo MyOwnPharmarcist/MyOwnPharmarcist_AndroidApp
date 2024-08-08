@@ -6,10 +6,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    app:layout_constraintVertical_weightSum="10"
+    tools:context=".layout.MainActivity"
     >
 
+    <!-- MainPage Title Logo -->
     <TextView
         android:id="@+id/mainPageTitleLogo"
         android:layout_width="wrap_content"
@@ -21,9 +21,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/mainPageExampleImage"
-        app:layout_constraintVertical_weight="4"
         />
 
+    <!-- MainPage example Image -->
     <ImageView
         android:id="@+id/mainPageExampleImage"
         android:layout_width="wrap_content"
@@ -32,18 +32,17 @@
         app:layout_constraintTop_toBottomOf="@+id/mainPageTitleLogo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-
-        app:layout_constraintVertical_weight="2"
         />
 
+    <!-- MainPage Catagory Button -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/mainPageExampleImage"
-        app:layout_constraintVertical_weight="4"
         >
 
+        <!-- Search Drugs -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,6 +68,7 @@
 
         </LinearLayout>
 
+        <!--  -->
         <View
             android:layout_width="2dp"
             android:layout_height="100dp"
