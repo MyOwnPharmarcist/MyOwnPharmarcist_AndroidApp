@@ -1,4 +1,4 @@
-package teamyj.dev.hrd_final_project;
+package teamyj.dev.hrd_final_project.layout;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import teamyj.dev.hrd_final_project.R;
 
 public class TimerDrug extends AppCompatActivity {
 
