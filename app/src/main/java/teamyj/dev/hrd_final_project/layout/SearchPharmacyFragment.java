@@ -3,6 +3,7 @@ package teamyj.dev.hrd_final_project.layout;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +31,12 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     private MapView mapView;
     private NaverMap naverMap;
 
+    private LatLng coord = new LatLng(36.336590, 127.459220);
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.i("on", "onCreateView");
         View view = inflater.inflate(R.layout.fragment_search_pharmacy, container, false);
         mapView = view.findViewById(R.id.map_view);
         mapView.onCreate(savedInstanceState);
@@ -46,6 +50,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
+        Log.i("on", "onMapReady");
         this.naverMap = naverMap;
         // 지도 초기화 로직
 
@@ -66,8 +71,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         // 실내지도 활성화
         this.naverMap.setIndoorEnabled(true);
 
-        LatLng coord = new LatLng(36.336590, 127.459220);
-
         Toast.makeText(getContext(),
                 "위도: " + coord.latitude + ", 경도: " + coord.longitude,
                 Toast.LENGTH_SHORT).show();
@@ -75,6 +78,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.i("on", "onRequestPermissionsResult");
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -86,36 +90,42 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
     @Override
     public void onStart() {
+        Log.i("on", "onStart");
         super.onStart();
         mapView.onStart();
     }
 
     @Override
     public void onResume() {
+        Log.i("on", "onResume");
         super.onResume();
         mapView.onResume();
     }
 
     @Override
     public void onPause() {
+        Log.i("on", "onPause");
         super.onPause();
         mapView.onPause();
     }
 
     @Override
     public void onStop() {
+        Log.i("on", "onStop");
         super.onStop();
         mapView.onStop();
     }
 
     @Override
     public void onDestroyView() {
+        Log.i("on", "onDestroyView");
         super.onDestroyView();
         mapView.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
+        Log.i("on", "onLowMemory");
         super.onLowMemory();
         mapView.onLowMemory();
     }

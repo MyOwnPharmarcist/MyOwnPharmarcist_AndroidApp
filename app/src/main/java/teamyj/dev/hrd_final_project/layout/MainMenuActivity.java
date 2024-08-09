@@ -54,6 +54,7 @@ public class MainMenuActivity extends AppCompatActivity {
         }
     }
 
+    // 앱이 정상적으로 실행 시 발생하는 메서드
     private void startApp() {
         // 앱의 나머지 초기화 작업 수행
         // Fragment 로드 등
@@ -68,6 +69,7 @@ public class MainMenuActivity extends AppCompatActivity {
         dataManager.initData(getAssets(), this);
     }
 
+    // 권한에 따라 앱 실행 가능 유무를 정하는 메서드
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -82,6 +84,7 @@ public class MainMenuActivity extends AppCompatActivity {
         }
     }
 
+    // 권한에 따른 Dialog를 출력하는 메서드
     private void showPermissionDeniedDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("권한 필요")
@@ -97,6 +100,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 .show();
     }
 
+    // BottomNavigationView의 탭 목록 선택 메서드
     private class ItemSelectListener implements BottomNavigationView.OnNavigationItemSelectedListener{
 
         @Override
