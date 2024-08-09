@@ -66,7 +66,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         // 실내지도 활성화
         this.naverMap.setIndoorEnabled(true);
 
-        LatLng coord = new LatLng(37.5670135, 126.9783740);
+        LatLng coord = new LatLng(36.336590, 127.459220);
 
         Toast.makeText(getContext(),
                 "위도: " + coord.latitude + ", 경도: " + coord.longitude,
