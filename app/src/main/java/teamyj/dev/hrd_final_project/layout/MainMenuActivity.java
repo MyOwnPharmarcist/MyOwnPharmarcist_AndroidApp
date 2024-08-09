@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import teamyj.dev.hrd_final_project.R;
+import teamyj.dev.hrd_final_project.data_system.DataManager;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -23,6 +24,8 @@ public class MainMenuActivity extends AppCompatActivity {
     private SearchDrugsFragment searchDrugsFragment = new SearchDrugsFragment();
     private SearchPharmacyFragment searchPharmacyFragment = new SearchPharmacyFragment();
     private TimerFragment timerFragment = new TimerFragment();
+
+    private DataManager dataManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectListener());
+
+        dataManager = DataManager.getInstance();
+        dataManager.initData(getAssets(), this);
     }
 
     private class ItemSelectListener implements BottomNavigationView.OnNavigationItemSelectedListener{
