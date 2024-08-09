@@ -12,7 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hrd_final_project"
         tools:targetApi="31"
-        android:name=".main_system.CustomApplication">
+        android:name=".main_system.CustomApplication"
+        >
+
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="we7grllraz" />
+
         <activity
             android:name=".layout.MainMenuActivity"
             android:exported="true">
@@ -22,13 +28,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".layout.TimerDrug"
             android:exported="true" />
         <activity
             android:name=".layout.MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"/>
     </application>
 
 </manifest>
