@@ -51,7 +51,84 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textshape" />
+            app:layout_constraintTop_toBottomOf="@+id/textshape">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape0"
+                    android:layout_marginHorizontal="30dp"/>
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/shape1"
+                    android:layout_marginHorizontal="30dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape2"
+                    android:layout_marginHorizontal="30dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape3"
+                    android:layout_marginHorizontal="30dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape4"
+                    android:layout_marginHorizontal="30dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape5"
+                    android:layout_marginHorizontal="30dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape6"
+                    android:layout_marginHorizontal="30dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape7"
+                    android:layout_marginHorizontal="30dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape8"
+                    android:layout_marginHorizontal="30dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape9"
+                    android:layout_marginHorizontal="30dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape10"
+                    android:layout_marginHorizontal="30dp"/>
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
 
         <TextView
         app:layout_constraintTop_toBottomOf="@+id/shapesearch"
@@ -75,6 +152,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/colortext" />
+
+
 
         <TextView
             app:layout_constraintTop_toBottomOf="@+id/colorsearch"
