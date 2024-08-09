@@ -34,13 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".layout.TimerDrug"
-            android:exported="true" />
-        <activity
-            android:name=".layout.MainActivity"
-            android:exported="true"/>
     </application>
 
 </manifest>
