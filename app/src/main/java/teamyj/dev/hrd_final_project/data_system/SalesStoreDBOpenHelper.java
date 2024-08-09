@@ -54,12 +54,9 @@ public class SalesStoreDBOpenHelper extends SQLiteOpenHelper {
     }
 
     public void createDB() {
-        boolean isExist = checkDBExist();
-
-        if(!isExist) {
-            this.getReadableDatabase();
-            copyDB();
-        }
+        context.deleteDatabase(SALES_STORE_DB_NAME);
+        this.getReadableDatabase();
+        copyDB();
     }
 
     private boolean checkDBExist() {
