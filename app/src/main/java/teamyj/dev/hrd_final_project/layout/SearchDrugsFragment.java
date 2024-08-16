@@ -11,7 +11,7 @@ import teamyj.dev.hrd_final_project.R;
 
 public class SearchDrugsFragment extends Fragment {
 
-    private View view;
+    View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -20,4 +20,6 @@ public class SearchDrugsFragment extends Fragment {
 
         return view;
     }
+
+
 }
