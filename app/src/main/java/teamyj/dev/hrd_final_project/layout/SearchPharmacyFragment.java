@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapView;
 import com.naver.maps.map.NaverMap;
@@ -81,15 +82,15 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         this.uiSettings.setLocationButtonEnabled(true);     // 내 위치
         this.uiSettings.setZoomControlEnabled(false);       // 줌
 
-//        // 카메라 이동 리스너 등록
-//        this.naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
-//            @Override
-//            public void onCameraChange(int reason, boolean animated) {
-//                // 카메라 이동이 완료된 후 마커 위치 업데이트
-//                CameraPosition cameraPosition = naverMap.getCameraPosition();
-//                updateMarkerPosition(cameraPosition.target);
-//            }
-//        });
+        // 카메라 이동 리스너 등록
+        this.naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(int reason, boolean animated) {
+                // 카메라 이동이 완료된 후 마커 위치 업데이트
+                CameraPosition cameraPosition = naverMap.getCameraPosition();
+                //updateMarkerPosition(cameraPosition.target);
+            }
+        });
     }
 
 //    // 마커 위치 업데이트 메서드
@@ -168,22 +169,27 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 // 이전의 레이아웃 변경 리스너 제거
                 view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                // 네비게이션 바 높이 계산
                 Rect rect = new Rect();
+                // 네비게이션 바 높이 계산
                 view.getWindowVisibleDisplayFrame(rect);
                 int screenY = view.getRootView().getHeight();
                 int navigationBarHeight = screenY - rect.bottom;
 
-                adjustMapUI(navigationBarHeight);
+                // 상태바 높이 계산
+                int id = getContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
+                int statusBarHeight = getContext().getResources().getDimensionPixelSize(id);
+
+                adjustMapUI(navigationBarHeight, statusBarHeight);
             }
         });
     }
 
-    private void adjustMapUI(int navigationBarHeight) {
+    private void adjustMapUI(int navigationBarHeight, int statusBarHeight) {
         View mapView = getView().findViewById(R.id.map_view);
         if(mapView != null) {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mapView.getLayoutParams();
             params.bottomMargin = navigationBarHeight;
+            params.topMargin = statusBarHeight;
             mapView.setLayoutParams(params);
         }
     }
