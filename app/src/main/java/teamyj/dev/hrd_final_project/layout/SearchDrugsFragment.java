@@ -95,19 +95,5 @@ public class SearchDrugsFragment extends Fragment {
         return false;
     }
 
-    // 검색 버튼이 클릭되었을 때 호출되는 메서드
-    public void onConfirmSelection(View view) {
-        if (selectedImageView != null) {
-            try {
-                int selectedId = selectedImageView.getId();
-                Toast.makeText(getContext(), "선택된 항목: " + selectedId, Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                // 예외가 발생한 경우 로그에 출력하고 사용자에게 알림
-                e.printStackTrace();
-                Toast.makeText(getContext(), "선택된 항목을 처리하는 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(getContext(), "선택된 항목이 없습니다.", Toast.LENGTH_SHORT).show();
-        }
-    }
+
 }
