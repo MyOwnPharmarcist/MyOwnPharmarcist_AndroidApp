@@ -43,6 +43,7 @@
 
             />
 
+<!--        //모양 가로 스크롤-->
         <HorizontalScrollView
             android:id="@+id/shapesearch"
             android:layout_width="match_parent"
@@ -63,68 +64,79 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape0"
-                    android:layout_marginHorizontal="30dp"/>
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/shape0"/>
 
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/shape1"
-                    android:layout_marginHorizontal="30dp"/>
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/shape1"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape2"
-                    android:layout_marginHorizontal="30dp"/>
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/shape2"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape3"
-                    android:layout_marginHorizontal="30dp"/>
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/shape3"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape4"
-                    android:layout_marginHorizontal="30dp"/>
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/shape4"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape5"
-                    android:layout_marginHorizontal="30dp"/>
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/shape5"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape6"
-                    android:layout_marginHorizontal="30dp"/>
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/shape6"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape7"
-                    android:layout_marginHorizontal="30dp"/>
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/shape7"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape8"
-                    android:layout_marginHorizontal="30dp"/>
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/shape8"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape9"
-                    android:layout_marginHorizontal="30dp"/>
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/shape9"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/shape10"
-                    android:layout_marginHorizontal="30dp"/>
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/shape10"/>
 
             </LinearLayout>
         </HorizontalScrollView>
@@ -144,14 +156,142 @@
         android:id="@+id/colortext"
         />
 
-        <HorizontalScrollView
-            android:id="@+id/colorsearch"
+<!--        색깔 가로 스크롤-->
+    <HorizontalScrollView
+        android:id="@+id/colorsearch"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:scrollbars="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colortext">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:scrollbars="horizontal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/colortext" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorall"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorall"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorwhite"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorwhite"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/coloryellow"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/coloryellow"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorornage"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorornage"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorpink"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorpink"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorred"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorred"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorbrown"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorbrown"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorlightgreen"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorlightgreen"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorgreen"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorgreen"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorturquoise"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorturquoise"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorblue"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorblue"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorsodomy"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorsodomy"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/coloramethyst"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/coloramethyst"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorpurple"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorpurple"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorgray"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorgray"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colorblack"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colorblack"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/colornull"
+                android:layout_marginHorizontal="30dp"
+                android:id="@+id/colornull"/>
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
 
 
@@ -176,7 +316,44 @@
             android:scrollbars="horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/formulationtext" />
+            app:layout_constraintTop_toBottomOf="@+id/formulationtext">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/formulation5"
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/formulation5"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/formulation1"
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/formulation1"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/formulation2"
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/formulation2"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/formulation3"
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/formulation3"/>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
 
 
 
