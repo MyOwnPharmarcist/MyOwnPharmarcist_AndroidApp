@@ -2,11 +2,13 @@ package teamyj.dev.hrd_final_project.layout;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -155,4 +157,34 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         mapView.onLowMemory();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // 레이아웃 변경 리스너 설정
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // 이전의 레이아웃 변경 리스너 제거
+                view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                // 네비게이션 바 높이 계산
+                Rect rect = new Rect();
+                view.getWindowVisibleDisplayFrame(rect);
+                int screenY = view.getRootView().getHeight();
+                int navigationBarHeight = screenY - rect.bottom;
+
+                adjustMapUI(navigationBarHeight);
+            }
+        });
+    }
+
+    private void adjustMapUI(int navigationBarHeight) {
+        View mapView = getView().findViewById(R.id.map_view);
+        if(mapView != null) {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mapView.getLayoutParams();
+            params.bottomMargin = navigationBarHeight;
+            mapView.setLayoutParams(params);
+        }
+    }
 }
