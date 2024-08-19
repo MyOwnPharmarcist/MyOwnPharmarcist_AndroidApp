@@ -11,14 +11,12 @@ import teamyj.dev.hrd_final_project.R;
 
 public class TimerFragment extends Fragment {
 
-   private View view;
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_search_drugs, container, false);
-
-
+        view = inflater.inflate(R.layout.fragment_timer, container, false);
         return view;
     }
 }
