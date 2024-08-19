@@ -200,11 +200,11 @@
                 android:id="@+id/colorornage"/>
 
             <ImageView
+                android:id="@+id/colorpink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/colorpink"
                 android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorpink"/>
+                android:src="@drawable/colorpink" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -328,32 +328,57 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/formulation5"
                     android:layout_marginHorizontal="30dp"
-                    android:id="@+id/formulation5"/>
+                    android:id="@+id/formulation5"
+                    />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/formulation1"
                     android:layout_marginHorizontal="30dp"
-                    android:id="@+id/formulation1"/>
+                    android:id="@+id/formulation1"
+                    />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/formulation2"
                     android:layout_marginHorizontal="30dp"
-                    android:id="@+id/formulation2"/>
+                    android:id="@+id/formulation2"
+                    />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/formulation3"
                     android:layout_marginHorizontal="30dp"
-                    android:id="@+id/formulation3"/>
+                    android:id="@+id/formulation3"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/formulation4"
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/formulation4"
+                    />
 
             </LinearLayout>
 
         </HorizontalScrollView>
+
+
+        <Button
+            app:layout_constraintTop_toBottomOf="@+id/formulationsearch"
+            android:layout_marginTop="80dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="검색"
+            android:onClick="onConfirmSelection"
+            />
 
 
 
