@@ -9,20 +9,27 @@
     tools:context=".layout.MainMenuActivity"
     >
 
-    <FrameLayout
+    <com.naver.maps.map.MapView
         android:id="@+id/menu_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize"/>
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/menu_bottom_navigation"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menu_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="#EFF8FB"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/main_menu_bottom"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/main_menu_bottom"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
