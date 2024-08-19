@@ -15,13 +15,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.naver.maps.geometry.LatLng;
-import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapView;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
-import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
 
 import teamyj.dev.hrd_final_project.R;
@@ -33,6 +31,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     private MapView mapView;
     private NaverMap naverMap;
     private UiSettings uiSettings;
+//    private Marker marker;
 
     private LatLng coord = new LatLng(36.336590, 127.459220);
 
@@ -80,27 +79,27 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         this.uiSettings.setLocationButtonEnabled(true);     // 내 위치
         this.uiSettings.setZoomControlEnabled(false);       // 줌
 
-        // 카메라 이동 리스너 등록
-        this.naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
-            @Override
-            public void onCameraChange(int reason, boolean animated) {
-                // 카메라 이동이 완료된 후 마커 위치 업데이트
-                CameraPosition cameraPosition = naverMap.getCameraPosition();
-                updateMarkerPosition(cameraPosition.target);
-            }
-        });
+//        // 카메라 이동 리스너 등록
+//        this.naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
+//            @Override
+//            public void onCameraChange(int reason, boolean animated) {
+//                // 카메라 이동이 완료된 후 마커 위치 업데이트
+//                CameraPosition cameraPosition = naverMap.getCameraPosition();
+//                updateMarkerPosition(cameraPosition.target);
+//            }
+//        });
     }
 
-    // 마커 위치 업데이트 메서드
-    private void updateMarkerPosition(LatLng position) {
-        if (marker != null) {
-            marker.setPosition(position);
-        } else {
-            marker = new Marker();
-            marker.setPosition(position);
-            marker.setMap(naverMap);
-        }
-    }
+//    // 마커 위치 업데이트 메서드
+//    private void updateMarkerPosition(LatLng position) {
+//        if (marker != null) {
+//            marker.setPosition(position);
+//        } else {
+//            marker = new Marker();
+//            marker.setPosition(position);
+//            marker.setMap(naverMap);
+//        }
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
