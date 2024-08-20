@@ -1,9 +1,11 @@
 package teamyj.dev.hrd_final_project.layout;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Rect;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,13 +31,17 @@ import com.naver.maps.map.util.FusedLocationSource;
 
 import teamyj.dev.hrd_final_project.R;
 import teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper;
+import teamyj.dev.hrd_final_project.main_system.CustomApplication;
 
 public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallback {
+
+    private CustomApplication application;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private FusedLocationSource locationSource;
     private MapView mapView;
     private NaverMap naverMap;
+    private LocationManager locationManager;
     private UiSettings uiSettings;
     private SalesStoreDBOpenHelper salesdbHelper;
     private Marker marker;
@@ -68,8 +74,13 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
         // 위치 권한 확인 및 요청
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
-        } else {
+//            locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, location -> {
+//                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+//                CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng);
+//                naverMap.moveCamera(cameraUpdate);
+//            }, Looper.getMainLooper());
+        }
+        else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
 
@@ -105,7 +116,8 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
             }
         });
 
-        addMarkers();
+        LatLng cameraPosition = naverMap.getCameraPosition().target;
+        addMarkers(cameraPosition);
     }
 
     @Override
@@ -114,8 +126,9 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 권한이 허용된 경우, 위치 추적 모드 설정
-                naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+                if(naverMap != null) {
+                    onMapReady(naverMap);
+                }
             }
         }
     }
@@ -123,6 +136,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        locationManager = (LocationManager)requireContext().getSystemService(Context.LOCATION_SERVICE);
 
         // 레이아웃 변경 리스너 설정
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -157,9 +171,9 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     }
 
     // 마커 핀 추가 메서드
-    private void addMarkers() {
+    private void addMarkers(LatLng cameraPosition) {
         salesdbHelper = new SalesStoreDBOpenHelper(getContext(), "sales_store.db", null, 1);
-        Cursor cursor = salesdbHelper.getLocations();
+        Cursor cursor = salesdbHelper.getLocations(cameraPosition);
 
         if(cursor.moveToFirst()) {
             do {
@@ -219,7 +233,5 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         super.onLowMemory();
         mapView.onLowMemory();
     }
-
-
 
 }
