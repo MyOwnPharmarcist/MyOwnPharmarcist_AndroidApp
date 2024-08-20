@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,9 @@ import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import teamyj.dev.hrd_final_project.R;
 import teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper;
 import teamyj.dev.hrd_final_project.main_system.CustomApplication;
@@ -45,6 +49,8 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     private UiSettings uiSettings;
     private SalesStoreDBOpenHelper salesdbHelper;
     private Marker marker;
+    private Button searchingMapBtn;
+    private List<Marker> markerList = new ArrayList<>(); // 표시된 마커 리스트
 
     @Nullable
     @Override
@@ -55,6 +61,8 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         mapView = view.findViewById(R.id.map_view);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        searchingMapBtn = view.findViewById(R.id.btn_search_nearby);
 
         // 위치 소스 초기화
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
@@ -84,6 +92,9 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
 
+        // 현재 카메라의 위치
+        LatLng cameraPosition = this.naverMap.getCameraPosition().target;
+
         // mapType
         this.naverMap.setMapType(NaverMap.MapType.Basic);
 
@@ -96,6 +107,8 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         this.uiSettings.setLocationButtonEnabled(true);     // 내 위치
         this.uiSettings.setZoomControlEnabled(false);       // 줌
 
+        addMarkers(cameraPosition); // 초기 화면 마커 표시
+
         // 카메라 이동시 호출 되는 메서드
         this.naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
             @Override
@@ -103,7 +116,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 Log.d("CameraChange", "Camera moved: Reason = " + reason + ", Animated = " + animated);
                 // 카메라 이동이 완료된 후 마커 위치 업데이트
                 CameraPosition cameraPosition = naverMap.getCameraPosition();
-
+                searchingMapBtn.setVisibility(View.GONE);
             }
         });
 
@@ -111,13 +124,20 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         this.naverMap.addOnCameraIdleListener(new NaverMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                LatLng position = naverMap.getCameraPosition().target;
+                LatLng position = naverMap.getCameraPosition().target;  // 현재 카메라 위치
                 Log.d("CameraIdle", "Camera is idle at: " + position.latitude + ", " + position.longitude);
+                searchingMapBtn.setVisibility(View.VISIBLE);    // 마커 핀 표시
+                searchingMapBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        deleteMarkers();    // 마커 삭제
+                        addMarkers(position); // 현재 카메라 위치에 마커 추가
+                    }
+                });
             }
         });
 
-        LatLng cameraPosition = naverMap.getCameraPosition().target;
-        addMarkers(cameraPosition);
+
     }
 
     @Override
@@ -185,11 +205,20 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 marker.setWidth(80);
                 marker.setHeight(110);
                 marker.setMap(naverMap);
+                markerList.add(marker); // 리스트에 마커 저장
             } while (cursor.moveToNext());
         }
 
         cursor.close();
         salesdbHelper.close();
+    }
+
+    private void deleteMarkers() {
+        for (Marker marker : markerList) {
+            marker.setMap(null);  // 지도에서 마커 삭제
+        }
+
+        markerList.clear();  // 리스트 초기화
     }
 
     @Override
