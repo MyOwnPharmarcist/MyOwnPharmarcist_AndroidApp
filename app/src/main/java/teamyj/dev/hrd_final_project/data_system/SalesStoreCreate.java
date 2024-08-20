@@ -66,7 +66,7 @@ public class SalesStoreCreate {
         }
         else if (preprocessing.length == 3) {
             data = preprocessing[2].split(",");
-            if(preprocessing[0].isEmpty()) {
+            if(preprocessing[0].length() < 2) {
                 // addr에 ,가 있을 때
                 addr = preprocessing[1];
                 name = data[1];
@@ -74,7 +74,7 @@ public class SalesStoreCreate {
             else {
                 // name에 ,가 있을 때
                 addr = (preprocessing[0].split(","))[0];
-                addr = preprocessing[1];
+                name = preprocessing[1];
             }
         }
         else {  // preprocessing.length == 5

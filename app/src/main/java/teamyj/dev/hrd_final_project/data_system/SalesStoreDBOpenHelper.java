@@ -1,9 +1,10 @@
 package teamyj.dev.hrd_final_project.data_system;
 
-import static teamyj.dev.hrd_final_project.data_system.DataManager.FILE_PATH;
 import static teamyj.dev.hrd_final_project.data_system.DataManager.BUFFER_SIZE;
+import static teamyj.dev.hrd_final_project.data_system.DataManager.FILE_PATH;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -87,4 +88,11 @@ public class SalesStoreDBOpenHelper extends SQLiteOpenHelper {
             throw new RuntimeException(e);
         }
     }
+
+    // 위도, 경도 값 가져오는 메서드
+    public Cursor getLocations() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT " + STORE_LATITUDE + ", " + STORE_LONGITUDE + " FROM " + TABLE_SALES_STORE, null);
+    }
+
 }
