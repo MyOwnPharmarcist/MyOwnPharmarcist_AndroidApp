@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Rect;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,8 +21,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
+import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapView;
 import com.naver.maps.map.NaverMap;
@@ -43,6 +48,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private FusedLocationSource locationSource;
+    private FusedLocationProviderClient locationClient;
     private MapView mapView;
     private NaverMap naverMap;
     private LocationManager locationManager;
@@ -82,18 +88,20 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
         // 위치 권한 확인 및 요청
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//            locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, location -> {
-//                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-//                CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng);
-//                naverMap.moveCamera(cameraUpdate);
-//            }, Looper.getMainLooper());
+            locationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng);
+                    naverMap.moveCamera(cameraUpdate);
+
+                    addMarkers(latLng); // 초기 화면 마커 표시
+                }
+            });
         }
         else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
-
-        // 현재 카메라의 위치
-        LatLng cameraPosition = this.naverMap.getCameraPosition().target;
 
         // mapType
         this.naverMap.setMapType(NaverMap.MapType.Basic);
@@ -106,8 +114,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         this.uiSettings.setCompassEnabled(true);            // 나침반
         this.uiSettings.setLocationButtonEnabled(true);     // 내 위치
         this.uiSettings.setZoomControlEnabled(false);       // 줌
-
-        addMarkers(cameraPosition); // 초기 화면 마커 표시
 
         // 카메라 이동시 호출 되는 메서드
         this.naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
@@ -157,6 +163,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         locationManager = (LocationManager)requireContext().getSystemService(Context.LOCATION_SERVICE);
+        locationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
         // 레이아웃 변경 리스너 설정
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
