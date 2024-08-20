@@ -25,5 +25,8 @@ public class CustomApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = CustomApplication.this;
+
+//        DataManager dataManager = DataManager.getInstance();
+//        dataManager.createData(getAssets(), this);
     }
 }
