@@ -8,6 +8,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.naver.maps.geometry.LatLng;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,6 +65,7 @@ public class SalesStoreDBOpenHelper extends SQLiteOpenHelper {
     private boolean checkDBExist() {
         String db_Path = FILE_PATH + SALES_STORE_DB_NAME;
         try (SQLiteDatabase checkDB = SQLiteDatabase.openDatabase(db_Path, null, SQLiteDatabase.OPEN_READONLY)) {
+            checkDB.execSQL("SELECT load_extension('libspatialite');");
             return checkDB.isOpen();
         } catch (Exception e) {
             return false;
@@ -90,9 +93,13 @@ public class SalesStoreDBOpenHelper extends SQLiteOpenHelper {
     }
 
     // 위도, 경도 값 가져오는 메서드
-    public Cursor getLocations() {
+    public Cursor getLocations(LatLng cameraPosition) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT " + STORE_LATITUDE + ", " + STORE_LONGITUDE + " FROM " + TABLE_SALES_STORE, null);
+        return db.rawQuery("SELECT * FROM " + TABLE_SALES_STORE +
+                " WHERE " + STORE_LATITUDE + " > " + (cameraPosition.latitude - 0.01) + " and "
+                + STORE_LATITUDE + " < " + (cameraPosition.latitude + 0.01) + " and "
+                + STORE_LONGITUDE + " > " + (cameraPosition.longitude - 0.01) + " and "
+                + STORE_LONGITUDE + " < " + (cameraPosition.longitude + 0.01), null);
     }
 
 }
