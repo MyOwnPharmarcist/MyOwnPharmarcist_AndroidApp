@@ -96,10 +96,10 @@ public class SalesStoreDBOpenHelper extends SQLiteOpenHelper {
     public Cursor getLocations(LatLng cameraPosition) {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_SALES_STORE +
-                " WHERE " + STORE_LATITUDE + " > " + (cameraPosition.latitude - 0.01) + " and "
-                + STORE_LATITUDE + " < " + (cameraPosition.latitude + 0.01) + " and "
-                + STORE_LONGITUDE + " > " + (cameraPosition.longitude - 0.01) + " and "
-                + STORE_LONGITUDE + " < " + (cameraPosition.longitude + 0.01), null);
+                " WHERE " + STORE_LATITUDE + " > " + (cameraPosition.latitude - 0.015) + " and "
+                + STORE_LATITUDE + " < " + (cameraPosition.latitude + 0.015) + " and "
+                + STORE_LONGITUDE + " > " + (cameraPosition.longitude - 0.015) + " and "
+                + STORE_LONGITUDE + " < " + (cameraPosition.longitude + 0.015), null);
     }
 
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Rect;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,13 +22,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
+import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapView;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
+import com.naver.maps.map.overlay.LocationOverlay;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
 
@@ -43,6 +50,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private FusedLocationSource locationSource;
+    private FusedLocationProviderClient locationClient;
     private MapView mapView;
     private NaverMap naverMap;
     private LocationManager locationManager;
@@ -82,32 +90,37 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
         // 위치 권한 확인 및 요청
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//            locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, location -> {
-//                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-//                CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng);
-//                naverMap.moveCamera(cameraUpdate);
-//            }, Looper.getMainLooper());
+            locationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng);
+                    naverMap.moveCamera(cameraUpdate);
+
+                    LocationOverlay locationOverlay = naverMap.getLocationOverlay();
+                    locationOverlay.setPosition(latLng);
+                    locationOverlay.setVisible(true);
+
+                    addMarkers(latLng); // 초기 화면 마커 표시
+                }
+            });
         }
         else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
 
-        // 현재 카메라의 위치
-        LatLng cameraPosition = this.naverMap.getCameraPosition().target;
-
         // mapType
         this.naverMap.setMapType(NaverMap.MapType.Basic);
-
         // 실내지도 활성화
         this.naverMap.setIndoorEnabled(true);
+        // 최소 줌 레벨 설정
+        this.naverMap.setMinZoom(7);
 
         // 네이버 지도 UI 세팅 (네이버 로고를 가리면 안됨)
         this.uiSettings = naverMap.getUiSettings();
         this.uiSettings.setCompassEnabled(true);            // 나침반
         this.uiSettings.setLocationButtonEnabled(true);     // 내 위치
         this.uiSettings.setZoomControlEnabled(false);       // 줌
-
-        addMarkers(cameraPosition); // 초기 화면 마커 표시
 
         // 카메라 이동시 호출 되는 메서드
         this.naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
@@ -116,7 +129,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 Log.d("CameraChange", "Camera moved: Reason = " + reason + ", Animated = " + animated);
                 // 카메라 이동이 완료된 후 마커 위치 업데이트
                 CameraPosition cameraPosition = naverMap.getCameraPosition();
-                searchingMapBtn.setVisibility(View.GONE);
+                searchingMapBtn.setVisibility(View.GONE);   // 버튼 숨김
             }
         });
 
@@ -126,7 +139,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
             public void onCameraIdle() {
                 LatLng position = naverMap.getCameraPosition().target;  // 현재 카메라 위치
                 Log.d("CameraIdle", "Camera is idle at: " + position.latitude + ", " + position.longitude);
-                searchingMapBtn.setVisibility(View.VISIBLE);    // 마커 핀 표시
+                searchingMapBtn.setVisibility(View.VISIBLE);    // 버튼 표시
                 searchingMapBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -136,8 +149,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 });
             }
         });
-
-
     }
 
     @Override
@@ -157,6 +168,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         locationManager = (LocationManager)requireContext().getSystemService(Context.LOCATION_SERVICE);
+        locationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
         // 레이아웃 변경 리스너 설정
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -197,14 +209,23 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
         if(cursor.moveToFirst()) {
             do {
+                String title = cursor.getString(cursor.getColumnIndexOrThrow("store_name"));
                 double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow("store_latitude"));
                 double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow("store_longitude"));
 
                 marker = new Marker();
                 marker.setPosition(new LatLng(latitude, longitude));
+                marker.setCaptionText(title);
+                marker.setCaptionRequestedWidth(200);
+                marker.setMinZoom(10);  // 너무 멀어지면 마커 제거
                 marker.setWidth(80);
                 marker.setHeight(110);
                 marker.setMap(naverMap);
+                marker.setOnClickListener(overlay -> {
+                    // 마커를 클릭할 때 정보 창을 엶
+                    Toast.makeText(getContext(), title, Toast.LENGTH_SHORT).show();
+                    return true;
+                });
                 markerList.add(marker); // 리스트에 마커 저장
             } while (cursor.moveToNext());
         }
@@ -213,11 +234,11 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         salesdbHelper.close();
     }
 
+    // 마커 핀 삭제 메서드
     private void deleteMarkers() {
         for (Marker marker : markerList) {
             marker.setMap(null);  // 지도에서 마커 삭제
         }
-
         markerList.clear();  // 리스트 초기화
     }
 
