@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class DrugProductsDBOpenHelper extends SQLiteOpenHelper {
+    public static final String DRUG_PRODUCTS_DB_NAME = "drug_products.db";
+    public static final int DRUG_PRODUCTS_DB_VERSION = 1;
+
     private StringBuilder stringBuilder = new StringBuilder();
     public static final String TABLE_DRUG_PRODUCTS = "Drug_Products";
     public static final String ITEM_NAME = "item_name";
