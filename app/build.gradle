@@ -40,9 +40,12 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 
-    // 네이버 지도 SDK
-    implementation 'com.naver.maps:map-sdk:3.19.1'
+    // Material Design
+    implementation 'com.google.android.material:material:1.2.1'
 
     // GPS 권한
     implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+    // 네이버 지도 SDK
+    implementation 'com.naver.maps:map-sdk:3.19.1'
 }

@@ -5,8 +5,6 @@ import android.app.Application;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import teamyj.dev.hrd_final_project.data_system.DrugProductsCreate;
-
 public class CustomApplication extends Application {
     /** --- 어플리케이션 인스턴스 --- */
     private static CustomApplication instance;
@@ -30,8 +28,5 @@ public class CustomApplication extends Application {
 
 //        DataManager dataManager = DataManager.getInstance();
 //        dataManager.createData(getAssets(), this);
-
-        DrugProductsCreate drugProductsCreate = new DrugProductsCreate();
-        drugProductsCreate.getDrugProducts(getAssets(), null);
     }
 }
