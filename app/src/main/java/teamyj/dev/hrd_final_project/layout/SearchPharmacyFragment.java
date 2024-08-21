@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -110,9 +111,10 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
         // mapType
         this.naverMap.setMapType(NaverMap.MapType.Basic);
-
         // 실내지도 활성화
         this.naverMap.setIndoorEnabled(true);
+        // 최소 줌 레벨 설정
+        this.naverMap.setMinZoom(7);
 
         // 네이버 지도 UI 세팅 (네이버 로고를 가리면 안됨)
         this.uiSettings = naverMap.getUiSettings();
@@ -127,7 +129,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 Log.d("CameraChange", "Camera moved: Reason = " + reason + ", Animated = " + animated);
                 // 카메라 이동이 완료된 후 마커 위치 업데이트
                 CameraPosition cameraPosition = naverMap.getCameraPosition();
-                searchingMapBtn.setVisibility(View.GONE);
+                searchingMapBtn.setVisibility(View.GONE);   // 버튼 숨김
             }
         });
 
@@ -137,7 +139,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
             public void onCameraIdle() {
                 LatLng position = naverMap.getCameraPosition().target;  // 현재 카메라 위치
                 Log.d("CameraIdle", "Camera is idle at: " + position.latitude + ", " + position.longitude);
-                searchingMapBtn.setVisibility(View.VISIBLE);    // 마커 핀 표시
+                searchingMapBtn.setVisibility(View.VISIBLE);    // 버튼 표시
                 searchingMapBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -147,8 +149,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 });
             }
         });
-
-
     }
 
     @Override
@@ -209,14 +209,23 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
         if(cursor.moveToFirst()) {
             do {
+                String title = cursor.getString(cursor.getColumnIndexOrThrow("store_name"));
                 double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow("store_latitude"));
                 double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow("store_longitude"));
 
                 marker = new Marker();
                 marker.setPosition(new LatLng(latitude, longitude));
+                marker.setCaptionText(title);
+                marker.setCaptionRequestedWidth(200);
+                marker.setMinZoom(10);  // 너무 멀어지면 마커 제거
                 marker.setWidth(80);
                 marker.setHeight(110);
                 marker.setMap(naverMap);
+                marker.setOnClickListener(overlay -> {
+                    // 마커를 클릭할 때 정보 창을 엶
+                    Toast.makeText(getContext(), title, Toast.LENGTH_SHORT).show();
+                    return true;
+                });
                 markerList.add(marker); // 리스트에 마커 저장
             } while (cursor.moveToNext());
         }
@@ -225,11 +234,11 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         salesdbHelper.close();
     }
 
+    // 마커 핀 삭제 메서드
     private void deleteMarkers() {
         for (Marker marker : markerList) {
             marker.setMap(null);  // 지도에서 마커 삭제
         }
-
         markerList.clear();  // 리스트 초기화
     }
 
