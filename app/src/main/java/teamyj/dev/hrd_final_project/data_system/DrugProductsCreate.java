@@ -8,9 +8,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class DrugProductsCreate {
-    private static final String DRUG_PRODUCTS_FILE = "drug_products/drug_products_final.csv";
+    private static final String DRUG_PRODUCTS_FILE = "drug_products/drug_product_final.csv";
     private DrugProductsDBOpenHelper drugProductsDBOpenHelper;
     private BufferedReader bufferedReader;
+    private StringBuilder stringBuilder = new StringBuilder();
 
     /** --- Drug Products Create --- */
     public void getDrugProducts(AssetManager assetManager, DrugProductsDBOpenHelper drugProductsDBOpenHelper) {
@@ -19,9 +20,28 @@ public class DrugProductsCreate {
 
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(assetManager.open(DRUG_PRODUCTS_FILE)));
+            String[] buffer;
             String line;
+            int count;
             while ((line = bufferedReader.readLine()) != null) {
-                processingDrugProductsData(line);
+                stringBuilder.append(line);
+                buffer = line.split("\"\"\"");
+                if((count = buffer.length) == 19) {
+                    processingDrugProductsData(stringBuilder.toString());
+                } else {
+                    while (count != 19) {
+                        line = bufferedReader.readLine();
+                        stringBuilder.append(line);
+                        buffer = line.split("\"\"\"");
+                        count += buffer.length - 1;
+                        if(line.endsWith("\"\"\"")) {
+                            count++;
+                        }
+                    }
+                    processingDrugProductsData(stringBuilder.toString());
+                }
+
+                stringBuilder.setLength(0);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -34,7 +54,6 @@ public class DrugProductsCreate {
                 }
             }
         }
-
     }
 
     private void processingDrugProductsData(String product_info) {
@@ -42,6 +61,8 @@ public class DrugProductsCreate {
         String[] data = null;
 
         // 전처리
-        
+        String[] preproessing = product_info.split("\"\"\"");
+        System.out.printf("");
+
     }
 }
