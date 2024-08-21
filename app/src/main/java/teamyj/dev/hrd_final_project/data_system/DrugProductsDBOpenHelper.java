@@ -29,7 +29,7 @@ public class DrugProductsDBOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         stringBuilder.setLength(0);
-        stringBuilder.append("CREATE TABLE").append(TABLE_DRUG_PRODUCTS).append(" (");
+        stringBuilder.append("CREATE TABLE ").append(TABLE_DRUG_PRODUCTS).append(" (");
         stringBuilder.append(ITEM_NAME).append(" TEXT PRIMARY KEY,");
         stringBuilder.append(ENTP_NAME).append(" TEXT,");
         stringBuilder.append(ETC_OTC_CODE).append(" TEXT,");

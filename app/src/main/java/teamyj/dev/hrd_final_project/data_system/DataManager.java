@@ -1,5 +1,7 @@
 package teamyj.dev.hrd_final_project.data_system;
 
+import static teamyj.dev.hrd_final_project.data_system.DrugProductsDBOpenHelper.DRUG_PRODUCTS_DB_NAME;
+import static teamyj.dev.hrd_final_project.data_system.DrugProductsDBOpenHelper.DRUG_PRODUCTS_DB_VERSION;
 import static teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper.SALES_STORE_DB_NAME;
 import static teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper.SALES_STORE_DB_VERSION;
 
@@ -31,6 +33,7 @@ public class DataManager {
     public static final int BUFFER_SIZE = 1024;
 
     SalesStoreDBOpenHelper salesStoreDBOpenHelper;
+    DrugProductsDBOpenHelper drugProductsDBOpenHelper;
 
     /** ---  Methods --- */
     public void createData(AssetManager assetManager, Context context) {
@@ -38,10 +41,16 @@ public class DataManager {
         CustomApplication application = CustomApplication.getInstance();
         ExecutorService excutor = application.getExcutor();
 
-        salesStoreDBOpenHelper = new SalesStoreDBOpenHelper(context, SALES_STORE_DB_NAME, null, SALES_STORE_DB_VERSION);
+//        salesStoreDBOpenHelper = new SalesStoreDBOpenHelper(context, SALES_STORE_DB_NAME, null, SALES_STORE_DB_VERSION);
+//        excutor.submit(() -> {
+//            SalesStoreCreate salesStoreCreate = new SalesStoreCreate();
+//            salesStoreCreate.getSalesStores(assetManager, salesStoreDBOpenHelper);
+//        });
+
+        drugProductsDBOpenHelper = new DrugProductsDBOpenHelper(context, DRUG_PRODUCTS_DB_NAME, null, DRUG_PRODUCTS_DB_VERSION);
         excutor.submit(() -> {
-            SalesStoreCreate salesStoreCreate = new SalesStoreCreate();
-            salesStoreCreate.getSalesStores(assetManager, salesStoreDBOpenHelper);
+            DrugProductsCreate drugProductsCreate = new DrugProductsCreate();
+            drugProductsCreate.getDrugProducts(assetManager, drugProductsDBOpenHelper);
         });
     }
 
