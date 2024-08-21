@@ -59,7 +59,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     private View viewBottomSheet;
     private BottomSheetBehavior behavior;
     private Marker marker;
-//    private Button searchingMapBtn;
     private List<Marker> markerList = new ArrayList<>(); // 표시된 마커 리스트
 
     @Nullable
@@ -77,8 +76,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         behavior = BottomSheetBehavior.from(viewBottomSheet);
         behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         fragment = this;
-
-//        searchingMapBtn = view.findViewById(R.id.btn_search_nearby);
 
         // 위치 소스 초기화
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
@@ -135,9 +132,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
             @Override
             public void onCameraChange(int reason, boolean animated) {
                 Log.d("CameraChange", "Camera moved: Reason = " + reason + ", Animated = " + animated);
-                // 카메라 이동이 완료된 후 마커 위치 업데이트
                 CameraPosition cameraPosition = naverMap.getCameraPosition();
-//                searchingMapBtn.setVisibility(View.GONE);   // 버튼 숨김
             }
         });
 
@@ -150,15 +145,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
                 deleteMarkers();    // 마커 삭제
                 addMarkers(position); // 현재 카메라 위치에 마커 추가
-
-//                searchingMapBtn.setVisibility(View.VISIBLE);    // 버튼 표시
-//                searchingMapBtn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        deleteMarkers();    // 마커 삭제
-//                        addMarkers(position); // 현재 카메라 위치에 마커 추가
-//                    }
-//                });
             }
         });
     }
@@ -205,7 +191,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     }
 
     private void adjustMapUI(int navigationBarHeight, int statusBarHeight) {
-        View mapView = getView().findViewById(R.id.map_view);
+        View mapView = getView().findViewById(R.id.coordinator_layout);
         if(mapView != null) {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mapView.getLayoutParams();
             params.bottomMargin = navigationBarHeight;
