@@ -2,12 +2,13 @@ package teamyj.dev.hrd_final_project.layout;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,7 +21,8 @@ import teamyj.dev.hrd_final_project.R;
 
 public class TimerFragment extends Fragment implements View.OnClickListener {
 
-    private long timeCountInMilliSeconds = 1 * 60000;
+    private long timeCountInMilliSeconds = 30 * 60000; // 기본값: 30분
+    private long initialTimeCountInMilliSeconds = timeCountInMilliSeconds; // 리셋을 위한 초기 타이머 값
 
     private enum TimerStatus {
         STARTED,
@@ -30,7 +32,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
     private TimerStatus timerStatus = TimerStatus.STOPPED;
 
     private ProgressBar progressBarCircle;
-    private TextView textViewTime;
+    private EditText editTextTime;
     private ImageView imageViewReset;
     private ImageView imageViewStartStop;
     private CountDownTimer countDownTimer;
@@ -47,7 +49,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
 
     private void initViews(View view) {
         progressBarCircle = view.findViewById(R.id.progressBarCircle);
-        textViewTime = view.findViewById(R.id.textViewTime);
+        editTextTime = view.findViewById(R.id.editTextTime);
         imageViewReset = view.findViewById(R.id.imageViewReset);
         imageViewStartStop = view.findViewById(R.id.imageViewStartStop);
     }
@@ -69,33 +71,44 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
 
     private void reset() {
         stopCountDownTimer();
+        // 타이머를 리셋할 때 초기 값을 다시 설정합니다.
+        timeCountInMilliSeconds = initialTimeCountInMilliSeconds;
+        setProgressBarValues();
+        editTextTime.setText(hmsTimeFormatter(timeCountInMilliSeconds)); // 시간을 초기 값으로 복원
         startCountDownTimer();
     }
 
     private void startStop() {
         if (timerStatus == TimerStatus.STOPPED) {
-            setTimerValues();
+            setTimerValues(); // 타이머 시작 전 시간을 설정
             setProgressBarValues();
             imageViewReset.setVisibility(View.VISIBLE);
             imageViewStartStop.setImageResource(R.drawable.ic_baseline_stop_circle_24);
-            textViewTime.setEnabled(false);
+            editTextTime.setEnabled(false);
             timerStatus = TimerStatus.STARTED;
             startCountDownTimer();
         } else {
             imageViewReset.setVisibility(View.GONE);
             imageViewStartStop.setImageResource(R.drawable.ic_baseline_play_circle_24);
-            textViewTime.setEnabled(true);
+            editTextTime.setEnabled(true);
             timerStatus = TimerStatus.STOPPED;
             stopCountDownTimer();
         }
     }
 
     private void setTimerValues() {
-        String timeString = textViewTime.getText().toString().trim();
-        if (!timeString.isEmpty()) {
+        String timeString = editTextTime.getText().toString().trim();
+        if (!TextUtils.isEmpty(timeString)) {
             String[] timeParts = timeString.split(":");
-            int minutes = Integer.parseInt(timeParts[1]); // Parse minutes part from the text
-            timeCountInMilliSeconds = minutes * 60 * 1000;
+            if (timeParts.length == 3) { // HH:MM:SS 형식인지 확인
+                int hours = Integer.parseInt(timeParts[0]);
+                int minutes = Integer.parseInt(timeParts[1]);
+                int seconds = Integer.parseInt(timeParts[2]);
+                timeCountInMilliSeconds = (hours * 3600 + minutes * 60 + seconds) * 1000;
+                initialTimeCountInMilliSeconds = timeCountInMilliSeconds; // 초기 타이머 값을 저장
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "시간 형식이 올바르지 않습니다", Toast.LENGTH_LONG).show();
+            }
         } else {
             Toast.makeText(getActivity().getApplicationContext(), "시간을 설정해주세요", Toast.LENGTH_LONG).show();
         }
@@ -105,18 +118,19 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
         countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                textViewTime.setText(hmsTimeFormatter(millisUntilFinished));
+                timeCountInMilliSeconds = millisUntilFinished;
+                editTextTime.setText(hmsTimeFormatter(millisUntilFinished));
                 progressBarCircle.setProgress((int) (millisUntilFinished / 1000));
             }
 
             @Override
             public void onFinish() {
-                textViewTime.setText(hmsTimeFormatter(timeCountInMilliSeconds));
+                editTextTime.setText(hmsTimeFormatter(0)); // 타이머가 끝나면 00:00:00으로 설정
                 setProgressBarValues();
                 imageViewReset.setVisibility(View.GONE);
                 imageViewStartStop.setImageResource(R.drawable.ic_baseline_play_circle_24);
-                textViewTime.setEnabled(true);
-                timerStatus = TimerStatus.STOPPED;
+                editTextTime.setEnabled(true);
+                timerStatus = TimerStatus.STOPPED; // 타이머 상태를 STOPPED로 업데이트
             }
         }.start();
     }
@@ -128,8 +142,8 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setProgressBarValues() {
-        progressBarCircle.setMax((int) timeCountInMilliSeconds / 1000);
-        progressBarCircle.setProgress((int) timeCountInMilliSeconds / 1000);
+        progressBarCircle.setMax((int) (initialTimeCountInMilliSeconds / 1000));
+        progressBarCircle.setProgress((int) (timeCountInMilliSeconds / 1000));
     }
 
     private String hmsTimeFormatter(long milliSeconds) {
