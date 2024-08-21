@@ -33,6 +33,7 @@
                 tools:layout_editor_absoluteY="0dp"
                 />
 
+            <!-- Persistent Bottom Sheet -->
             <include
                 android:id="@+id/viewBottomSheet"
                 layout="@layout/fragment_bottom_sheet"

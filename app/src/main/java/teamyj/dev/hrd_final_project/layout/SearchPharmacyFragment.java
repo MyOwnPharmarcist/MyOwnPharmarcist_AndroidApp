@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
@@ -46,6 +47,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
     private CustomApplication application;
 
+    private Fragment fragment;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private FusedLocationSource locationSource;
     private FusedLocationProviderClient locationClient;
@@ -54,6 +56,8 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     private LocationManager locationManager;
     private UiSettings uiSettings;
     private SalesStoreDBOpenHelper salesdbHelper;
+    private View viewBottomSheet;
+    private BottomSheetBehavior behavior;
     private Marker marker;
 //    private Button searchingMapBtn;
     private List<Marker> markerList = new ArrayList<>(); // 표시된 마커 리스트
@@ -67,6 +71,12 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         mapView = view.findViewById(R.id.map_view);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        // Marker의 상세 정보를 출력하기 위한 BottomSheet
+        viewBottomSheet = view.findViewById(R.id.viewBottomSheet);
+        behavior = BottomSheetBehavior.from(viewBottomSheet);
+        behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        fragment = this;
 
 //        searchingMapBtn = view.findViewById(R.id.btn_search_nearby);
 
@@ -226,7 +236,8 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 marker.setMap(naverMap);
                 marker.setOnClickListener(overlay -> {
                     // 마커를 클릭할 때 정보 창을 엶
-
+                    new BottomSheetFragment(behavior, fragment);
+                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     return true;
                 });
                 markerList.add(marker); // 리스트에 마커 저장
