@@ -59,6 +59,8 @@ public class DataManager {
 
         salesStoreDBOpenHelper = new SalesStoreDBOpenHelper(context, SALES_STORE_DB_NAME, null, SALES_STORE_DB_VERSION);
         salesStoreDBOpenHelper.createDB();
+        drugProductsDBOpenHelper = new DrugProductsDBOpenHelper(context, DRUG_PRODUCTS_DB_NAME, null, DRUG_PRODUCTS_DB_VERSION);
+        drugProductsDBOpenHelper.createDB();
     }
 
 }

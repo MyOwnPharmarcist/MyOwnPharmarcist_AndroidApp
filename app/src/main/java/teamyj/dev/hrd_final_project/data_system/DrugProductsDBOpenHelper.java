@@ -1,10 +1,18 @@
 package teamyj.dev.hrd_final_project.data_system;
 
+import static teamyj.dev.hrd_final_project.data_system.DataManager.BUFFER_SIZE;
+import static teamyj.dev.hrd_final_project.data_system.DataManager.FILE_PATH;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class DrugProductsDBOpenHelper extends SQLiteOpenHelper {
     public static final String DRUG_PRODUCTS_DB_NAME = "drug_products.db";
@@ -22,8 +30,11 @@ public class DrugProductsDBOpenHelper extends SQLiteOpenHelper {
     public static final String EE_DOC_DATA = "ee_doc_data";
     public static final String UD_DOC_DATA = "ud_doc_data";
 
+    private Context context;
+
     public DrugProductsDBOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
+        this.context = context;
     }
 
     @Override
@@ -46,5 +57,31 @@ public class DrugProductsDBOpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_DRUG_PRODUCTS);
         onCreate(sqLiteDatabase);
+    }
+
+    public void createDB() {
+        context.deleteDatabase(DRUG_PRODUCTS_DB_NAME);
+        this.getReadableDatabase();
+        copyDB();
+    }
+
+    private void copyDB() {
+        try {
+            InputStream inputStream = context.getAssets().open("drug_products/" + DRUG_PRODUCTS_DB_NAME);
+            String outPath = FILE_PATH + DRUG_PRODUCTS_DB_NAME;
+            OutputStream outputStream = new FileOutputStream(outPath);
+
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+
+            outputStream.flush();
+            outputStream.close();
+            inputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
