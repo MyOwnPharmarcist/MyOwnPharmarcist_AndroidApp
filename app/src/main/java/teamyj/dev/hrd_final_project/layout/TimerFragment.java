@@ -5,7 +5,6 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,7 +30,6 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
     private TimerStatus timerStatus = TimerStatus.STOPPED;
 
     private ProgressBar progressBarCircle;
-    private EditText editTextMinute;
     private TextView textViewTime;
     private ImageView imageViewReset;
     private ImageView imageViewStartStop;
@@ -46,6 +44,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
         initListeners();
         return view;
     }
+
     private void initViews(View view) {
         progressBarCircle = view.findViewById(R.id.progressBarCircle);
         textViewTime = view.findViewById(R.id.textViewTime);
@@ -67,7 +66,6 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
             startStop();
         }
     }
-
 
     private void reset() {
         stopCountDownTimer();
@@ -93,13 +91,14 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setTimerValues() {
-        int time = 0;
-        if (!editTextMinute.getText().toString().isEmpty()) {
-            time = Integer.parseInt(editTextMinute.getText().toString().trim());
+        String timeString = textViewTime.getText().toString().trim();
+        if (!timeString.isEmpty()) {
+            String[] timeParts = timeString.split(":");
+            int minutes = Integer.parseInt(timeParts[1]); // Parse minutes part from the text
+            timeCountInMilliSeconds = minutes * 60 * 1000;
         } else {
             Toast.makeText(getActivity().getApplicationContext(), "시간을 설정해주세요", Toast.LENGTH_LONG).show();
         }
-        timeCountInMilliSeconds = time * 60 * 1000;
     }
 
     private void startCountDownTimer() {
@@ -116,7 +115,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
                 setProgressBarValues();
                 imageViewReset.setVisibility(View.GONE);
                 imageViewStartStop.setImageResource(R.drawable.ic_baseline_play_circle_24);
-                editTextMinute.setEnabled(true);
+                textViewTime.setEnabled(true);
                 timerStatus = TimerStatus.STOPPED;
             }
         }.start();
