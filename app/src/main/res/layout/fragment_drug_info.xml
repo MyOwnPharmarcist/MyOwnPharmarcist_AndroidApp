@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".layout.DrugInfoFragment"
+    android:id="@+id/fragment_drug_info">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="item_name_text_view"
+            android:layout_margin="30dp"
+            android:id="@+id/item_name_text_view"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="entp_name_text_view"
+            android:layout_margin="30dp"
+            android:id="@+id/entp_name_text_view"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="etc_otc_code_text_view"
+            android:layout_margin="30dp"
+            android:id="@+id/etc_otc_code_text_view"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="chart_text_view"
+            android:layout_margin="30dp"
+            android:id="@+id/chart_text_view"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="storage_method_text_view"
+            android:layout_margin="30dp"
+            android:id="@+id/storage_method_text_view"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="valid_term_text_view"
+            android:layout_margin="30dp"
+            android:id="@+id/valid_term_text_view"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="induty_type_text_view"
+            android:layout_margin="30dp"
+            android:id="@+id/induty_type_text_view"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ee_doc_data_text_view"
+            android:layout_margin="30dp"
+            android:id="@+id/ee_doc_data_text_view"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ud_doc_data_text_view"
+            android:layout_margin="30dp"
+            android:id="@+id/ud_doc_data_text_view"
+            />
+
+    </LinearLayout>
+
+</FrameLayout>
