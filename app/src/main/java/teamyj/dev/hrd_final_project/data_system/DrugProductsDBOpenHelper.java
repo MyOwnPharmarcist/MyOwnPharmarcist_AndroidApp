@@ -59,7 +59,7 @@ public class DrugProductsDBOpenHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void createDB() {
+    public void loadDB() {
         context.deleteDatabase(DRUG_PRODUCTS_DB_NAME);
         this.getReadableDatabase();
         copyDB();
