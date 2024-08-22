@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
@@ -46,6 +47,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
     private CustomApplication application;
 
+    private Fragment fragment;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private FusedLocationSource locationSource;
     private FusedLocationProviderClient locationClient;
@@ -54,8 +56,9 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     private LocationManager locationManager;
     private UiSettings uiSettings;
     private SalesStoreDBOpenHelper salesdbHelper;
+    private View viewBottomSheet;
+    private BottomSheetBehavior behavior;
     private Marker marker;
-//    private Button searchingMapBtn;
     private List<Marker> markerList = new ArrayList<>(); // 표시된 마커 리스트
 
     @Nullable
@@ -68,7 +71,11 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-//        searchingMapBtn = view.findViewById(R.id.btn_search_nearby);
+        // Marker의 상세 정보를 출력하기 위한 BottomSheet
+        viewBottomSheet = view.findViewById(R.id.viewBottomSheet);
+        behavior = BottomSheetBehavior.from(viewBottomSheet);
+        behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        fragment = this;
 
         // 위치 소스 초기화
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
@@ -125,9 +132,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
             @Override
             public void onCameraChange(int reason, boolean animated) {
                 Log.d("CameraChange", "Camera moved: Reason = " + reason + ", Animated = " + animated);
-                // 카메라 이동이 완료된 후 마커 위치 업데이트
                 CameraPosition cameraPosition = naverMap.getCameraPosition();
-//                searchingMapBtn.setVisibility(View.GONE);   // 버튼 숨김
             }
         });
 
@@ -140,15 +145,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
                 deleteMarkers();    // 마커 삭제
                 addMarkers(position); // 현재 카메라 위치에 마커 추가
-
-//                searchingMapBtn.setVisibility(View.VISIBLE);    // 버튼 표시
-//                searchingMapBtn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        deleteMarkers();    // 마커 삭제
-//                        addMarkers(position); // 현재 카메라 위치에 마커 추가
-//                    }
-//                });
             }
         });
     }
@@ -195,7 +191,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     }
 
     private void adjustMapUI(int navigationBarHeight, int statusBarHeight) {
-        View mapView = getView().findViewById(R.id.map_view);
+        View mapView = getView().findViewById(R.id.coordinator_layout);
         if(mapView != null) {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mapView.getLayoutParams();
             params.bottomMargin = navigationBarHeight;
@@ -226,7 +222,8 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 marker.setMap(naverMap);
                 marker.setOnClickListener(overlay -> {
                     // 마커를 클릭할 때 정보 창을 엶
-
+                    new BottomSheetFragment(behavior, fragment);
+                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     return true;
                 });
                 markerList.add(marker); // 리스트에 마커 저장
