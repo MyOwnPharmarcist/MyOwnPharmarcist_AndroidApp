@@ -5,12 +5,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import teamyj.dev.hrd_final_project.R;
 
@@ -39,6 +45,10 @@ public class SearchDrugsFragment extends Fragment {
             R.id.formulation5, R.id.formulation1, R.id.formulation2, R.id.formulation3, R.id.formulation4
     };
 
+    private ListView listView;
+    private DruglistAdapter adapter;
+    private List<Druglist> itemList;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,6 +58,16 @@ public class SearchDrugsFragment extends Fragment {
         setupClickListeners((LinearLayout) ((LinearLayout) ((HorizontalScrollView) view.findViewById(R.id.shapesearch)).getChildAt(0)));
         setupClickListeners((LinearLayout) ((LinearLayout) ((HorizontalScrollView) view.findViewById(R.id.colorsearch)).getChildAt(0)));
         setupClickListeners((LinearLayout) ((LinearLayout) ((HorizontalScrollView) view.findViewById(R.id.formulationsearch)).getChildAt(0)));
+
+
+        Button searchButton = view.findViewById(R.id.searchbtn);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // DrugInfoFragment로 전환
+                openDrugInfoFragment();
+            }
+        });
 
         return view;
     }
@@ -93,6 +113,25 @@ public class SearchDrugsFragment extends Fragment {
             }
         }
         return false;
+    }
+
+    // DB에서 데이터를 가져오는 함수 (예시)
+    private List<Druglist> fetchDataFromDB() {
+        List<Druglist> list = new ArrayList<>();
+
+        // 예시 데이터 추가 (실제 DB 연동 필요)
+        list.add(new Druglist("Drug 1", "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/1Muwq7fAuBq", "Red", "Round", "Tablet"));
+        list.add(new Druglist("Drug 2", "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/151318001317200082", "Blue", "Oval", "Capsule"));
+
+        return list;
+    }
+
+    private void openDrugInfoFragment() {
+        // FragmentTransaction을 통해 DrugInfoFragment로 전환
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.menu_frame_layout, new DrugInfoFragment()); // 올바른 FrameLayout ID 사용
+        transaction.addToBackStack(new SearchDrugsFragment());  // 뒤로가기 시 이전 Fragment로 돌아가기 위해 추가
+        transaction.commit();
     }
 
 

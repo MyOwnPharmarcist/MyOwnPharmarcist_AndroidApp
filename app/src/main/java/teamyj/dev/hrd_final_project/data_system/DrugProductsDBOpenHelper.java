@@ -4,6 +4,7 @@ import static teamyj.dev.hrd_final_project.data_system.DataManager.BUFFER_SIZE;
 import static teamyj.dev.hrd_final_project.data_system.DataManager.FILE_PATH;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -83,5 +84,10 @@ public class DrugProductsDBOpenHelper extends SQLiteOpenHelper {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Cursor getFirstDrugInfo() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_DRUG_PRODUCTS + " LIMIT 1", null);
     }
 }
