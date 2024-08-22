@@ -15,9 +15,6 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import teamyj.dev.hrd_final_project.R;
 
 public class SearchDrugsFragment extends Fragment {
@@ -46,8 +43,6 @@ public class SearchDrugsFragment extends Fragment {
     };
 
     private ListView listView;
-    private DruglistAdapter adapter;
-    private List<Druglist> itemList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,22 +110,22 @@ public class SearchDrugsFragment extends Fragment {
         return false;
     }
 
-    // DB에서 데이터를 가져오는 함수 (예시)
-    private List<Druglist> fetchDataFromDB() {
-        List<Druglist> list = new ArrayList<>();
-
-        // 예시 데이터 추가 (실제 DB 연동 필요)
-        list.add(new Druglist("Drug 1", "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/1Muwq7fAuBq", "Red", "Round", "Tablet"));
-        list.add(new Druglist("Drug 2", "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/151318001317200082", "Blue", "Oval", "Capsule"));
-
-        return list;
-    }
+//    // DB에서 데이터를 가져오는 함수 (예시)
+//    private List<Druglist> fetchDataFromDB() {
+//        List<Druglist> list = new ArrayList<>();
+//
+//        // 예시 데이터 추가 (실제 DB 연동 필요)
+//        list.add(new Druglist("Drug 1", "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/1Muwq7fAuBq", "Red", "Round", "Tablet"));
+//        list.add(new Druglist("Drug 2", "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/151318001317200082", "Blue", "Oval", "Capsule"));
+//
+//        return list;
+//    }
 
     private void openDrugInfoFragment() {
         // FragmentTransaction을 통해 DrugInfoFragment로 전환
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.menu_frame_layout, new DrugInfoFragment()); // 올바른 FrameLayout ID 사용
-        transaction.addToBackStack(new SearchDrugsFragment());  // 뒤로가기 시 이전 Fragment로 돌아가기 위해 추가
+        transaction.addToBackStack(null);  // 뒤로가기 시 이전 Fragment로 돌아가기 위해 추가
         transaction.commit();
     }
 

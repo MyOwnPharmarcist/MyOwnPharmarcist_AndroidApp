@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationManager;
@@ -25,6 +26,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
@@ -59,6 +61,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     private View viewBottomSheet;
     private BottomSheetBehavior behavior;
     private Marker marker;
+    private Bundle result;
     private List<Marker> markerList = new ArrayList<>(); // 표시된 마커 리스트
 
     @Nullable
@@ -126,6 +129,16 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         this.uiSettings.setCompassEnabled(true);            // 나침반
         this.uiSettings.setLocationButtonEnabled(true);     // 내 위치
         this.uiSettings.setZoomControlEnabled(false);       // 줌
+
+        // 지도를 클릭 시
+        this.naverMap.setOnMapClickListener(new NaverMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
+                // BottomSheet를 숨김
+                behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+            }
+        });
 
         // 카메라 이동시 호출 되는 메서드
         this.naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
@@ -207,23 +220,39 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
         if(cursor.moveToFirst()) {
             do {
-                String title = cursor.getString(cursor.getColumnIndexOrThrow("store_name"));
-
+                String storeName = cursor.getString(cursor.getColumnIndexOrThrow("store_name"));
+                String storeCallNumber = cursor.getString(cursor.getColumnIndexOrThrow("store_call_number"));
+                String storeAddr = cursor.getString(cursor.getColumnIndexOrThrow("store_addr"));
+                String storeTime = cursor.getString(cursor.getColumnIndexOrThrow("store_time"));
                 double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow("store_latitude"));
                 double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow("store_longitude"));
 
                 marker = new Marker();
                 marker.setPosition(new LatLng(latitude, longitude));
-                marker.setCaptionText(title);
+                marker.setCaptionText(storeName);
                 marker.setCaptionRequestedWidth(200);
                 marker.setMinZoom(10);  // 너무 멀어지면 마커 제거
                 marker.setWidth(80);
                 marker.setHeight(110);
                 marker.setMap(naverMap);
                 marker.setOnClickListener(overlay -> {
+                    // 마커를 클릭할 때 해당 마커로 카메라 이동
+                    CameraPosition selectedMarkerPosition = new CameraPosition(new LatLng(latitude, longitude), 16);
+                    CameraUpdate cameraUpdate = CameraUpdate.toCameraPosition(selectedMarkerPosition).animate(CameraAnimation.Easing);
+                    naverMap.moveCamera(cameraUpdate);
+
                     // 마커를 클릭할 때 정보 창을 엶
                     new BottomSheetFragment(behavior, fragment);
                     behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+                    // 클릭된 마커의 정보를 전달
+                    result = new Bundle();
+                    result.putString("store_name", storeName);
+                    result.putString("store_call_number", storeCallNumber);
+                    result.putString("store_address", storeAddr);
+                    result.putString("store_time", storeTime);
+                    getParentFragmentManager().setFragmentResult("storeKey", result);
+
                     return true;
                 });
                 markerList.add(marker); // 리스트에 마커 저장
