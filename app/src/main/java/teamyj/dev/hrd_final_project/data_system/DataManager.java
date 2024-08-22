@@ -34,8 +34,18 @@ public class DataManager {
 
     SalesStoreDBOpenHelper salesStoreDBOpenHelper;
     DrugProductsDBOpenHelper drugProductsDBOpenHelper;
+    DrugListDBOpenHelper drugListDBOpenHelper;
 
     /** ---  Methods --- */
+    public void initData(AssetManager assetManager, Context context) {
+        this.assetManager = assetManager;
+
+        salesStoreDBOpenHelper = new SalesStoreDBOpenHelper(context, SALES_STORE_DB_NAME, null, SALES_STORE_DB_VERSION);
+        salesStoreDBOpenHelper.loadDB();
+        drugProductsDBOpenHelper = new DrugProductsDBOpenHelper(context, DRUG_PRODUCTS_DB_NAME, null, DRUG_PRODUCTS_DB_VERSION);
+        drugProductsDBOpenHelper.loadDB();
+    }
+
     public void createData(AssetManager assetManager, Context context) {
         this.assetManager = assetManager;
         CustomApplication application = CustomApplication.getInstance();
@@ -47,20 +57,16 @@ public class DataManager {
 //            salesStoreCreate.getSalesStores(assetManager, salesStoreDBOpenHelper);
 //        });
 
-        drugProductsDBOpenHelper = new DrugProductsDBOpenHelper(context, DRUG_PRODUCTS_DB_NAME, null, DRUG_PRODUCTS_DB_VERSION);
+//        drugProductsDBOpenHelper = new DrugProductsDBOpenHelper(context, DRUG_PRODUCTS_DB_NAME, null, DRUG_PRODUCTS_DB_VERSION);
+//        excutor.submit(() -> {
+//            DrugProductsCreate drugProductsCreate = new DrugProductsCreate();
+//            drugProductsCreate.getDrugProducts(assetManager, drugProductsDBOpenHelper);
+//        });
+
+        drugListDBOpenHelper = new DrugListDBOpenHelper(context, DrugListDBOpenHelper.DRUG_LIST_DB_NAME, null, DRUG_PRODUCTS_DB_VERSION);
         excutor.submit(() -> {
-            DrugProductsCreate drugProductsCreate = new DrugProductsCreate();
-            drugProductsCreate.getDrugProducts(assetManager, drugProductsDBOpenHelper);
+            DrugListCreate drugListCreate = new DrugListCreate();
+            drugListCreate.getDrugList(assetManager, drugListDBOpenHelper);
         });
     }
-
-    public void initData(AssetManager assetManager, Context context) {
-        this.assetManager = assetManager;
-
-        salesStoreDBOpenHelper = new SalesStoreDBOpenHelper(context, SALES_STORE_DB_NAME, null, SALES_STORE_DB_VERSION);
-        salesStoreDBOpenHelper.loadDB();
-        drugProductsDBOpenHelper = new DrugProductsDBOpenHelper(context, DRUG_PRODUCTS_DB_NAME, null, DRUG_PRODUCTS_DB_VERSION);
-        //drugProductsDBOpenHelper.loadDB();
-    }
-
 }
