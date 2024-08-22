@@ -5,6 +5,8 @@ import android.app.Application;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import teamyj.dev.hrd_final_project.data_system.DataManager;
+
 public class CustomApplication extends Application {
     /** --- 어플리케이션 인스턴스 --- */
     private static CustomApplication instance;
@@ -26,7 +28,7 @@ public class CustomApplication extends Application {
         super.onCreate();
         instance = CustomApplication.this;
 
-//        DataManager dataManager = DataManager.getInstance();
-//        dataManager.createData(getAssets(), this);
+        DataManager dataManager = DataManager.getInstance();
+        dataManager.createData(getAssets(), this);
     }
 }

@@ -56,7 +56,7 @@ public class SalesStoreDBOpenHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void createDB() {
+    public void loadDB() {
         context.deleteDatabase(SALES_STORE_DB_NAME);
         this.getReadableDatabase();
         copyDB();
