@@ -136,7 +136,8 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
             public void onMapClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
                 // BottomSheet를 숨김
                 behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-
+                CameraUpdate cameraUpdate = CameraUpdate.zoomTo(15).animate(CameraAnimation.Easing);
+                naverMap.moveCamera(cameraUpdate);
             }
         });
 
