@@ -45,10 +45,10 @@ public class DrugProductsCreate {
                 // 마지막이 """ 인가? => 데이터의 끝 (while문 스킵)
                 if(line.endsWith("\"\"\"")) {
                     count++;
-                }
-                // 용법 용량이 없는 경우 => 데이터 17개 + null + null
-                if(line.endsWith("\"\"\"\"\"\"")) {
-                    count++;
+                    // 용법 용량이 없는 경우 => 데이터 17개 + null + null
+                    if(line.endsWith("\"\"\"\"\"\"")) {
+                        count++;
+                    }
                 }
                 while (count < 19) {
                     line = bufferedReader.readLine();
@@ -67,9 +67,9 @@ public class DrugProductsCreate {
                     // 마지막 데이터인가?
                     if (line.endsWith("\"\"\"")) {
                         count++;
-                    }
-                    if(line.endsWith("\"\"\"\"\"\"")) {
-                        count++;
+                        if(line.endsWith("\"\"\"\"\"\"")) {
+                            count++;
+                        }
                     }
                 }
                 processingDrugProductsData(stringBuilder.toString());
