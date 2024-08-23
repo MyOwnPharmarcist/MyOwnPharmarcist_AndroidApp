@@ -1,8 +1,16 @@
 package teamyj.dev.hrd_final_project.data_system;
 
+import static teamyj.dev.hrd_final_project.data_system.DataManager.BUFFER_SIZE;
+import static teamyj.dev.hrd_final_project.data_system.DataManager.FILE_PATH;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class EmergencyDrugDBOpenHelper extends SQLiteOpenHelper {
     public static final String EMERGENCY_DRUG_DB_NAME = "emergency_drug.db";
@@ -39,5 +47,31 @@ public class EmergencyDrugDBOpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_EMERGENCY_DRUG);
         onCreate(sqLiteDatabase);
+    }
+
+    public void loadDB() {
+        context.deleteDatabase(EMERGENCY_DRUG_DB_NAME);
+        this.getReadableDatabase();
+        copyDB();
+    }
+
+    private void copyDB() {
+        try {
+            InputStream inputStream = context.getAssets().open("emergency_drug/" + EMERGENCY_DRUG_DB_NAME);
+            String outPath = FILE_PATH + EMERGENCY_DRUG_DB_NAME;
+            OutputStream outputStream = new FileOutputStream(outPath);
+
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+
+            outputStream.flush();
+            outputStream.close();
+            inputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

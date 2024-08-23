@@ -10,6 +10,7 @@ import static teamyj.dev.hrd_final_project.data_system.EmergencyDrugDBOpenHelper
 import android.content.ContentValues;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -86,5 +87,6 @@ public class EmergencyDrugCreate {
         values.put(EMERGENCY_LONGITUDE, data[index]);
 
         db.insertWithOnConflict(TABLE_EMERGENCY_DRUG, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        Log.i("emergency", name);
     }
 }

@@ -51,6 +51,8 @@ public class DataManager {
         drugProductsDBOpenHelper.loadDB();
         drugListDBOpenHelper = new DrugListDBOpenHelper(context, DRUG_LIST_DB_NAME, null, DRUG_LIST_DB_VERSION);
         drugListDBOpenHelper.loadDB();
+        emergencyDrugDBOpenHelper = new EmergencyDrugDBOpenHelper(context, EMERGENCY_DRUG_DB_NAME, null, EMERGENCY_DRUG_DB_VERSION);
+        emergencyDrugDBOpenHelper.loadDB();
     }
 
     public void createData(AssetManager assetManager, Context context) {
@@ -76,10 +78,10 @@ public class DataManager {
 //            drugListCreate.getDrugList(assetManager, drugListDBOpenHelper);
 //        });
 
-        emergencyDrugDBOpenHelper = new EmergencyDrugDBOpenHelper(context, EMERGENCY_DRUG_DB_NAME, null, EMERGENCY_DRUG_DB_VERSION);
-        excutor.submit(() -> {
-            EmergencyDrugCreate emergencyDrugCreate = new EmergencyDrugCreate();
-            emergencyDrugCreate.getEmergencyDrug(assetManager, emergencyDrugDBOpenHelper);
-        });
+//        emergencyDrugDBOpenHelper = new EmergencyDrugDBOpenHelper(context, EMERGENCY_DRUG_DB_NAME, null, EMERGENCY_DRUG_DB_VERSION);
+//        excutor.submit(() -> {
+//            EmergencyDrugCreate emergencyDrugCreate = new EmergencyDrugCreate();
+//            emergencyDrugCreate.getEmergencyDrug(assetManager, emergencyDrugDBOpenHelper);
+//        });
     }
 }
