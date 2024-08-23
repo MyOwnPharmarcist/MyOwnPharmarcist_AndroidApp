@@ -121,6 +121,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         ActivityCompat.finishAffinity(this); // app 종료
     }
 }
