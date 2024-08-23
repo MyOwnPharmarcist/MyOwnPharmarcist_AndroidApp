@@ -134,7 +134,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         this.naverMap.setOnMapClickListener(new NaverMap.OnMapClickListener() {
             @Override
             public void onMapClick(@NonNull PointF pointF, @NonNull LatLng latLng) {
-                // BottomSheet를 숨김
+                // BottomSheet를 숨김 + zoom을 당겨서 애니메이션 느낌 효과 추가
                 behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 CameraUpdate cameraUpdate = CameraUpdate.zoomTo(15).animate(CameraAnimation.Easing);
                 naverMap.moveCamera(cameraUpdate);
