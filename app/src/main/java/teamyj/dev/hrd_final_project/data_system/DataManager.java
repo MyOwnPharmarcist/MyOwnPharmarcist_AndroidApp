@@ -1,11 +1,13 @@
 package teamyj.dev.hrd_final_project.data_system;
 
-import static teamyj.dev.hrd_final_project.data_system.DrugProductsDBOpenHelper.DRUG_PRODUCTS_DB_NAME;
-import static teamyj.dev.hrd_final_project.data_system.DrugProductsDBOpenHelper.DRUG_PRODUCTS_DB_VERSION;
-import static teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper.SALES_STORE_DB_NAME;
-import static teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper.SALES_STORE_DB_VERSION;
 import static teamyj.dev.hrd_final_project.data_system.DrugListDBOpenHelper.DRUG_LIST_DB_NAME;
 import static teamyj.dev.hrd_final_project.data_system.DrugListDBOpenHelper.DRUG_LIST_DB_VERSION;
+import static teamyj.dev.hrd_final_project.data_system.DrugProductsDBOpenHelper.DRUG_PRODUCTS_DB_NAME;
+import static teamyj.dev.hrd_final_project.data_system.DrugProductsDBOpenHelper.DRUG_PRODUCTS_DB_VERSION;
+import static teamyj.dev.hrd_final_project.data_system.EmergencyDrugDBOpenHelper.EMERGENCY_DRUG_DB_NAME;
+import static teamyj.dev.hrd_final_project.data_system.EmergencyDrugDBOpenHelper.EMERGENCY_DRUG_DB_VERSION;
+import static teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper.SALES_STORE_DB_NAME;
+import static teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper.SALES_STORE_DB_VERSION;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -37,6 +39,7 @@ public class DataManager {
     SalesStoreDBOpenHelper salesStoreDBOpenHelper;
     DrugProductsDBOpenHelper drugProductsDBOpenHelper;
     DrugListDBOpenHelper drugListDBOpenHelper;
+    EmergencyDrugDBOpenHelper emergencyDrugDBOpenHelper;
 
     /** ---  Methods --- */
     public void initData(AssetManager assetManager, Context context) {
@@ -67,10 +70,16 @@ public class DataManager {
 //            drugProductsCreate.getDrugProducts(assetManager, drugProductsDBOpenHelper);
 //        });
 
-        drugListDBOpenHelper = new DrugListDBOpenHelper(context, DRUG_LIST_DB_NAME, null, DRUG_LIST_DB_VERSION);
+//        drugListDBOpenHelper = new DrugListDBOpenHelper(context, DRUG_LIST_DB_NAME, null, DRUG_LIST_DB_VERSION);
+//        excutor.submit(() -> {
+//            DrugListCreate drugListCreate = new DrugListCreate();
+//            drugListCreate.getDrugList(assetManager, drugListDBOpenHelper);
+//        });
+
+        emergencyDrugDBOpenHelper = new EmergencyDrugDBOpenHelper(context, EMERGENCY_DRUG_DB_NAME, null, EMERGENCY_DRUG_DB_VERSION);
         excutor.submit(() -> {
-            DrugListCreate drugListCreate = new DrugListCreate();
-            drugListCreate.getDrugList(assetManager, drugListDBOpenHelper);
+            EmergencyDrugCreate emergencyDrugCreate = new EmergencyDrugCreate();
+            emergencyDrugCreate.getEmergencyDrug(assetManager, emergencyDrugDBOpenHelper);
         });
     }
 }
