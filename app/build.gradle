@@ -33,9 +33,11 @@ android {
     buildFeatures {
         compose true
     }
-
     composeOptions {
         kotlinCompilerExtensionVersion "1.5.3"
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 
 }
@@ -46,6 +48,7 @@ dependencies {
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
+    implementation libs.material3.android
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -53,9 +56,13 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'androidx.compose.ui:ui:1.6.8'
     implementation 'androidx.compose.material:material:1.6.8'
+    implementation 'androidx.compose.material3:material3:1.2.1'
+    implementation 'androidx.compose.runtime:runtime-livedata:1.6.8'
     implementation 'androidx.compose.ui:ui-tooling-preview:1.6.8'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.4'
     implementation 'androidx.activity:activity-compose:1.9.1'
+    // 기존의 Fragment와 Compose 통합을 위한 의존성
+    implementation 'androidx.compose.ui:ui-viewbinding:1.6.8'
 
     // Material Design
     implementation 'com.google.android.material:material:1.12.0'

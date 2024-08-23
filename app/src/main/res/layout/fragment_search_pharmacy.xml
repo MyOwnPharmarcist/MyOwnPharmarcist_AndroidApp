@@ -40,6 +40,19 @@
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
                 />
 
+<!--            &lt;!&ndash; Persistent Bottom Sheet &ndash;&gt;-->
+<!--            <include-->
+<!--                android:id="@+id/compose_view"-->
+<!--                layout="@layout/fragment_bottom_sheet"-->
+<!--                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"-->
+<!--                />-->
+
+<!--            &lt;!&ndash; ComposeView를 배치할 레이아웃 &ndash;&gt;-->
+<!--            <androidx.compose.ui.platform.ComposeView-->
+<!--                android:id="@+id/compose_view"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent" />-->
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 <!--        <Button-->

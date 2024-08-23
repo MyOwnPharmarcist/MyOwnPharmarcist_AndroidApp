@@ -202,6 +202,10 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 adjustMapUI(navigationBarHeight, statusBarHeight);
             }
         });
+
+//        ComposeView composeView = view.findViewById(R.id.compose_view);
+//        // ComposeHelper에 정의된 Kotlin 확장 함수를 호출합니다.
+//        ComposeHelperKt.setBottomSheetContent(this, composeView);
     }
 
     private void adjustMapUI(int navigationBarHeight, int statusBarHeight) {
