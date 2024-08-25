@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.location.Location;
@@ -38,11 +39,13 @@ import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.LocationOverlay;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
+import com.naver.maps.map.util.MarkerIcons;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import teamyj.dev.hrd_final_project.R;
+import teamyj.dev.hrd_final_project.data_system.EmergencyDrugDBOpenHelper;
 import teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper;
 import teamyj.dev.hrd_final_project.main_system.CustomApplication;
 
@@ -58,15 +61,22 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     private NaverMap naverMap;
     private LocationManager locationManager;
     private UiSettings uiSettings;
-    private SalesStoreDBOpenHelper salesdbHelper;
     private View viewBottomSheet;
     private BottomSheetBehavior<View> behavior;
     private Marker marker;
     private Bundle result;
+
+    private SalesStoreDBOpenHelper salesdbHelper;
+    private EmergencyDrugDBOpenHelper emergencyDrugDBOpenHelper;
     private List<Marker> markerList = new ArrayList<>();
 
+    private TextView title;
+    private TextView address;
+    private TextView ex1;
+    private TextView ex2;
+
     private TextView storeName;
-    private TextView storeCallNumber;
+    private TextView storeEtc;
     private TextView storeAddr;
     private TextView storeTime;// 표시된 마커 리스트
 
@@ -86,8 +96,13 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         fragment = this;
 
-        storeName = view.findViewById(R.id.bottom_sheet_store_name);
-        storeCallNumber = view.findViewById(R.id.bottom_sheet_store_call_number);
+        title = view.findViewById(R.id.title);
+        address = view.findViewById(R.id.address);
+        ex1 = view.findViewById(R.id.ex1);
+        ex2 = view.findViewById(R.id.ex2);
+
+        storeName = view.findViewById(R.id.bottom_sheet_name);
+        storeEtc = view.findViewById(R.id.bottom_sheet_text);
         storeAddr = view.findViewById(R.id.bottom_sheet_store_address);
         storeTime = view.findViewById(R.id.bottom_sheet_store_time);
 
@@ -231,16 +246,18 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     // 마커 핀 추가 메서드
     private void addMarkers(LatLng cameraPosition) {
         salesdbHelper = new SalesStoreDBOpenHelper(getContext(), "sales_store.db", null, 1);
-        Cursor cursor = salesdbHelper.getLocations(cameraPosition);
+        emergencyDrugDBOpenHelper = new EmergencyDrugDBOpenHelper(getContext(), "emergency_drug.db", null, 1);
+        Cursor cursorSales = salesdbHelper.getLocations(cameraPosition);
+        Cursor cursorEmergency = emergencyDrugDBOpenHelper.getLocations(cameraPosition);
 
-        if(cursor.moveToFirst()) {
+        if(cursorSales.moveToFirst()) {
             do {
-                String strStoreName = cursor.getString(cursor.getColumnIndexOrThrow("store_name"));
-                String strStoreCallNumber = cursor.getString(cursor.getColumnIndexOrThrow("store_call_number"));
-                String strStoreAddr = cursor.getString(cursor.getColumnIndexOrThrow("store_addr"));
-                String strStoreTime = cursor.getString(cursor.getColumnIndexOrThrow("store_time"));
-                double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow("store_latitude"));
-                double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow("store_longitude"));
+                String strStoreName = cursorSales.getString(cursorSales.getColumnIndexOrThrow("store_name"));
+                String strStoreCallNumber = cursorSales.getString(cursorSales.getColumnIndexOrThrow("store_call_number"));
+                String strStoreAddr = cursorSales.getString(cursorSales.getColumnIndexOrThrow("store_addr"));
+                String strStoreTime = cursorSales.getString(cursorSales.getColumnIndexOrThrow("store_time"));
+                double latitude = cursorSales.getDouble(cursorSales.getColumnIndexOrThrow("store_latitude"));
+                double longitude = cursorSales.getDouble(cursorSales.getColumnIndexOrThrow("store_longitude"));
 
                 marker = new Marker();
                 marker.setPosition(new LatLng(latitude, longitude));
@@ -256,9 +273,13 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                     CameraUpdate cameraUpdate = CameraUpdate.toCameraPosition(selectedMarkerPosition).animate(CameraAnimation.Easing);
                     naverMap.moveCamera(cameraUpdate);
 
+                    title.setText("약국 명");
                     storeName.setText(strStoreName);
-                    storeCallNumber.setText(strStoreCallNumber);
+                    address.setText("주소");
                     storeAddr.setText(strStoreAddr);
+                    ex1.setText("전화번호");
+                    storeEtc.setText(strStoreCallNumber);
+                    ex2.setText("영업시간");
                     storeTime.setText(strStoreTime);
 
                     behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -266,11 +287,54 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                     return true;
                 });
                 markerList.add(marker); // 리스트에 마커 저장
-            } while (cursor.moveToNext());
+            } while (cursorSales.moveToNext());
         }
 
-        cursor.close();
+        if(cursorEmergency.moveToFirst()) {
+            do {
+                String strName = cursorEmergency.getString(cursorEmergency.getColumnIndexOrThrow("business_name"));
+                String strAddr = cursorEmergency.getString(cursorEmergency.getColumnIndexOrThrow("street_address"));
+                String strStatus = cursorEmergency.getString(cursorEmergency.getColumnIndexOrThrow("business_status"));
+                double latitude = cursorEmergency.getDouble(cursorEmergency.getColumnIndexOrThrow("ratitude"));
+                double longitude = cursorEmergency.getDouble(cursorEmergency.getColumnIndexOrThrow("longitude"));
+
+                marker = new Marker();
+                marker.setPosition(new LatLng(latitude, longitude));
+                marker.setCaptionText(strName);
+                marker.setIcon(MarkerIcons.BLACK);
+                marker.setIconTintColor(Color.BLUE);
+                marker.setCaptionRequestedWidth(200);
+                marker.setMinZoom(10);  // 너무 멀어지면 마커 제거
+                marker.setWidth(80);
+                marker.setHeight(110);
+                marker.setMap(naverMap);
+                marker.setOnClickListener(overlay -> {
+                    // 마커를 클릭할 때 해당 마커로 카메라 이동
+                    CameraPosition selectedMarkerPosition = new CameraPosition(new LatLng(latitude, longitude), 16);
+                    CameraUpdate cameraUpdate = CameraUpdate.toCameraPosition(selectedMarkerPosition).animate(CameraAnimation.Easing);
+                    naverMap.moveCamera(cameraUpdate);
+
+                    title.setText("편의점 명");
+                    storeName.setText(strName);
+                    address.setText("주소");
+                    storeAddr.setText(strAddr);
+                    ex1.setText("영업 유무");
+                    storeEtc.setText(strStatus);
+                    ex2.setText("");
+                    storeTime.setText("");
+
+                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+                    return true;
+                });
+                markerList.add(marker); // 리스트에 마커 저장
+            } while (cursorEmergency.moveToNext());
+        }
+
+        cursorSales.close();
         salesdbHelper.close();
+        cursorEmergency.close();
+        emergencyDrugDBOpenHelper.close();
     }
 
     // 마커 핀 삭제 메서드

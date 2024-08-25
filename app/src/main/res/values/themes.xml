@@ -23,6 +23,8 @@
     <!-- BottomNavigationView item 텍스트 크기 조절 -->
     <style name="TextAppearance.BottomNavigationView.Item" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:textSize">11sp</item>
+        <item name="android:itemBackground">@color/black</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Widget.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">

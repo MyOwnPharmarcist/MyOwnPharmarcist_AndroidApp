@@ -4,8 +4,11 @@ import static teamyj.dev.hrd_final_project.data_system.DataManager.BUFFER_SIZE;
 import static teamyj.dev.hrd_final_project.data_system.DataManager.FILE_PATH;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.naver.maps.geometry.LatLng;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -73,5 +76,15 @@ public class EmergencyDrugDBOpenHelper extends SQLiteOpenHelper {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // 위도, 경도 값 가져오는 메서드
+    public Cursor getLocations(LatLng cameraPosition) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_EMERGENCY_DRUG +
+                " WHERE " + EMERGENCY_LATITUDE + " > " + (cameraPosition.latitude - 0.015) + " and "
+                + EMERGENCY_LATITUDE + " < " + (cameraPosition.latitude + 0.015) + " and "
+                + EMERGENCY_LONGITUDE + " > " + (cameraPosition.longitude - 0.015) + " and "
+                + EMERGENCY_LONGITUDE + " < " + (cameraPosition.longitude + 0.015), null);
     }
 }

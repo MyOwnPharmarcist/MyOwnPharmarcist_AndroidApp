@@ -28,29 +28,51 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="13dp"
         android:layout_marginTop="20dp"
         >
 
         <!-- persistent bottom sheet의 Content -->
+
+        <!-- 상점 이름 -->
         <TextView
-            android:id="@+id/bottom_sheet_store_name"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="bottom_sheet_store_name"
+            android:text="Title"
+            android:textSize="23sp"
+            android:textColor="#848484"
+            android:fontFamily="@font/nanum_gothic_bold"
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_store_call_number"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_name"
             />
 
         <TextView
-            android:id="@+id/bottom_sheet_store_call_number"
+            android:id="@+id/bottom_sheet_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="bottom_sheet_store_call_number"
+            android:text="상점의 이름이 들어갑니다."
+            android:textSize="13sp"
+            android:fontFamily="@font/nanum_gothic"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_store_name"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/address"
+            />
+
+        <!-- 상점 주소 -->
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:textSize="23sp"
+            android:textColor="#848484"
+            android:fontFamily="@font/nanum_gothic_bold"
+            android:layout_marginTop="25dp"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_name"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_store_address"
             />
@@ -59,9 +81,54 @@
             android:id="@+id/bottom_sheet_store_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="bottom_sheet_store_address"
+            android:text="상점의 주소가 들어갑니다."
+            android:textSize="13sp"
+            android:fontFamily="@font/nanum_gothic"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_store_call_number"
+            app:layout_constraintTop_toBottomOf="@+id/address"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ex1"
+            />
+
+        <!-- 상점 연락처 및 영업 유무 -->
+        <TextView
+            android:id="@+id/ex1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ex1"
+            android:textSize="23sp"
+            android:textColor="#848484"
+            android:fontFamily="@font/nanum_gothic_bold"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_store_address"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_text"
+            />
+
+        <TextView
+            android:id="@+id/bottom_sheet_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="연락처 및 영업 유무가 들어갑니다."
+            android:textSize="13sp"
+            android:fontFamily="@font/nanum_gothic"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/ex1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ex2"
+            />
+
+        <!-- 상점 영업 시간 -->
+        <TextView
+            android:id="@+id/ex2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ex2"
+            android:textSize="23sp"
+            android:textColor="#848484"
+            android:fontFamily="@font/nanum_gothic_bold"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_text"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_store_time"
             />
@@ -70,9 +137,11 @@
             android:id="@+id/bottom_sheet_store_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="bottom_sheet_store_time"
+            android:text="상점의 영업시간이 들어갑니다."
+            android:textSize="13sp"
+            android:fontFamily="@font/nanum_gothic"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_store_address"
+            app:layout_constraintTop_toBottomOf="@+id/ex2"
             app:layout_constraintLeft_toLeftOf="parent"
             />
 
