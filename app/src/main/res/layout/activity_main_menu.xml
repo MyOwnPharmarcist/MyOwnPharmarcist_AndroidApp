@@ -21,10 +21,12 @@
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+
         android:id="@+id/menu_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:theme="@style/Widget.BottomNavigationView"
         app:labelVisibilityMode="labeled"
         app:itemRippleColor="@null"
         app:layout_constraintBottom_toBottomOf="parent"

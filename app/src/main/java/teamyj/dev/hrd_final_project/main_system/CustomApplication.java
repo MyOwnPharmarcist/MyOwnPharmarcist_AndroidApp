@@ -2,6 +2,8 @@ package teamyj.dev.hrd_final_project.main_system;
 
 import android.app.Application;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,5 +32,8 @@ public class CustomApplication extends Application {
 
         DataManager dataManager = DataManager.getInstance();
         dataManager.createData(getAssets(), this);
+
+        // 다크모드 비활성화
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 }

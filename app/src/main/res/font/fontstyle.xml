@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/line_seed_kr_bd"
+        tools:ignore="UnusedAttribute" />
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/line_seed_kr_rg"
+        tools:ignore="UnusedAttribute" />
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/line_seed_kr_th"
+        tools:ignore="UnusedAttribute" />
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/jalnan_2_ttf"
+        tools:ignore="UnusedAttribute" />
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/bmjua_ttf"
+        tools:ignore="UnusedAttribute" />
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/nanum_gothic"
+        tools:ignore="UnusedAttribute" />
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/nanum_gothic_bold"
+        tools:ignore="UnusedAttribute" />
+
+
+</font-family>

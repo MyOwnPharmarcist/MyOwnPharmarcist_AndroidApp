@@ -3,7 +3,7 @@
     <style name="Theme.Hrd_final_project" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@android:color/transparent</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -19,4 +19,45 @@
         <item name="windowActionBar">false</item>
 
     </style>
+
+    <!-- BottomNavigationView item 텍스트 크기 조절 -->
+    <style name="TextAppearance.BottomNavigationView.Item" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="Widget.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="fontFamily">@font/nanum_gothic</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="itemTextAppearance">@style/TextAppearance.BottomNavigationView.Item</item>
+    </style>
+
+    <!-- BottomSheet의 스타일을 정의 -->
+    <style name="ModalBottomSheet" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="android:background">@drawable/round_background</item>
+    </style>
+
+    <!-- BottomSheetDialog의 스타일을 정의 -->
+    <style name="ModalBottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
+    </style>
+
+    <!-- 앱의 전체 테마에 BottomSheetDialog 테마를 설정 -->
+    <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="bottomSheetDialogTheme">@style/ModalBottomSheetDialog</item>
+        <item name="colorControlNormal">@color/handle_color</item> <!-- 핸들의 색상 -->
+    </style>
+
+    <!-- BottomSheetDragHandleView의 스타일 정의 -->
+    <style name="Widget.BottomSheetDragHandleView" parent="Widget.Material3.BottomSheet.DragHandle">
+        <item name="android:layout_width">40dp</item> <!-- 핸들의 너비 -->
+        <item name="android:layout_height">4dp</item> <!-- 핸들의 높이 -->
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.BottomSheet.DragHandle</item> <!-- 핸들의 모양 -->
+    </style>
+
+    <!-- 핸들의 ShapeAppearance 정의 -->
+    <style name="ShapeAppearance.BottomSheet.DragHandle" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">2dp</item>
+    </style>
+
 </resources>

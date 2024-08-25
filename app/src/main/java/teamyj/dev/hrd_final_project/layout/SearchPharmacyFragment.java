@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,10 +60,15 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     private UiSettings uiSettings;
     private SalesStoreDBOpenHelper salesdbHelper;
     private View viewBottomSheet;
-    private BottomSheetBehavior behavior;
+    private BottomSheetBehavior<View> behavior;
     private Marker marker;
     private Bundle result;
-    private List<Marker> markerList = new ArrayList<>(); // 표시된 마커 리스트
+    private List<Marker> markerList = new ArrayList<>();
+
+    private TextView storeName;
+    private TextView storeCallNumber;
+    private TextView storeAddr;
+    private TextView storeTime;// 표시된 마커 리스트
 
     @Nullable
     @Override
@@ -80,7 +86,12 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         fragment = this;
 
-        // 위치 소스 초기화
+        storeName = view.findViewById(R.id.bottom_sheet_store_name);
+        storeCallNumber = view.findViewById(R.id.bottom_sheet_store_call_number);
+        storeAddr = view.findViewById(R.id.bottom_sheet_store_address);
+        storeTime = view.findViewById(R.id.bottom_sheet_store_time);
+
+        // 위치 소스 초기화 (내 위치 버튼 동작을 위해)
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
         return view;
@@ -126,9 +137,12 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
         // 네이버 지도 UI 세팅 (네이버 로고를 가리면 안됨)
         this.uiSettings = naverMap.getUiSettings();
-        this.uiSettings.setCompassEnabled(true);            // 나침반
-        this.uiSettings.setLocationButtonEnabled(true);     // 내 위치
+        this.uiSettings.setCompassEnabled(true);           // 나침반
+        this.uiSettings.setLocationButtonEnabled(true);    // 내 위치
         this.uiSettings.setZoomControlEnabled(false);       // 줌
+        this.uiSettings.setIndoorLevelPickerEnabled(true); // 실내지도 층 피커
+//        this.uiSettings.setLogoGravity(Gravity.END|Gravity.BOTTOM); // 네이버 로고 Gravity
+//        this.uiSettings.setLogoMargin(10,10,10,10); // 네이버 로고 Margin
 
         // 지도를 클릭 시
         this.naverMap.setOnMapClickListener(new NaverMap.OnMapClickListener() {
@@ -202,10 +216,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 adjustMapUI(navigationBarHeight, statusBarHeight);
             }
         });
-
-//        ComposeView composeView = view.findViewById(R.id.compose_view);
-//        // ComposeHelper에 정의된 Kotlin 확장 함수를 호출합니다.
-//        ComposeHelperKt.setBottomSheetContent(this, composeView);
     }
 
     private void adjustMapUI(int navigationBarHeight, int statusBarHeight) {
@@ -225,16 +235,16 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
         if(cursor.moveToFirst()) {
             do {
-                String storeName = cursor.getString(cursor.getColumnIndexOrThrow("store_name"));
-                String storeCallNumber = cursor.getString(cursor.getColumnIndexOrThrow("store_call_number"));
-                String storeAddr = cursor.getString(cursor.getColumnIndexOrThrow("store_addr"));
-                String storeTime = cursor.getString(cursor.getColumnIndexOrThrow("store_time"));
+                String strStoreName = cursor.getString(cursor.getColumnIndexOrThrow("store_name"));
+                String strStoreCallNumber = cursor.getString(cursor.getColumnIndexOrThrow("store_call_number"));
+                String strStoreAddr = cursor.getString(cursor.getColumnIndexOrThrow("store_addr"));
+                String strStoreTime = cursor.getString(cursor.getColumnIndexOrThrow("store_time"));
                 double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow("store_latitude"));
                 double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow("store_longitude"));
 
                 marker = new Marker();
                 marker.setPosition(new LatLng(latitude, longitude));
-                marker.setCaptionText(storeName);
+                marker.setCaptionText(strStoreName);
                 marker.setCaptionRequestedWidth(200);
                 marker.setMinZoom(10);  // 너무 멀어지면 마커 제거
                 marker.setWidth(80);
@@ -246,17 +256,12 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                     CameraUpdate cameraUpdate = CameraUpdate.toCameraPosition(selectedMarkerPosition).animate(CameraAnimation.Easing);
                     naverMap.moveCamera(cameraUpdate);
 
-                    // 마커를 클릭할 때 정보 창을 엶
-                    new BottomSheetFragment(behavior, fragment);
-                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    storeName.setText(strStoreName);
+                    storeCallNumber.setText(strStoreCallNumber);
+                    storeAddr.setText(strStoreAddr);
+                    storeTime.setText(strStoreTime);
 
-                    // 클릭된 마커의 정보를 전달
-                    result = new Bundle();
-                    result.putString("store_name", storeName);
-                    result.putString("store_call_number", storeCallNumber);
-                    result.putString("store_address", storeAddr);
-                    result.putString("store_time", storeTime);
-                    getParentFragmentManager().setFragmentResult("storeKey", result);
+                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
                     return true;
                 });
@@ -280,6 +285,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     public void onStart() {
         Log.i("on", "onStart");
         super.onStart();
+        behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         mapView.onStart();
     }
 
@@ -308,6 +314,13 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     public void onDestroyView() {
         Log.i("on", "onDestroyView");
         super.onDestroyView();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.i("on", "onDestroyView");
+        super.onDestroy();
         mapView.onDestroy();
     }
 

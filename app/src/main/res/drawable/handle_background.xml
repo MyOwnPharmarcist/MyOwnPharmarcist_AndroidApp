@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/handle_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/handle_color" /> <!-- Handle 색상 -->
+    <corners android:radius="2dp" /> <!-- 둥근 모서리 -->
+</shape>

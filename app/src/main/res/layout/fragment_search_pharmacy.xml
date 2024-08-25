@@ -33,45 +33,16 @@
                 tools:layout_editor_absoluteY="0dp"
                 />
 
-            <!-- Persistent Bottom Sheet -->
+            <!-- Bottom Sheet -->
             <include
                 android:id="@+id/viewBottomSheet"
                 layout="@layout/fragment_bottom_sheet"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
                 />
 
-<!--            &lt;!&ndash; Persistent Bottom Sheet &ndash;&gt;-->
-<!--            <include-->
-<!--                android:id="@+id/compose_view"-->
-<!--                layout="@layout/fragment_bottom_sheet"-->
-<!--                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"-->
-<!--                />-->
 
-<!--            &lt;!&ndash; ComposeView를 배치할 레이아웃 &ndash;&gt;-->
-<!--            <androidx.compose.ui.platform.ComposeView-->
-<!--                android:id="@+id/compose_view"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent" />-->
+
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-<!--        <Button-->
-<!--            android:id="@+id/btn_search_nearby"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/searching_map_button"-->
-<!--            android:text="현 지도에서 검색"-->
-<!--            android:textSize="10sp"-->
-<!--            android:paddingStart="30dp"-->
-<!--            android:paddingEnd="30dp"-->
-<!--            android:layout_margin="16dp"-->
-<!--            android:enabled="true"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintLeft_toLeftOf="parent"-->
-<!--            app:layout_constraintRight_toRightOf="parent"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintVertical_bias="0.08"-->
-<!--            />-->
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
