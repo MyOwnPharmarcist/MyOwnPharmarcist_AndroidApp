@@ -9,7 +9,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import teamyj.dev.hrd_final_project.Interface.ApplicationGettable;
-import teamyj.dev.hrd_final_project.Interface.FileLoadable;
 import teamyj.dev.hrd_final_project.data_system.DataManager;
 
 public class CustomApplication extends Application implements ApplicationGettable {
@@ -21,7 +20,6 @@ public class CustomApplication extends Application implements ApplicationGettabl
 
     /** --- Fields  --- */
     private ExecutorService excutor = Executors.newFixedThreadPool(16);
-    private FileLoadable dataManager;
 
     /** --- Getter and Setter   --- */
     @Override
@@ -40,8 +38,7 @@ public class CustomApplication extends Application implements ApplicationGettabl
         super.onCreate();
         instance = CustomApplication.this;
 
-        dataManager = new DataManager();
-        dataManager.loadFile(this);
+        new DataManager().loadFile(this);
 
         // 다크모드 비활성화
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
