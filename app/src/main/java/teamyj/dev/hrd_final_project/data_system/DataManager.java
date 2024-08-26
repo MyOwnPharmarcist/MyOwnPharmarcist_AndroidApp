@@ -12,7 +12,6 @@ import static teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper.SA
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import java.io.BufferedReader;
 import java.util.concurrent.ExecutorService;
 
 import teamyj.dev.hrd_final_project.Interface.ApplicationGettable;
@@ -23,9 +22,7 @@ import teamyj.dev.hrd_final_project.Interface.FileLoadable;
 public class DataManager implements FileLoadable {
 
     /** ---  Fields  --- */
-    private BufferedReader bufferedReader;
     private AssetManager assetManager;
-    private ApplicationGettable applicaion;
 
     private long time;
 
@@ -34,10 +31,6 @@ public class DataManager implements FileLoadable {
     public static final int BUFFER_SIZE = 1024;
 
     /** ---  Methods --- */
-    public DataManager(ApplicationGettable application) {
-        this.applicaion = application;
-    }
-
     @Override
     public void loadFile(Context context) {
         new SalesStoreDBOpenHelper(context, SALES_STORE_DB_NAME, null, SALES_STORE_DB_VERSION).loadDB();
@@ -46,9 +39,9 @@ public class DataManager implements FileLoadable {
         new EmergencyDrugDBOpenHelper(context, EMERGENCY_DRUG_DB_NAME, null, EMERGENCY_DRUG_DB_VERSION).loadDB();
     }
 
-    public void createData(AssetManager assetManager, Context context) {
-        this.assetManager = assetManager;
-        ExecutorService excutor = applicaion.getExecutor();
+    public void createData(ApplicationGettable application, Context context) {
+        this.assetManager = application.getAssetManager();
+        ExecutorService excutor = application.getExecutor();
 
         DBWritable sales_store = new SalesStoreDBOpenHelper(context, SALES_STORE_DB_NAME, null, SALES_STORE_DB_VERSION);
         excutor.submit(() -> {

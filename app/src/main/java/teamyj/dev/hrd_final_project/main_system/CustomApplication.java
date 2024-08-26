@@ -40,7 +40,7 @@ public class CustomApplication extends Application implements ApplicationGettabl
         super.onCreate();
         instance = CustomApplication.this;
 
-        dataManager = new DataManager(this);
+        dataManager = new DataManager();
         dataManager.loadFile(this);
 
         // 다크모드 비활성화
