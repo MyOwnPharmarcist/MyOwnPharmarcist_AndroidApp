@@ -61,6 +61,7 @@ public class AlarmFragment extends Fragment {
         return view;
     }
 
+    // AlarmFragment.java
     private void stopAlarm() {
         if (ringtone != null && ringtone.isPlaying()) {
             ringtone.stop();
@@ -69,7 +70,7 @@ public class AlarmFragment extends Fragment {
             vibrator.cancel();
         }
 
-        // TimerFragment로 돌아가기 위해 액티비티를 종료
+        // Activity를 종료합니다.
         if (getActivity() != null) {
             getActivity().finish();
         }

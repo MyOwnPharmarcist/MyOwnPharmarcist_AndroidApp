@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -125,6 +123,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    // TimerFragment.java
     private void startCountDownTimer() {
         countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 1000) {
             @Override
@@ -141,10 +140,16 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
                 imageViewStartStop.setImageResource(R.drawable.ic_baseline_play_circle_24);
                 editTextTime.setEnabled(true);
                 timerStatus = TimerStatus.STOPPED;
+
+                // 알람 시작
                 startAlarm();
+
+                // 알람 화면으로 전환
+                Intent intent = new Intent(getContext(), AlarmActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         }.start();
-        countDownTimer.start();
     }
 
     private void stopCountDownTimer() {
@@ -165,20 +170,18 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
                 TimeUnit.MILLISECONDS.toSeconds(milliSeconds) % TimeUnit.MINUTES.toSeconds(1));
     }
 
+    @SuppressLint("ScheduleExactAlarm")
     private void startAlarm() {
-        // 알람 시간 설정
-        long triggerAtMillis = System.currentTimeMillis() + timeCountInMilliSeconds;
-
         Context context = getContext();
         if (context != null) {
             Intent intent = new Intent(context, AlarmReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
             if (alarmManager != null) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);
+                alarmManager.cancel(pendingIntent); // 기존 알람 취소
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeCountInMilliSeconds, pendingIntent);
             }
         }
-        Log.d("TimerFragment", "Alarm set for: " + triggerAtMillis);
     }
 }
