@@ -64,9 +64,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectListener());
-
-        dataManager = DataManager.getInstance();
-        dataManager.initData(getAssets(), this);
     }
 
     // 권한에 따라 앱 실행 가능 유무를 정하는 메서드

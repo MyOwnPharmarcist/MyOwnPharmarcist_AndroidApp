@@ -12,15 +12,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class DrugListCreate {
+import teamyj.dev.hrd_final_project.Interface.DBCreatable;
+import teamyj.dev.hrd_final_project.Interface.DBWritable;
+
+public class DrugListCreate implements DBCreatable {
     private static final String DRUG_PRODUCTS_FILE = "drug_list/drug_list_final.csv";
-    private DrugListDBOpenHelper drugListDBOpenHelper;
+    private DBWritable dbWritable;
     private BufferedReader bufferedReader;
-    private StringBuilder stringBuilder = new StringBuilder();
 
     /** --- Drug List Create --- */
-    public void getDrugList(AssetManager assetManager, DrugListDBOpenHelper drugListDBOpenHelper) {
-        this.drugListDBOpenHelper = drugListDBOpenHelper;
+    @Override
+    public void create(AssetManager assetManager, DBWritable dbWritable) {
+        this.dbWritable = dbWritable;
         long time = System.currentTimeMillis();
 
         try {
@@ -54,7 +57,7 @@ public class DrugListCreate {
     }
 
     private void addDrugListData(String[] data)  {
-        SQLiteDatabase db = drugListDBOpenHelper.getWritableDatabase();
+        SQLiteDatabase db = dbWritable.getWritableDatabase();
         ContentValues values = new ContentValues();
         for(int i = 0; i < 3; i++) {
             values.put(DRUG_LIST_ELEMENTS[i], data[i]);
@@ -63,6 +66,6 @@ public class DrugListCreate {
             values.put(DRUG_LIST_ELEMENTS[i-2], data[i]);
         }
         db.insertWithOnConflict(TABLE_DRUG_LIST, null, values, SQLiteDatabase.CONFLICT_IGNORE);
-        Log.i("drug", data[0]);
+//        Log.i("drug", data[0]);
     }
 }

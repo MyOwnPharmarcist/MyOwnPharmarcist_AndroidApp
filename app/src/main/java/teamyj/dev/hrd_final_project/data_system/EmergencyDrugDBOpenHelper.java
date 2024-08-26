@@ -15,7 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class EmergencyDrugDBOpenHelper extends SQLiteOpenHelper {
+import teamyj.dev.hrd_final_project.Interface.DBLoadable;
+import teamyj.dev.hrd_final_project.Interface.DBWritable;
+
+public class EmergencyDrugDBOpenHelper extends SQLiteOpenHelper implements DBWritable, DBLoadable {
     public static final String EMERGENCY_DRUG_DB_NAME = "emergency_drug.db";
     public static final int EMERGENCY_DRUG_DB_VERSION = 1;
 
@@ -52,6 +55,7 @@ public class EmergencyDrugDBOpenHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    @Override
     public void loadDB() {
         context.deleteDatabase(EMERGENCY_DRUG_DB_NAME);
         this.getReadableDatabase();

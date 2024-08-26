@@ -12,7 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class DrugListDBOpenHelper extends SQLiteOpenHelper {
+import teamyj.dev.hrd_final_project.Interface.DBLoadable;
+import teamyj.dev.hrd_final_project.Interface.DBWritable;
+
+public class DrugListDBOpenHelper extends SQLiteOpenHelper implements DBWritable, DBLoadable {
     public static final String DRUG_LIST_DB_NAME = "drug_list.db";
     public static final int DRUG_LIST_DB_VERSION = 1;
 
@@ -66,6 +69,7 @@ public class DrugListDBOpenHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    @Override
     public void loadDB() {
         context.deleteDatabase(DRUG_LIST_DB_NAME);
         this.getReadableDatabase();

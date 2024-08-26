@@ -15,20 +15,17 @@ import android.content.res.AssetManager;
 import java.io.BufferedReader;
 import java.util.concurrent.ExecutorService;
 
-import teamyj.dev.hrd_final_project.main_system.CustomApplication;
+import teamyj.dev.hrd_final_project.Interface.ApplicationGettable;
+import teamyj.dev.hrd_final_project.Interface.DBWritable;
+import teamyj.dev.hrd_final_project.Interface.FileLoadable;
 
 
-public class DataManager {
-    /** ---  싱글톤 패턴  --- */
-    private static final DataManager instance = new DataManager();
-    private DataManager() {}
-    public static DataManager getInstance() {
-        return instance;
-    }
+public class DataManager implements FileLoadable {
 
     /** ---  Fields  --- */
     private BufferedReader bufferedReader;
     private AssetManager assetManager;
+    private ApplicationGettable applicaion;
 
     private long time;
 
@@ -36,52 +33,41 @@ public class DataManager {
     public static final String FILE_PATH = "/data/data/teamyj.dev.hrd_final_project/databases/";
     public static final int BUFFER_SIZE = 1024;
 
-    SalesStoreDBOpenHelper salesStoreDBOpenHelper;
-    DrugProductsDBOpenHelper drugProductsDBOpenHelper;
-    DrugListDBOpenHelper drugListDBOpenHelper;
-    EmergencyDrugDBOpenHelper emergencyDrugDBOpenHelper;
-
     /** ---  Methods --- */
-    public void initData(AssetManager assetManager, Context context) {
-        this.assetManager = assetManager;
+    public DataManager(ApplicationGettable application) {
+        this.applicaion = application;
+    }
 
-        salesStoreDBOpenHelper = new SalesStoreDBOpenHelper(context, SALES_STORE_DB_NAME, null, SALES_STORE_DB_VERSION);
-        salesStoreDBOpenHelper.loadDB();
-        drugProductsDBOpenHelper = new DrugProductsDBOpenHelper(context, DRUG_PRODUCTS_DB_NAME, null, DRUG_PRODUCTS_DB_VERSION);
-        drugProductsDBOpenHelper.loadDB();
-        drugListDBOpenHelper = new DrugListDBOpenHelper(context, DRUG_LIST_DB_NAME, null, DRUG_LIST_DB_VERSION);
-        drugListDBOpenHelper.loadDB();
-        emergencyDrugDBOpenHelper = new EmergencyDrugDBOpenHelper(context, EMERGENCY_DRUG_DB_NAME, null, EMERGENCY_DRUG_DB_VERSION);
-        emergencyDrugDBOpenHelper.loadDB();
+    @Override
+    public void loadFile(Context context) {
+        new SalesStoreDBOpenHelper(context, SALES_STORE_DB_NAME, null, SALES_STORE_DB_VERSION).loadDB();
+        new DrugProductsDBOpenHelper(context, DRUG_PRODUCTS_DB_NAME, null, DRUG_PRODUCTS_DB_VERSION).loadDB();
+        new DrugListDBOpenHelper(context, DRUG_LIST_DB_NAME, null, DRUG_LIST_DB_VERSION).loadDB();
+        new EmergencyDrugDBOpenHelper(context, EMERGENCY_DRUG_DB_NAME, null, EMERGENCY_DRUG_DB_VERSION).loadDB();
     }
 
     public void createData(AssetManager assetManager, Context context) {
         this.assetManager = assetManager;
-        CustomApplication application = CustomApplication.getInstance();
-        ExecutorService excutor = application.getExcutor();
+        ExecutorService excutor = applicaion.getExecutor();
 
-//        salesStoreDBOpenHelper = new SalesStoreDBOpenHelper(context, SALES_STORE_DB_NAME, null, SALES_STORE_DB_VERSION);
-//        excutor.submit(() -> {
-//            SalesStoreCreate salesStoreCreate = new SalesStoreCreate();
-//            salesStoreCreate.getSalesStores(assetManager, salesStoreDBOpenHelper);
-//        });
+        DBWritable sales_store = new SalesStoreDBOpenHelper(context, SALES_STORE_DB_NAME, null, SALES_STORE_DB_VERSION);
+        excutor.submit(() -> {
+            new SalesStoreCreate().create(assetManager, sales_store);;
+        });
 
-//        drugProductsDBOpenHelper = new DrugProductsDBOpenHelper(context, DRUG_PRODUCTS_DB_NAME, null, DRUG_PRODUCTS_DB_VERSION);
-//        excutor.submit(() -> {
-//            DrugProductsCreate drugProductsCreate = new DrugProductsCreate();
-//            drugProductsCreate.getDrugProducts(assetManager, drugProductsDBOpenHelper);
-//        });
+        DBWritable drug_products = new DrugProductsDBOpenHelper(context, DRUG_PRODUCTS_DB_NAME, null, DRUG_PRODUCTS_DB_VERSION);
+        excutor.submit(() -> {
+            new DrugProductsCreate().create(assetManager, drug_products);
+        });
 
-//        drugListDBOpenHelper = new DrugListDBOpenHelper(context, DRUG_LIST_DB_NAME, null, DRUG_LIST_DB_VERSION);
-//        excutor.submit(() -> {
-//            DrugListCreate drugListCreate = new DrugListCreate();
-//            drugListCreate.getDrugList(assetManager, drugListDBOpenHelper);
-//        });
+        DBWritable drug_list = new DrugListDBOpenHelper(context, DRUG_LIST_DB_NAME, null, DRUG_LIST_DB_VERSION);
+        excutor.submit(() -> {
+            new DrugListCreate().create(assetManager, drug_list);
+        });
 
-//        emergencyDrugDBOpenHelper = new EmergencyDrugDBOpenHelper(context, EMERGENCY_DRUG_DB_NAME, null, EMERGENCY_DRUG_DB_VERSION);
-//        excutor.submit(() -> {
-//            EmergencyDrugCreate emergencyDrugCreate = new EmergencyDrugCreate();
-//            emergencyDrugCreate.getEmergencyDrug(assetManager, emergencyDrugDBOpenHelper);
-//        });
+        DBWritable emergency_drug = new EmergencyDrugDBOpenHelper(context, EMERGENCY_DRUG_DB_NAME, null, EMERGENCY_DRUG_DB_VERSION);
+        excutor.submit(() -> {
+            new EmergencyDrugCreate().create(assetManager, emergency_drug);;
+        });
     }
 }

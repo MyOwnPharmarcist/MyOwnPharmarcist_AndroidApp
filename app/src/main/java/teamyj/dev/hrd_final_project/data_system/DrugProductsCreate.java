@@ -20,15 +20,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class DrugProductsCreate {
+import teamyj.dev.hrd_final_project.Interface.DBCreatable;
+import teamyj.dev.hrd_final_project.Interface.DBWritable;
+
+public class DrugProductsCreate implements DBCreatable {
     private static final String DRUG_PRODUCTS_FILE = "drug_products/drug_product_final.csv";
-    private DrugProductsDBOpenHelper drugProductsDBOpenHelper;
+    private DBWritable dbWritable;
     private BufferedReader bufferedReader;
     private StringBuilder stringBuilder = new StringBuilder();
 
     /** --- Drug Products Create --- */
-    public void getDrugProducts(AssetManager assetManager, DrugProductsDBOpenHelper drugProductsDBOpenHelper) {
-        this.drugProductsDBOpenHelper = drugProductsDBOpenHelper;
+    @Override
+    public void create(AssetManager assetManager, DBWritable dbWritable) {
+        this.dbWritable = dbWritable;
         long time = System.currentTimeMillis();
 
         try {
@@ -83,9 +87,10 @@ public class DrugProductsCreate {
                 try {
                     bufferedReader.close();
                 } catch (IOException e) {
-                    Log.i("Error","BufferedReader 생성 실패");
+                    Log.i("Error", "BufferedReader 생성 실패");
                 }
             }
+            Log.i("drug_products_create", Long.sum(System.currentTimeMillis(), -time) + "ms");
         }
     }
 
@@ -106,7 +111,7 @@ public class DrugProductsCreate {
     }
 
     private void addDrugProductsData(String[] data, String ud)  {
-        SQLiteDatabase db = drugProductsDBOpenHelper.getWritableDatabase();
+        SQLiteDatabase db = dbWritable.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ITEM_NAME, data[1]);
         values.put(ENTP_NAME, data[3]);
@@ -118,6 +123,6 @@ public class DrugProductsCreate {
         values.put(EE_DOC_DATA, data[15]);
         values.put(UD_DOC_DATA, ud);
         db.insertWithOnConflict(TABLE_DRUG_PRODUCTS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
-        Log.i("drug", data[1]);
+//        Log.i("drug", data[1]);
     }
 }

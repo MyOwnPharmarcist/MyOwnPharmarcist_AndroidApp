@@ -127,15 +127,19 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
             locationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
-                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng);
-                    naverMap.moveCamera(cameraUpdate);
+                    try {
+                        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng);
+                        naverMap.moveCamera(cameraUpdate);
 
-                    LocationOverlay locationOverlay = naverMap.getLocationOverlay();
-                    locationOverlay.setPosition(latLng);
-                    locationOverlay.setVisible(true);
+                        LocationOverlay locationOverlay = naverMap.getLocationOverlay();
+                        locationOverlay.setPosition(latLng);
+                        locationOverlay.setVisible(true);
 
-                    addMarkers(latLng); // 초기 화면 마커 표시
+                        addMarkers(latLng); // 초기 화면 마커 표시
+                    } catch (NullPointerException e) {
+                        onMapReady(naverMap);
+                    }
                 }
             });
         }

@@ -18,14 +18,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SalesStoreCreate {
+import teamyj.dev.hrd_final_project.Interface.DBCreatable;
+import teamyj.dev.hrd_final_project.Interface.DBWritable;
+
+public class SalesStoreCreate implements DBCreatable {
     private static final String SALES_STORE_FILE = "sales_store/drug_stores_csv_final.csv";
-    private SalesStoreDBOpenHelper salesStoreDBOpenHelper;
+    private DBWritable dbWritable;
     private BufferedReader bufferedReader;
 
     /** --- Sales Store Create --- */
-    public void getSalesStores(AssetManager assetManager, SalesStoreDBOpenHelper salesStoreDBOpenHelper) {
-        this.salesStoreDBOpenHelper = salesStoreDBOpenHelper;
+    @Override
+    public void create(AssetManager assetManager, DBWritable dbWritable) {
+        this.dbWritable = dbWritable;
         long time = System.currentTimeMillis();
 
         try {
@@ -43,10 +47,9 @@ public class SalesStoreCreate {
                 } catch (IOException e) {
                     Log.i("Error", "BufferedReader 생성 실패");
                 }
+                Log.i("drug_list_create", Long.sum(System.currentTimeMillis(), -time) + "ms");
             }
         }
-
-        Log.i("sales_store", String.valueOf(Long.sum(System.currentTimeMillis(), -time)) + "ms 소요");
     }
 
     private void processingSalesStoreData(String store_info) {
@@ -90,7 +93,7 @@ public class SalesStoreCreate {
     // 영업 시작, 종료 시간을 문자열로 정리
     // ex) 1800, 900 -> 월요일: 09:00 ~ 18:00
     private void addSalesStoreData(String[] data, String addr, String name) {
-        SQLiteDatabase db = salesStoreDBOpenHelper.getWritableDatabase();
+        SQLiteDatabase db = dbWritable.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(STORE_ID, data[19]);
         values.put(STORE_NAME, name);
@@ -100,6 +103,7 @@ public class SalesStoreCreate {
         values.put(STORE_LATITUDE, data[data.length - 2]);
         values.put(STORE_LONGITUDE, data[data.length - 1]);
         db.insertWithOnConflict(TABLE_SALES_STORE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+//        Log.i("sales_store", name);
     }
 
     private String organizeOpenCloseTime(String[] data) {
@@ -142,6 +146,5 @@ public class SalesStoreCreate {
 
         return stringBuilder.toString();
     }
-
     /** --- Sales Store Create End --- */
 }

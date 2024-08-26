@@ -15,7 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class SalesStoreDBOpenHelper extends SQLiteOpenHelper {
+import teamyj.dev.hrd_final_project.Interface.DBLoadable;
+import teamyj.dev.hrd_final_project.Interface.DBWritable;
+
+public class SalesStoreDBOpenHelper extends SQLiteOpenHelper implements DBWritable, DBLoadable {
     public static final String SALES_STORE_DB_NAME = "sales_store.db";
     public static final int SALES_STORE_DB_VERSION = 1;
 
@@ -56,6 +59,7 @@ public class SalesStoreDBOpenHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    @Override
     public void loadDB() {
         context.deleteDatabase(SALES_STORE_DB_NAME);
         this.getReadableDatabase();
@@ -101,5 +105,4 @@ public class SalesStoreDBOpenHelper extends SQLiteOpenHelper {
                 + STORE_LONGITUDE + " > " + (cameraPosition.longitude - 0.015) + " and "
                 + STORE_LONGITUDE + " < " + (cameraPosition.longitude + 0.015), null);
     }
-
 }
