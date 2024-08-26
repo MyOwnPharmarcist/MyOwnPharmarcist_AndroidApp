@@ -4,6 +4,7 @@ import static teamyj.dev.hrd_final_project.data_system.DataManager.BUFFER_SIZE;
 import static teamyj.dev.hrd_final_project.data_system.DataManager.FILE_PATH;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -14,8 +15,9 @@ import java.io.OutputStream;
 
 import teamyj.dev.hrd_final_project.Interface.DBLoadable;
 import teamyj.dev.hrd_final_project.Interface.DBWritable;
+import teamyj.dev.hrd_final_project.Interface.ListDataGettable;
 
-public class DrugListDBOpenHelper extends SQLiteOpenHelper implements DBWritable, DBLoadable {
+public class DrugListDBOpenHelper extends SQLiteOpenHelper implements DBWritable, DBLoadable, ListDataGettable {
     public static final String DRUG_LIST_DB_NAME = "drug_list.db";
     public static final int DRUG_LIST_DB_VERSION = 1;
 
@@ -46,8 +48,8 @@ public class DrugListDBOpenHelper extends SQLiteOpenHelper implements DBWritable
 
     private Context context;
 
-    public DrugListDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version){
-        super(context, name, factory, version);
+    public DrugListDBOpenHelper(Context context){
+        super(context, DRUG_LIST_DB_NAME, null, DRUG_LIST_DB_VERSION);
         this.context = context;
     }
 
@@ -94,5 +96,11 @@ public class DrugListDBOpenHelper extends SQLiteOpenHelper implements DBWritable
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Cursor searchDrugList(String condition) {
+
+        return null;
     }
 }

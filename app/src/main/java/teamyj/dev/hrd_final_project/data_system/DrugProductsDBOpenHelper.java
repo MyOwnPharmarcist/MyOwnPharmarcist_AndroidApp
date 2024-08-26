@@ -8,8 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,8 +15,9 @@ import java.io.OutputStream;
 
 import teamyj.dev.hrd_final_project.Interface.DBLoadable;
 import teamyj.dev.hrd_final_project.Interface.DBWritable;
+import teamyj.dev.hrd_final_project.Interface.DetailDataGettable;
 
-public class DrugProductsDBOpenHelper extends SQLiteOpenHelper implements DBWritable, DBLoadable {
+public class DrugProductsDBOpenHelper extends SQLiteOpenHelper implements DBWritable, DBLoadable, DetailDataGettable {
     public static final String DRUG_PRODUCTS_DB_NAME = "drug_products.db";
     public static final int DRUG_PRODUCTS_DB_VERSION = 1;
 
@@ -36,8 +35,8 @@ public class DrugProductsDBOpenHelper extends SQLiteOpenHelper implements DBWrit
 
     private Context context;
 
-    public DrugProductsDBOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public DrugProductsDBOpenHelper(Context context) {
+        super(context, DRUG_PRODUCTS_DB_NAME, null, DRUG_PRODUCTS_DB_VERSION);
         this.context = context;
     }
 

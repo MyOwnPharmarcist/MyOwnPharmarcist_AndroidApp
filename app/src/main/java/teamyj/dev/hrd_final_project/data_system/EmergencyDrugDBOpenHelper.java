@@ -17,8 +17,9 @@ import java.io.OutputStream;
 
 import teamyj.dev.hrd_final_project.Interface.DBLoadable;
 import teamyj.dev.hrd_final_project.Interface.DBWritable;
+import teamyj.dev.hrd_final_project.Interface.LocationDataGettable;
 
-public class EmergencyDrugDBOpenHelper extends SQLiteOpenHelper implements DBWritable, DBLoadable {
+public class EmergencyDrugDBOpenHelper extends SQLiteOpenHelper implements DBWritable, DBLoadable, LocationDataGettable {
     public static final String EMERGENCY_DRUG_DB_NAME = "emergency_drug.db";
     public static final int EMERGENCY_DRUG_DB_VERSION = 1;
 
@@ -32,8 +33,8 @@ public class EmergencyDrugDBOpenHelper extends SQLiteOpenHelper implements DBWri
 
     private final Context context;
 
-    public EmergencyDrugDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public EmergencyDrugDBOpenHelper(Context context) {
+        super(context, EMERGENCY_DRUG_DB_NAME, null, EMERGENCY_DRUG_DB_VERSION);
         this.context = context;
     }
 
@@ -83,6 +84,7 @@ public class EmergencyDrugDBOpenHelper extends SQLiteOpenHelper implements DBWri
     }
 
     // 위도, 경도 값 가져오는 메서드
+    @Override
     public Cursor getLocations(LatLng cameraPosition) {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_EMERGENCY_DRUG +

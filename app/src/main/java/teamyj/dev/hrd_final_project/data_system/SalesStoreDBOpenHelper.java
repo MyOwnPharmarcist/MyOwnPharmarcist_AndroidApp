@@ -17,8 +17,9 @@ import java.io.OutputStream;
 
 import teamyj.dev.hrd_final_project.Interface.DBLoadable;
 import teamyj.dev.hrd_final_project.Interface.DBWritable;
+import teamyj.dev.hrd_final_project.Interface.LocationDataGettable;
 
-public class SalesStoreDBOpenHelper extends SQLiteOpenHelper implements DBWritable, DBLoadable {
+public class SalesStoreDBOpenHelper extends SQLiteOpenHelper implements DBWritable, DBLoadable, LocationDataGettable {
     public static final String SALES_STORE_DB_NAME = "sales_store.db";
     public static final int SALES_STORE_DB_VERSION = 1;
 
@@ -34,8 +35,8 @@ public class SalesStoreDBOpenHelper extends SQLiteOpenHelper implements DBWritab
 
     private final Context context;
 
-    public SalesStoreDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public SalesStoreDBOpenHelper(Context context) {
+        super(context, SALES_STORE_DB_NAME, null, SALES_STORE_DB_VERSION);
         this.context = context;
     }
 
@@ -97,6 +98,7 @@ public class SalesStoreDBOpenHelper extends SQLiteOpenHelper implements DBWritab
     }
 
     // 위도, 경도 값 가져오는 메서드
+    @Override
     public Cursor getLocations(LatLng cameraPosition) {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_SALES_STORE +

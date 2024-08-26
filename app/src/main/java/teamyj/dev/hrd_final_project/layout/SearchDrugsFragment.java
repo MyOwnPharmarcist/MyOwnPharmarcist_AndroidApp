@@ -1,5 +1,6 @@
 package teamyj.dev.hrd_final_project.layout;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,7 +16,10 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import teamyj.dev.hrd_final_project.Interface.DBHelperGettable;
+import teamyj.dev.hrd_final_project.Interface.ListDataGettable;
 import teamyj.dev.hrd_final_project.R;
+import teamyj.dev.hrd_final_project.main_system.CustomApplication;
 
 public class SearchDrugsFragment extends Fragment {
 
@@ -42,6 +46,7 @@ public class SearchDrugsFragment extends Fragment {
             R.id.formulation5, R.id.formulation1, R.id.formulation2, R.id.formulation3, R.id.formulation4
     };
 
+    ListDataGettable listHelper;
     private ListView listView;
 
     @Override
@@ -49,6 +54,8 @@ public class SearchDrugsFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search_drugs, container, false);
 
+        DBHelperGettable application = CustomApplication.getInstance();
+        listHelper = application.getList();
         // 각 스크롤 뷰 내의 이미지들에 클릭 리스너 설정
         setupClickListeners((LinearLayout) ((LinearLayout) ((HorizontalScrollView) view.findViewById(R.id.shapesearch)).getChildAt(0)));
         setupClickListeners((LinearLayout) ((LinearLayout) ((HorizontalScrollView) view.findViewById(R.id.colorsearch)).getChildAt(0)));
@@ -127,7 +134,19 @@ public class SearchDrugsFragment extends Fragment {
         transaction.replace(R.id.menu_frame_layout, new DrugInfoFragment()); // 올바른 FrameLayout ID 사용
         transaction.addToBackStack(null);  // 뒤로가기 시 이전 Fragment로 돌아가기 위해 추가
         transaction.commit();
+
+        listHelper.searchDrugList(makeSQLCondition());
     }
 
+    private String makeSQLCondition() {
+        String shape;
+        String colot;
+        String codeName;
+                                                                                     
+        return null;
+    }
 
+    public void addList(Cursor cursor) {
+
+    }
 }
