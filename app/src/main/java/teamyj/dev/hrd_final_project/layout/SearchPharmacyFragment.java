@@ -27,6 +27,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.button.MaterialButton;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraPosition;
@@ -62,9 +63,9 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     private LocationManager locationManager;
     private UiSettings uiSettings;
     private View viewBottomSheet;
+    private LatLng position;
     private BottomSheetBehavior<View> behavior;
     private Marker marker;
-    private Bundle result;
 
     private SalesStoreDBOpenHelper salesdbHelper;
     private EmergencyDrugDBOpenHelper emergencyDrugDBOpenHelper;
@@ -80,11 +81,17 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     private TextView storeAddr;
     private TextView storeTime;// 표시된 마커 리스트
 
+    private MaterialButton btnPharmacy;
+    private MaterialButton btnEmergency;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.i("on", "onCreateView");
         View view = inflater.inflate(R.layout.fragment_search_pharmacy, container, false);
+
+        // 위치 소스 초기화 (내 위치 버튼 동작을 위해)
+        locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
         mapView = view.findViewById(R.id.map_view);
         mapView.onCreate(savedInstanceState);
@@ -106,8 +113,24 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         storeAddr = view.findViewById(R.id.bottom_sheet_store_address);
         storeTime = view.findViewById(R.id.bottom_sheet_store_time);
 
-        // 위치 소스 초기화 (내 위치 버튼 동작을 위해)
-        locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
+        btnPharmacy = view.findViewById(R.id.btnPharmacy);
+        btnEmergency = view.findViewById(R.id.btnEmergency);
+
+        btnPharmacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteMarkers();
+                addMarkers(position);
+            }
+        });
+
+        btnEmergency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteMarkers();
+                addMarkers(position);
+            }
+        });
 
         return view;
     }
@@ -128,15 +151,15 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 @Override
                 public void onSuccess(Location location) {
                     try {
-                        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng);
+                        position = new LatLng(location.getLatitude(), location.getLongitude());
+                        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(position);
                         naverMap.moveCamera(cameraUpdate);
 
                         LocationOverlay locationOverlay = naverMap.getLocationOverlay();
-                        locationOverlay.setPosition(latLng);
+                        locationOverlay.setPosition(position);
                         locationOverlay.setVisible(true);
 
-                        addMarkers(latLng); // 초기 화면 마커 표시
+                        addMarkers(position); // 초기 화면 마커 표시
                     } catch (NullPointerException e) {
                         onMapReady(naverMap);
                     }
@@ -178,8 +201,8 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         this.naverMap.addOnCameraChangeListener(new NaverMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(int reason, boolean animated) {
-                Log.d("CameraChange", "Camera moved: Reason = " + reason + ", Animated = " + animated);
-                CameraPosition cameraPosition = naverMap.getCameraPosition();
+//                Log.d("CameraChange", "Camera moved: Reason = " + reason + ", Animated = " + animated);
+//                position = naverMap.getCameraPosition().target;  // 현재 카메라 위치
             }
         });
 
@@ -187,7 +210,7 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         this.naverMap.addOnCameraIdleListener(new NaverMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                LatLng position = naverMap.getCameraPosition().target;  // 현재 카메라 위치
+                position = naverMap.getCameraPosition().target;  // 현재 카메라 위치
                 Log.d("CameraIdle", "Camera is idle at: " + position.latitude + ", " + position.longitude);
 
                 deleteMarkers();    // 마커 삭제
@@ -254,91 +277,98 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         Cursor cursorSales = salesdbHelper.getLocations(cameraPosition);
         Cursor cursorEmergency = emergencyDrugDBOpenHelper.getLocations(cameraPosition);
 
-        if(cursorSales.moveToFirst()) {
-            do {
-                String strStoreName = cursorSales.getString(cursorSales.getColumnIndexOrThrow("store_name"));
-                String strStoreCallNumber = cursorSales.getString(cursorSales.getColumnIndexOrThrow("store_call_number"));
-                String strStoreAddr = cursorSales.getString(cursorSales.getColumnIndexOrThrow("store_addr"));
-                String strStoreTime = cursorSales.getString(cursorSales.getColumnIndexOrThrow("store_time"));
-                double latitude = cursorSales.getDouble(cursorSales.getColumnIndexOrThrow("store_latitude"));
-                double longitude = cursorSales.getDouble(cursorSales.getColumnIndexOrThrow("store_longitude"));
+        if (btnPharmacy.isChecked()) {
+            deleteMarkers();
+            if(cursorSales.moveToFirst()) {
+                do {
+                    String strStoreName = cursorSales.getString(cursorSales.getColumnIndexOrThrow("store_name"));
+                    String strStoreCallNumber = cursorSales.getString(cursorSales.getColumnIndexOrThrow("store_call_number"));
+                    String strStoreAddr = cursorSales.getString(cursorSales.getColumnIndexOrThrow("store_addr"));
+                    String strStoreTime = cursorSales.getString(cursorSales.getColumnIndexOrThrow("store_time"));
+                    double latitude = cursorSales.getDouble(cursorSales.getColumnIndexOrThrow("store_latitude"));
+                    double longitude = cursorSales.getDouble(cursorSales.getColumnIndexOrThrow("store_longitude"));
 
-                marker = new Marker();
-                marker.setPosition(new LatLng(latitude, longitude));
-                marker.setCaptionText(strStoreName);
-                marker.setCaptionRequestedWidth(200);
-                marker.setMinZoom(10);  // 너무 멀어지면 마커 제거
-                marker.setWidth(80);
-                marker.setHeight(110);
-                marker.setMap(naverMap);
-                marker.setOnClickListener(overlay -> {
-                    // 마커를 클릭할 때 해당 마커로 카메라 이동
-                    CameraPosition selectedMarkerPosition = new CameraPosition(new LatLng(latitude, longitude), 16);
-                    CameraUpdate cameraUpdate = CameraUpdate.toCameraPosition(selectedMarkerPosition).animate(CameraAnimation.Easing);
-                    naverMap.moveCamera(cameraUpdate);
+                    marker = new Marker();
+                    marker.setPosition(new LatLng(latitude, longitude));
+                    marker.setCaptionText(strStoreName);
+                    marker.setCaptionRequestedWidth(200);
+                    marker.setMinZoom(10);  // 너무 멀어지면 마커 제거
+                    marker.setWidth(80);
+                    marker.setHeight(110);
+                    marker.setMap(naverMap);
+                    marker.setOnClickListener(overlay -> {
+                        // 마커를 클릭할 때 해당 마커로 카메라 이동
+                        CameraPosition selectedMarkerPosition = new CameraPosition(new LatLng(latitude, longitude), 16);
+                        CameraUpdate cameraUpdate = CameraUpdate.toCameraPosition(selectedMarkerPosition).animate(CameraAnimation.Easing);
+                        naverMap.moveCamera(cameraUpdate);
 
-                    title.setText("약국 명");
-                    storeName.setText(strStoreName);
-                    address.setText("주소");
-                    storeAddr.setText(strStoreAddr);
-                    ex1.setText("전화번호");
-                    storeEtc.setText(strStoreCallNumber);
-                    ex2.setText("영업시간");
-                    storeTime.setText(strStoreTime);
+                        title.setText("약국 명");
+                        storeName.setText(strStoreName);
+                        address.setText("주소");
+                        storeAddr.setText(strStoreAddr);
+                        ex1.setText("전화번호");
+                        storeEtc.setText(strStoreCallNumber);
+                        ex2.setText("영업시간");
+                        storeTime.setText(strStoreTime);
 
-                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
-                    return true;
-                });
-                markerList.add(marker); // 리스트에 마커 저장
-            } while (cursorSales.moveToNext());
+                        return true;
+                    });
+                    markerList.add(marker); // 리스트에 마커 저장
+                } while (cursorSales.moveToNext());
+            }
+
+            cursorSales.close();
+            salesdbHelper.close();
         }
 
-        if(cursorEmergency.moveToFirst()) {
-            do {
-                String strName = cursorEmergency.getString(cursorEmergency.getColumnIndexOrThrow("business_name"));
-                String strAddr = cursorEmergency.getString(cursorEmergency.getColumnIndexOrThrow("street_address"));
-                String strStatus = cursorEmergency.getString(cursorEmergency.getColumnIndexOrThrow("business_status"));
-                double latitude = cursorEmergency.getDouble(cursorEmergency.getColumnIndexOrThrow("ratitude"));
-                double longitude = cursorEmergency.getDouble(cursorEmergency.getColumnIndexOrThrow("longitude"));
+        if(btnEmergency.isChecked()) {
+            deleteMarkers();
+            if(cursorEmergency.moveToFirst()) {
+                do {
+                    String strName = cursorEmergency.getString(cursorEmergency.getColumnIndexOrThrow("business_name"));
+                    String strAddr = cursorEmergency.getString(cursorEmergency.getColumnIndexOrThrow("street_address"));
+                    String strStatus = cursorEmergency.getString(cursorEmergency.getColumnIndexOrThrow("business_status"));
+                    double latitude = cursorEmergency.getDouble(cursorEmergency.getColumnIndexOrThrow("ratitude"));
+                    double longitude = cursorEmergency.getDouble(cursorEmergency.getColumnIndexOrThrow("longitude"));
 
-                marker = new Marker();
-                marker.setPosition(new LatLng(latitude, longitude));
-                marker.setCaptionText(strName);
-                marker.setIcon(MarkerIcons.BLACK);
-                marker.setIconTintColor(Color.BLUE);
-                marker.setCaptionRequestedWidth(200);
-                marker.setMinZoom(10);  // 너무 멀어지면 마커 제거
-                marker.setWidth(80);
-                marker.setHeight(110);
-                marker.setMap(naverMap);
-                marker.setOnClickListener(overlay -> {
-                    // 마커를 클릭할 때 해당 마커로 카메라 이동
-                    CameraPosition selectedMarkerPosition = new CameraPosition(new LatLng(latitude, longitude), 16);
-                    CameraUpdate cameraUpdate = CameraUpdate.toCameraPosition(selectedMarkerPosition).animate(CameraAnimation.Easing);
-                    naverMap.moveCamera(cameraUpdate);
+                    marker = new Marker();
+                    marker.setPosition(new LatLng(latitude, longitude));
+                    marker.setCaptionText(strName);
+                    marker.setIcon(MarkerIcons.BLACK);
+                    marker.setIconTintColor(Color.BLUE);
+                    marker.setCaptionRequestedWidth(200);
+                    marker.setMinZoom(10);  // 너무 멀어지면 마커 제거
+                    marker.setWidth(80);
+                    marker.setHeight(110);
+                    marker.setMap(naverMap);
+                    marker.setOnClickListener(overlay -> {
+                        // 마커를 클릭할 때 해당 마커로 카메라 이동
+                        CameraPosition selectedMarkerPosition = new CameraPosition(new LatLng(latitude, longitude), 16);
+                        CameraUpdate cameraUpdate = CameraUpdate.toCameraPosition(selectedMarkerPosition).animate(CameraAnimation.Easing);
+                        naverMap.moveCamera(cameraUpdate);
 
-                    title.setText("편의점 명");
-                    storeName.setText(strName);
-                    address.setText("주소");
-                    storeAddr.setText(strAddr);
-                    ex1.setText("영업 유무");
-                    storeEtc.setText(strStatus);
-                    ex2.setText("");
-                    storeTime.setText("");
+                        title.setText("상비 의약품 판매점");
+                        storeName.setText(strName);
+                        address.setText("주소");
+                        storeAddr.setText(strAddr);
+                        ex1.setText("영업 유무");
+                        storeEtc.setText(strStatus);
+                        ex2.setText("");
+                        storeTime.setText("");
 
-                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
-                    return true;
-                });
-                markerList.add(marker); // 리스트에 마커 저장
-            } while (cursorEmergency.moveToNext());
+                        return true;
+                    });
+                    markerList.add(marker); // 리스트에 마커 저장
+                } while (cursorEmergency.moveToNext());
+            }
+
+            cursorEmergency.close();
+            emergencyDrugDBOpenHelper.close();
         }
-
-        cursorSales.close();
-        salesdbHelper.close();
-        cursorEmergency.close();
-        emergencyDrugDBOpenHelper.close();
     }
 
     // 마커 핀 삭제 메서드

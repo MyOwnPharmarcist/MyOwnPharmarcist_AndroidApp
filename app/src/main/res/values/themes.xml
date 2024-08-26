@@ -62,4 +62,9 @@
         <item name="cornerSize">2dp</item>
     </style>
 
+    <!-- switch round -->
+    <style name="ShapeAppearanceOverlay.App.rounded" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>
