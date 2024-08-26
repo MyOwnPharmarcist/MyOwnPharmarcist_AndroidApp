@@ -54,8 +54,7 @@ public class DrugInfoFragment extends Fragment {
 
 
     private void addDrugInfo() {
-        drugProductsDBOpenHelper = new DrugProductsDBOpenHelper(getContext(), "drug_products.db", null, 1);
-        Cursor cursor = drugProductsDBOpenHelper.getFirstDrugInfo();
+        Cursor cursor = new DrugProductsDBOpenHelper(getContext()).getFirstDrugInfo();;
 
         if (cursor.moveToFirst()) {
             int itemNameIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.ITEM_NAME);

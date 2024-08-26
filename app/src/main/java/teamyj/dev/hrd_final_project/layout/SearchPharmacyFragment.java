@@ -67,8 +67,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
     private BottomSheetBehavior<View> behavior;
     private Marker marker;
 
-    private SalesStoreDBOpenHelper salesdbHelper;
-    private EmergencyDrugDBOpenHelper emergencyDrugDBOpenHelper;
     private List<Marker> markerList = new ArrayList<>();
 
     private TextView title;
@@ -272,10 +270,8 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
 
     // 마커 핀 추가 메서드
     private void addMarkers(LatLng cameraPosition) {
-        salesdbHelper = new SalesStoreDBOpenHelper(getContext(), "sales_store.db", null, 1);
-        emergencyDrugDBOpenHelper = new EmergencyDrugDBOpenHelper(getContext(), "emergency_drug.db", null, 1);
-        Cursor cursorSales = salesdbHelper.getLocations(cameraPosition);
-        Cursor cursorEmergency = emergencyDrugDBOpenHelper.getLocations(cameraPosition);
+        Cursor cursorSales = new SalesStoreDBOpenHelper(getContext()).getLocations(cameraPosition);
+        Cursor cursorEmergency = new EmergencyDrugDBOpenHelper(getContext()).getLocations(cameraPosition);
 
         if (btnPharmacy.isChecked()) {
             deleteMarkers();
@@ -320,7 +316,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
             }
 
             cursorSales.close();
-            salesdbHelper.close();
         }
 
         if(btnEmergency.isChecked()) {
@@ -367,7 +362,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
             }
 
             cursorEmergency.close();
-            emergencyDrugDBOpenHelper.close();
         }
     }
 

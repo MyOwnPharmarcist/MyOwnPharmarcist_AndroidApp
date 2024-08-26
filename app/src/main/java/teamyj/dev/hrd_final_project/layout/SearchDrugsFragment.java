@@ -135,15 +135,18 @@ public class SearchDrugsFragment extends Fragment {
         transaction.addToBackStack(null);  // 뒤로가기 시 이전 Fragment로 돌아가기 위해 추가
         transaction.commit();
 
-        listHelper.searchDrugList(makeSQLCondition());
+        String condition = makeSQLCondition();
+        listHelper.searchDrugList(condition);
     }
 
     private String makeSQLCondition() {
         String shape;
-        String colot;
+        String color;
         String codeName;
+
+        String result = "";
                                                                                      
-        return null;
+        return result;
     }
 
     public void addList(Cursor cursor) {
