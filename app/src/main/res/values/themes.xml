@@ -28,7 +28,7 @@
     </style>
 
     <style name="Widget.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
-        <item name="fontFamily">@font/nanum_gothic</item>
+<!--        <item name="fontFamily">@font/line_seed_kr_rg</item>-->
         <item name="android:minHeight">0dp</item>
         <item name="itemTextAppearance">@style/TextAppearance.BottomNavigationView.Item</item>
     </style>
@@ -66,5 +66,6 @@
     <style name="ShapeAppearanceOverlay.App.rounded" parent="">
         <item name="cornerSize">50%</item>
     </style>
+
 
 </resources>

@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="handle_color">#C3BBBB</color>
     <color name="bottom_sheet_background">#F3EEEE</color>
+    <color name="transparent">@android:color/transparent</color>
 </resources>
