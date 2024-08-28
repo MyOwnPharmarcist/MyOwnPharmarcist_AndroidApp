@@ -95,15 +95,21 @@ public class SearchDrugsFragment extends Fragment {
         TextView text = (TextView) ((FrameLayout)view).getChildAt(1);
 
         if(view.getParent().equals(selectedShape.getParent().getParent())) {
-            selectedShape.setBackgroundColor(Color.TRANSPARENT);
+            if(!selectedShape.equals(image)) {
+                selectedShape.setBackgroundColor(Color.TRANSPARENT);
+            }
             selectedShape = image;
             shape = text.getText().toString();
         } else if(view.getParent().equals(selectedColor.getParent().getParent())) {
-            selectedColor.setBackgroundColor(Color.TRANSPARENT);
+            if(!selectedColor.equals(image)) {
+                selectedColor.setBackgroundColor(Color.TRANSPARENT);
+            }
             selectedColor = image;
             color = text.getText().toString();
         } else {
-            selectedFormulation.setBackgroundColor(Color.TRANSPARENT);
+            if(!selectedFormulation.equals(image)) {
+                selectedFormulation.setBackgroundColor(Color.TRANSPARENT);
+            }
             selectedFormulation = image;
             codeName = text.getText().toString();
         }
