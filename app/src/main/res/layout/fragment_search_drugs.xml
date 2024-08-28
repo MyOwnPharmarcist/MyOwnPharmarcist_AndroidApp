@@ -71,8 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:visibility="gone"
-                        android:text=""
-                        android:id="@+id/shape0_text"/>
+                        android:text=""/>
                 </FrameLayout>
 
                 <FrameLayout
@@ -82,79 +81,146 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/shape1"
-                        android:layout_marginHorizontal="30dp"
-                        android:id="@+id/shape1_image"/>
+                        android:layout_marginHorizontal="30dp"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:visibility="gone"
-                        android:text="원형"
-                        android:id="@+id/shape1_text"/>
+                        android:text="원형"/>
                 </FrameLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shape2"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/shape2"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shape2"
+                        android:layout_marginHorizontal="30dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="타원형"/>
+                </FrameLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shape3"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/shape3"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shape3"
+                        android:layout_marginHorizontal="30dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="장방형"/>
+                </FrameLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shape4"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/shape4"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shape4"
+                        android:layout_marginHorizontal="30dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="반원형"/>
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shape5"
+                        android:layout_marginHorizontal="30dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="삼각형"/>
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shape6"
+                        android:layout_marginHorizontal="30dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="사각형"/>
+                </FrameLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shape5"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/shape5"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shape7"
+                        android:layout_marginHorizontal="30dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="마름모형"/>
+                </FrameLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shape6"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/shape6"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shape8"
+                        android:layout_marginHorizontal="30dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="오각형"/>
+                </FrameLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shape7"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/shape7"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shape9"
+                        android:layout_marginHorizontal="30dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="육각형"/>
+                </FrameLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shape8"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/shape8"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shape9"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/shape9"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shape10"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/shape10"/>
-
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shape10"
+                        android:layout_marginHorizontal="30dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="팔각형"/>
+                </FrameLayout>
             </LinearLayout>
         </HorizontalScrollView>
 
@@ -188,130 +254,265 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:id="@+id/color">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorall"
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/colorall"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text=""/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorall"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorall"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorwhite"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="하양"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorwhite"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorwhite"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/coloryellow"
+                    android:layout_marginHorizontal="30dp"
+                    android:id="@+id/coloryellow"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="노랑"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/coloryellow"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/coloryellow"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorornage"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="주황"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorornage"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorornage"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorpink"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="분홍"/>
+            </FrameLayout>
 
-            <ImageView
-                android:id="@+id/colorpink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:src="@drawable/colorpink" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorred"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="빨강"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorred"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorred"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorbrown"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="갈색"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorbrown"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorbrown"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorlightgreen"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="연두"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorlightgreen"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorlightgreen"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorgreen"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="초록"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorgreen"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorgreen"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorturquoise"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="청록"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorturquoise"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorturquoise"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorblue"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="파랑"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorblue"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorblue"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorsodomy"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="남색"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorsodomy"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorsodomy"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/coloramethyst"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="자주"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/coloramethyst"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/coloramethyst"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorpurple"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="보라"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorpurple"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorpurple"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorgray"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="회색"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorgray"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorgray"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colorblack"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="검정"/>
+            </FrameLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colorblack"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colorblack"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/colornull"
-                android:layout_marginHorizontal="30dp"
-                android:id="@+id/colornull"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/colornull"
+                    android:layout_marginHorizontal="30dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:text="투명"/>
+            </FrameLayout>
         </LinearLayout>
 
     </HorizontalScrollView>
-
-
 
         <TextView
             app:layout_constraintTop_toBottomOf="@+id/colorsearch"
@@ -342,50 +543,84 @@
                 android:orientation="horizontal"
                 android:id="@+id/formulation">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/formulation5"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/formulation5"
-                    />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/formulation5"
+                        android:layout_marginHorizontal="30dp"
+                        android:id="@+id/formulation5"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text=""/>
+                </FrameLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/formulation1"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/formulation1"
-                    />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/formulation1"
+                        android:layout_marginHorizontal="30dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="정제"/>
+                </FrameLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/formulation2"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/formulation2"
-                    />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/formulation2"
+                        android:layout_marginHorizontal="30dp"
+                        android:id="@+id/formulation2"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="경질캡슐"/>
+                </FrameLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/formulation3"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/formulation3"
-                    />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/formulation3"
+                        android:layout_marginHorizontal="30dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="연질캡슐"/>
+                </FrameLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/formulation4"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/formulation4"
-                    />
-
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/formulation4"
+                        android:layout_marginHorizontal="30dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="기타"/>
+                </FrameLayout>
             </LinearLayout>
-
         </HorizontalScrollView>
-
 
         <Button
             app:layout_constraintTop_toBottomOf="@+id/formulationsearch"
