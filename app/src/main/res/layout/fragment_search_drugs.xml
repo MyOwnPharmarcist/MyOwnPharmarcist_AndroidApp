@@ -262,7 +262,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/colorall"
                     android:layout_marginHorizontal="30dp"
-                    android:id="@+id/colorall"/>
+                    android:id="@+id/colorall_image"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -551,7 +551,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/formulation5"
                         android:layout_marginHorizontal="30dp"
-                        android:id="@+id/formulation5"/>
+                        android:id="@+id/formulation5_image"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

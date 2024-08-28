@@ -53,9 +53,9 @@ public class SearchDrugsFragment extends Fragment {
 
         selectedShape = view.findViewById(R.id.shape0_image);
         selectedShape.setBackgroundColor(Color.BLUE);
-        selectedColor = view.findViewById(R.id.colorall);
+        selectedColor = view.findViewById(R.id.colorall_image);
         selectedColor.setBackgroundColor(Color.BLUE);
-        selectedFormulation = view.findViewById(R.id.formulation5);
+        selectedFormulation = view.findViewById(R.id.formulation5_image);
         selectedFormulation.setBackgroundColor(Color.BLUE);
 
         // 각 스크롤 뷰 내의 이미지들에 클릭 리스너 설정
