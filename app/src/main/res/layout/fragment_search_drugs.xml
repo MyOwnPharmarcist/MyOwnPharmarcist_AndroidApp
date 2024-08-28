@@ -58,20 +58,39 @@
                 android:orientation="horizontal"
                 android:id="@+id/shape">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shape0"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/shape0"/>
-
-
-                <ImageView
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/shape1"
-                    android:layout_marginHorizontal="30dp"
-                    android:id="@+id/shape1"/>
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shape0"
+                        android:layout_marginHorizontal="30dp"
+                        android:id="@+id/shape0_image"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text=""
+                        android:id="@+id/shape0_text"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shape1"
+                        android:layout_marginHorizontal="30dp"
+                        android:id="@+id/shape1_image"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:text="원형"
+                        android:id="@+id/shape1_text"/>
+                </FrameLayout>
 
                 <ImageView
                     android:layout_width="wrap_content"
