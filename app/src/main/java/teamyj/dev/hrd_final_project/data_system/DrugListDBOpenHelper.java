@@ -100,7 +100,7 @@ public class DrugListDBOpenHelper extends SQLiteOpenHelper implements DBWritable
 
     @Override
     public Cursor searchDrugList(String condition) {
-
-        return null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_DRUG_LIST + " WHERE " + condition, null);
     }
 }
