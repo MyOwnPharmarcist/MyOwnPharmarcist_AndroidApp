@@ -1,5 +1,7 @@
 package teamyj.dev.hrd_final_project.layout;
 
+import static teamyj.dev.hrd_final_project.data_system.DrugListDBOpenHelper.DRUG_LIST_ELEMENTS;
+
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -23,19 +26,20 @@ import teamyj.dev.hrd_final_project.R;
 import teamyj.dev.hrd_final_project.main_system.CustomApplication;
 
 public class SearchDrugsFragment extends Fragment {
+    private StringBuilder stringBuilder = new StringBuilder();
 
-    View view;
+    private View view;
+    private EditText editText;
     private ImageView selectedShape;  // 현재 선택된 ImageView
     private ImageView selectedColor;
     private ImageView selectedFormulation;
 
-    ListDataGettable listHelper;
+    private ListDataGettable listHelper;
     private ListView listView;
 
-    String name = "";
-    String shape = "";
-    String color = "";
-    String codeName = "";
+    private String shape = "";
+    private String color = "";
+    private String codeName = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,12 +49,14 @@ public class SearchDrugsFragment extends Fragment {
         DBHelperGettable application = CustomApplication.getInstance();
         listHelper = application.getList();
 
+        editText = view.findViewById(R.id.editSearch);
+
         selectedShape = view.findViewById(R.id.shape0_image);
         selectedShape.setBackgroundColor(Color.BLUE);
-//        selectedColor = view.findViewById(R.id.colorall_image);
-//        selectedColor.setBackgroundColor(Color.BLUE);
-//        selectedFormulation = view.findViewById(R.id.formulation5_image);
-//        selectedFormulation.setBackgroundColor(Color.BLUE);
+        selectedColor = view.findViewById(R.id.colorall_image);
+        selectedColor.setBackgroundColor(Color.BLUE);
+        selectedFormulation = view.findViewById(R.id.formulation5_image);
+        selectedFormulation.setBackgroundColor(Color.BLUE);
 
         // 각 스크롤 뷰 내의 이미지들에 클릭 리스너 설정
         setupClickListeners((LinearLayout) ((HorizontalScrollView) view.findViewById(R.id.shapesearch)).getChildAt(0));
@@ -63,7 +69,8 @@ public class SearchDrugsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // DrugInfoFragment로 전환
-                openDrugInfoFragment();
+                sendSQLCondition();
+//                openDrugInfoFragment();
             }
         });
 
@@ -88,15 +95,21 @@ public class SearchDrugsFragment extends Fragment {
         TextView text = (TextView) ((FrameLayout)view).getChildAt(1);
 
         if(view.getParent().equals(selectedShape.getParent().getParent())) {
-            selectedShape.setBackgroundColor(Color.TRANSPARENT);
+            if(!selectedShape.equals(image)) {
+                selectedShape.setBackgroundColor(Color.TRANSPARENT);
+            }
             selectedShape = image;
             shape = text.getText().toString();
         } else if(view.getParent().equals(selectedColor.getParent().getParent())) {
-            selectedColor.setBackgroundColor(Color.TRANSPARENT);
+            if(!selectedColor.equals(image)) {
+                selectedColor.setBackgroundColor(Color.TRANSPARENT);
+            }
             selectedColor = image;
             color = text.getText().toString();
         } else {
-            selectedFormulation.setBackgroundColor(Color.TRANSPARENT);
+            if(!selectedFormulation.equals(image)) {
+                selectedFormulation.setBackgroundColor(Color.TRANSPARENT);
+            }
             selectedFormulation = image;
             codeName = text.getText().toString();
         }
@@ -120,16 +133,31 @@ public class SearchDrugsFragment extends Fragment {
         transaction.addToBackStack(null);  // 뒤로가기 시 이전 Fragment로 돌아가기 위해 추가
         transaction.commit();
 
-        String condition = makeSQLCondition();
-        listHelper.searchDrugList(condition);
+
     }
 
-    private String makeSQLCondition() {
-
-
-        String result = "";
-
-        return result;
+    private void sendSQLCondition() {
+        String result;
+        stringBuilder.setLength(0);
+        if((result = editText.getText().toString()).isEmpty()) {
+            stringBuilder.append("0 = 0");
+            if(!shape.isEmpty()) {
+                stringBuilder.append(" and ").append(DRUG_LIST_ELEMENTS[3]).append(" = '")
+                        .append(shape).append("'");
+            }
+            if(!shape.isEmpty()) {
+                stringBuilder.append(" and ").append(DRUG_LIST_ELEMENTS[4]).append(" = '")
+                        .append(color).append("'");
+            }
+            if(!shape.isEmpty()) {
+                stringBuilder.append(" and ").append(DRUG_LIST_ELEMENTS[7]).append(" = '")
+                        .append(codeName).append("'");
+            }
+        } else {
+            stringBuilder.append(DRUG_LIST_ELEMENTS[0]).append(" LIKE '%").append(result)
+                    .append("%'");
+        }
+        addList(listHelper.searchDrugList(stringBuilder.toString()));
     }
 
     public void addList(Cursor cursor) {
