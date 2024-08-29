@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,12 +78,10 @@ public class SearchDrugsFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // DrugInfoFragment로 전환
                 sendSQLCondition();
-                openDrugInfoFragment();
             }
         });
-
+        setListViewListener();
         return view;
     }
 
@@ -135,7 +134,7 @@ public class SearchDrugsFragment extends Fragment {
 //        return list;
 //    }
 
-    private void openDrugInfoFragment() {
+    private void openDrugInfoFragment(String itemName) {
         // FragmentTransaction을 통해 DrugInfoFragment로 전환
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.menu_frame_layout, new DrugInfoFragment()); // 올바른 FrameLayout ID 사용
@@ -182,5 +181,15 @@ public class SearchDrugsFragment extends Fragment {
             }
         }
         druglistAdapter.notifyDataSetChanged();
+    }
+
+    private void setListViewListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String itemName = (String)adapterView.getItemAtPosition(i);
+                openDrugInfoFragment(itemName);
+            }
+        });
     }
 }
