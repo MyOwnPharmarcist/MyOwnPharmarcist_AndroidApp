@@ -32,19 +32,19 @@ public class DrugInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_drug_info, container, false);
 
-        // TextView 초기화
-        itemNameTextView = view.findViewById(R.id.item_name_text_view);
-        entpNameTextView = view.findViewById(R.id.entp_name_text_view);
-        etcOtcCodeTextView = view.findViewById(R.id.etc_otc_code_text_view);
-        chartTextView = view.findViewById(R.id.chart_text_view);
-        storageMethodTextView = view.findViewById(R.id.storage_method_text_view);
-        validTermTextView = view.findViewById(R.id.valid_term_text_view);
-        indutyTypeTextView = view.findViewById(R.id.induty_type_text_view);
-        eeDocDataTextView = view.findViewById(R.id.ee_doc_data_text_view);
-        udDocDataTextView = view.findViewById(R.id.ud_doc_data_text_view);
-
-        // Drug info 데이터 추가
-        addDrugInfo();
+//        // TextView 초기화
+//        itemNameTextView = view.findViewById(R.id.item_name_text_view);
+//        entpNameTextView = view.findViewById(R.id.entp_name_text_view);
+//        etcOtcCodeTextView = view.findViewById(R.id.etc_otc_code_text_view);
+//        chartTextView = view.findViewById(R.id.chart_text_view);
+//        storageMethodTextView = view.findViewById(R.id.storage_method_text_view);
+//        validTermTextView = view.findViewById(R.id.valid_term_text_view);
+//        indutyTypeTextView = view.findViewById(R.id.induty_type_text_view);
+//        eeDocDataTextView = view.findViewById(R.id.ee_doc_data_text_view);
+//        udDocDataTextView = view.findViewById(R.id.ud_doc_data_text_view);
+//
+//        // Drug info 데이터 추가
+//        addDrugInfo();
 
 
 

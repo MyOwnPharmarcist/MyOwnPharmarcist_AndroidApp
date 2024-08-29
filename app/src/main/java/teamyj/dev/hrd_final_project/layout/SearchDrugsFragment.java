@@ -79,7 +79,7 @@ public class SearchDrugsFragment extends Fragment {
             public void onClick(View v) {
                 // DrugInfoFragment로 전환
                 sendSQLCondition();
-//                openDrugInfoFragment();
+                openDrugInfoFragment();
             }
         });
 
