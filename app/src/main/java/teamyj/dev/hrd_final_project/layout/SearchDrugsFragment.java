@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.ArrayList;
 
 import teamyj.dev.hrd_final_project.Interface.DBHelperGettable;
 import teamyj.dev.hrd_final_project.Interface.ListDataGettable;
@@ -36,6 +39,8 @@ public class SearchDrugsFragment extends Fragment {
 
     private ListDataGettable listHelper;
     private ListView listView;
+    private ArrayList<String> arrayList;
+    private ArrayAdapter<String> druglistAdapter;
 
     private String shape = "";
     private String color = "";
@@ -63,8 +68,12 @@ public class SearchDrugsFragment extends Fragment {
         setupClickListeners((LinearLayout) ((HorizontalScrollView) view.findViewById(R.id.colorsearch)).getChildAt(0));
         setupClickListeners((LinearLayout) ((HorizontalScrollView) view.findViewById(R.id.formulationsearch)).getChildAt(0));
 
-
         Button searchButton = view.findViewById(R.id.searchbtn);
+        listView = view.findViewById(R.id.listView);
+        arrayList = new ArrayList<>();
+        druglistAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, arrayList);
+        listView.setAdapter(druglistAdapter);
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,8 +141,6 @@ public class SearchDrugsFragment extends Fragment {
         transaction.replace(R.id.menu_frame_layout, new DrugInfoFragment()); // 올바른 FrameLayout ID 사용
         transaction.addToBackStack(null);  // 뒤로가기 시 이전 Fragment로 돌아가기 위해 추가
         transaction.commit();
-
-
     }
 
     private void sendSQLCondition() {
@@ -145,11 +152,11 @@ public class SearchDrugsFragment extends Fragment {
                 stringBuilder.append(" and ").append(DRUG_LIST_ELEMENTS[3]).append(" = '")
                         .append(shape).append("'");
             }
-            if(!shape.isEmpty()) {
+            if(!color.isEmpty()) {
                 stringBuilder.append(" and ").append(DRUG_LIST_ELEMENTS[4]).append(" = '")
                         .append(color).append("'");
             }
-            if(!shape.isEmpty()) {
+            if(!codeName.isEmpty()) {
                 stringBuilder.append(" and ").append(DRUG_LIST_ELEMENTS[7]).append(" = '")
                         .append(codeName).append("'");
             }
@@ -161,6 +168,19 @@ public class SearchDrugsFragment extends Fragment {
     }
 
     public void addList(Cursor cursor) {
-
+        arrayList.clear();
+        if(cursor.moveToFirst()) {
+            arrayList.add(cursor.getString(0));
+            while (cursor.moveToNext()) {
+                arrayList.add(cursor.getString(0));
+                for (int i = 0; i < 50; i++) {
+                    if(cursor.moveToNext()) {
+                        arrayList.add(cursor.getString(0));
+                    }
+                }
+                druglistAdapter.notifyDataSetChanged();
+            }
+        }
+        druglistAdapter.notifyDataSetChanged();
     }
 }

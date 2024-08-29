@@ -1,6 +1,5 @@
 package teamyj.dev.hrd_final_project.layout;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,41 +53,41 @@ public class DrugInfoFragment extends Fragment {
 
 
     private void addDrugInfo() {
-        Cursor cursor = new DrugProductsDBOpenHelper(getContext()).getSelectionDrugInfo();;
-
-        if (cursor.moveToFirst()) {
-            int itemNameIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.ITEM_NAME);
-            int entpNameIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.ENTP_NAME);
-            int etcOtcCodeIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.ETC_OTC_CODE);
-            int chartIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.CHART);
-            int storageMethodIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.STORAGE_METHOD);
-            int validTermIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.VALID_TERM);
-            int indutyTypeIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.INDUTY_TYPE);
-            int eeDocDataIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.EE_DOC_DATA);
-            int udDocDataIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.UD_DOC_DATA);
-
-            // 각 인덱스가 -1이 아닌지 확인 후 데이터 가져오기
-            String itemName = itemNameIndex != -1 ? cursor.getString(itemNameIndex) : "N/A";
-            String entpName = entpNameIndex != -1 ? cursor.getString(entpNameIndex) : "N/A";
-            String etcOtcCode = etcOtcCodeIndex != -1 ? cursor.getString(etcOtcCodeIndex) : "N/A";
-            String chart = chartIndex != -1 ? cursor.getString(chartIndex) : "N/A";
-            String storageMethod = storageMethodIndex != -1 ? cursor.getString(storageMethodIndex) : "N/A";
-            String validTerm = validTermIndex != -1 ? cursor.getString(validTermIndex) : "N/A";
-            String indutyType = indutyTypeIndex != -1 ? cursor.getString(indutyTypeIndex) : "N/A";
-            String eeDocData = eeDocDataIndex != -1 ? cursor.getString(eeDocDataIndex) : "N/A";
-            String udDocData = udDocDataIndex != -1 ? cursor.getString(udDocDataIndex) : "N/A";
-
-            // TextView에 데이터 설정
-            itemNameTextView.setText(itemName);
-            entpNameTextView.setText(entpName);
-            etcOtcCodeTextView.setText(etcOtcCode);
-            chartTextView.setText(chart);
-            storageMethodTextView.setText(storageMethod);
-            validTermTextView.setText(validTerm);
-            indutyTypeTextView.setText(indutyType);
-            eeDocDataTextView.setText(eeDocData);
-            udDocDataTextView.setText(udDocData);
-        }
-        cursor.close();
+//        Cursor cursor = new DrugProductsDBOpenHelper(getContext()).getSelectionDrugInfo();
+//
+//        if (cursor.moveToFirst()) {
+//            int itemNameIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.ITEM_NAME);
+//            int entpNameIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.ENTP_NAME);
+//            int etcOtcCodeIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.ETC_OTC_CODE);
+//            int chartIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.CHART);
+//            int storageMethodIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.STORAGE_METHOD);
+//            int validTermIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.VALID_TERM);
+//            int indutyTypeIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.INDUTY_TYPE);
+//            int eeDocDataIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.EE_DOC_DATA);
+//            int udDocDataIndex = cursor.getColumnIndex(DrugProductsDBOpenHelper.UD_DOC_DATA);
+//
+//            // 각 인덱스가 -1이 아닌지 확인 후 데이터 가져오기
+//            String itemName = itemNameIndex != -1 ? cursor.getString(itemNameIndex) : "N/A";
+//            String entpName = entpNameIndex != -1 ? cursor.getString(entpNameIndex) : "N/A";
+//            String etcOtcCode = etcOtcCodeIndex != -1 ? cursor.getString(etcOtcCodeIndex) : "N/A";
+//            String chart = chartIndex != -1 ? cursor.getString(chartIndex) : "N/A";
+//            String storageMethod = storageMethodIndex != -1 ? cursor.getString(storageMethodIndex) : "N/A";
+//            String validTerm = validTermIndex != -1 ? cursor.getString(validTermIndex) : "N/A";
+//            String indutyType = indutyTypeIndex != -1 ? cursor.getString(indutyTypeIndex) : "N/A";
+//            String eeDocData = eeDocDataIndex != -1 ? cursor.getString(eeDocDataIndex) : "N/A";
+//            String udDocData = udDocDataIndex != -1 ? cursor.getString(udDocDataIndex) : "N/A";
+//
+//            // TextView에 데이터 설정
+//            itemNameTextView.setText(itemName);
+//            entpNameTextView.setText(entpName);
+//            etcOtcCodeTextView.setText(etcOtcCode);
+//            chartTextView.setText(chart);
+//            storageMethodTextView.setText(storageMethod);
+//            validTermTextView.setText(validTerm);
+//            indutyTypeTextView.setText(indutyType);
+//            eeDocDataTextView.setText(eeDocData);
+//            udDocDataTextView.setText(udDocData);
+//        }
+//        cursor.close();
     }
 }

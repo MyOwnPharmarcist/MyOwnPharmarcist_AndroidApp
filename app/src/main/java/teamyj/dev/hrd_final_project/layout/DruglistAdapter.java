@@ -27,18 +27,17 @@ public class DruglistAdapter extends SimpleCursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         TextView nameTextView = view.findViewById(R.id.nameTextView);
-        TextView colorTextView = view.findViewById(R.id.colorTextView);
-        TextView shapeTextView = view.findViewById(R.id.shapeTextView);
-
+//        TextView colorTextView = view.findViewById(R.id.colorTextView);
+//        TextView shapeTextView = view.findViewById(R.id.shapeTextView);
 
         // DB에서 가져온 데이터 설정
         String name = cursor.getString(cursor.getColumnIndexOrThrow("item_name"));
-        String color = cursor.getString(cursor.getColumnIndexOrThrow("color"));
-        String shape = cursor.getString(cursor.getColumnIndexOrThrow("shape"));
+//        String color = cursor.getString(cursor.getColumnIndexOrThrow("color"));
+//        String shape = cursor.getString(cursor.getColumnIndexOrThrow("shape"));
 
         nameTextView.setText("Name: " + name);
-        colorTextView.setText("Color: " + color);
-        shapeTextView.setText("Shape: " + shape);
+//        colorTextView.setText("Color: " + color);
+//        shapeTextView.setText("Shape: " + shape);
 
     }
 }
