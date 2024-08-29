@@ -9,19 +9,13 @@
     android:id="@+id/fragment_drug_info">
 
     <!-- Top Navigation Bar -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-    </FrameLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/info_nav_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:background="@color/white"
-        android:elevation="20dp"
+        android:elevation="15dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -54,7 +48,6 @@
             app:layout_constraintBottom_toBottomOf="@id/info_nav_bar"
             app:layout_constraintHorizontal_bias="0.5"
             />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- drug image -->
@@ -62,10 +55,10 @@
         android:id="@+id/drug_image"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="#0F0"
+        android:layout_marginTop="45dp"
         android:src="@drawable/drug_test_image"
         android:scaleType="fitXY"
-        app:layout_constraintTop_toBottomOf="@+id/info_nav_bar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -75,103 +68,391 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="280dp">
-
-        <!-- drug detail info -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/drug_detail_info"
+        android:layout_marginTop="280dp"
+        >
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:padding="10dp"
             android:background="@drawable/round_background"
             android:elevation="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/info_nav_bar"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:scrollbars="none"
             >
 
-            <!-- 의약품 이름 -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/info_drug_name"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@color/white"
-                app:cardElevation="5dp"
-                app:cardCornerRadius="8dp"
-                app:layout_constraintTop_toTopOf="@+id/drug_detail_info"
-                app:layout_constraintLeft_toLeftOf="@+id/drug_detail_info"
-                app:layout_constraintRight_toLeftOf="@+id/info_drug_2"
-                app:layout_constraintBottom_toBottomOf="@+id/drug_detail_info"
-                app:layout_constraintVertical_bias="0.05"
+            <!-- drug detail info -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/drug_detail_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/info_nav_bar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 >
 
-                <LinearLayout
+                <!-- 의약품 이름 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/info_drug_item_name_card"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/drug_detail_info"
+                    app:layout_constraintLeft_toLeftOf="@+id/drug_detail_info"
+                    app:layout_constraintRight_toRightOf="@+id/drug_detail_info"
+                    app:layout_constraintBottom_toTopOf="@+id/info_drug_entp_name_card"
                     >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="의약품 이름"
-                        android:textSize="18sp"
-                        android:textColor="@color/black"
-                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="의약품 이름이 들어갑니다.ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ"
-                        />
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="의약품명"
+                            android:textSize="15sp"
+                            android:textColor="@color/black"
+                            />
 
-            </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/info_drug_item_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="의약품 이름이 들어갑니다."
+                            />
+                    </LinearLayout>
 
-            <!-- 의약품 제조원 -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/info_drug_2"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@color/white"
-                app:cardElevation="5dp"
-                app:cardCornerRadius="8dp"
-                app:layout_constraintTop_toTopOf="@+id/drug_detail_info"
-                app:layout_constraintLeft_toRightOf="@+id/info_drug_name"
-                app:layout_constraintRight_toRightOf="@+id/drug_detail_info"
-                app:layout_constraintBottom_toBottomOf="@+id/drug_detail_info"
-                app:layout_constraintVertical_bias="0.05"
-                >
+                </com.google.android.material.card.MaterialCardView>
 
-                <LinearLayout
+                <!-- 회사명 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/info_drug_entp_name_card"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/info_drug_item_name_card"
+                    app:layout_constraintLeft_toLeftOf="@+id/drug_detail_info"
+                    app:layout_constraintRight_toRightOf="@+id/drug_detail_info"
+                    app:layout_constraintBottom_toTopOf="@+id/info_drug_etcotc_card"
                     >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="의약품 이름"
-                        android:textSize="18sp"
-                        android:textColor="@color/black"
-                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="의약품 이름이 들어갑니다."
-                        />
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="회사명"
+                            android:textSize="15sp"
+                            android:textColor="@color/black"
+                            />
 
-            </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/info_drug_entp_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="회사 이름이 들어갑니다."
+                            />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <!-- 일반의약품코드 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/info_drug_etcotc_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/info_drug_entp_name_card"
+                    app:layout_constraintLeft_toLeftOf="@+id/drug_detail_info"
+                    app:layout_constraintRight_toRightOf="@+id/drug_detail_info"
+                    app:layout_constraintBottom_toTopOf="@+id/info_drug_chart_card"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="일반 의약품 코드"
+                            android:textSize="15sp"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/info_drug_etcotc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="코드가 들어갑니다."
+                            />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- 제형 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/info_drug_chart_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/info_drug_etcotc_card"
+                    app:layout_constraintLeft_toLeftOf="@+id/drug_detail_info"
+                    app:layout_constraintRight_toRightOf="@+id/drug_detail_info"
+                    app:layout_constraintBottom_toTopOf="@+id/info_drug_storage_card"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="제형"
+                            android:textSize="15sp"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/info_drug_chart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="제형이 들어갑니다."
+                            />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- 보관조건 및 사용기간 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/info_drug_storage_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/info_drug_chart_card"
+                    app:layout_constraintLeft_toLeftOf="@+id/drug_detail_info"
+                    app:layout_constraintRight_toRightOf="@+id/drug_detail_info"
+                    app:layout_constraintBottom_toTopOf="@+id/info_drug_valid_card"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="보관조건 및 사용기간"
+                            android:textSize="15sp"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/info_drug_storage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="보관조건 및 사용기간이 들어갑니다."
+                            />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- 유효기간 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/info_drug_valid_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/info_drug_storage_card"
+                    app:layout_constraintLeft_toLeftOf="@+id/drug_detail_info"
+                    app:layout_constraintRight_toRightOf="@+id/drug_detail_info"
+                    app:layout_constraintBottom_toTopOf="@id/info_drug_induty_card"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="유효기간"
+                            android:textSize="15sp"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/info_drug_valid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="유효기간이 들어갑니다."
+                            />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- 산업유형 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/info_drug_induty_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/info_drug_valid_card"
+                    app:layout_constraintLeft_toLeftOf="@+id/drug_detail_info"
+                    app:layout_constraintRight_toRightOf="@+id/drug_detail_info"
+                    app:layout_constraintBottom_toTopOf="@+id/info_drug_ee_doc_card"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="산업유형"
+                            android:textSize="15sp"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/info_drug_induty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="산업유형이 들어갑니다."
+                            />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- 효능효과 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/info_drug_ee_doc_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/info_drug_induty_card"
+                    app:layout_constraintLeft_toLeftOf="@+id/drug_detail_info"
+                    app:layout_constraintRight_toRightOf="@+id/drug_detail_info"
+                    app:layout_constraintBottom_toTopOf="@+id/info_drug_ud_doc_card"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="효능효과"
+                            android:textSize="15sp"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/info_drug_ee_doc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="효능효과가 들어갑니다."
+                            />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- 용법용량 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/info_drug_ud_doc_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/info_drug_ee_doc_card"
+                    app:layout_constraintLeft_toLeftOf="@+id/drug_detail_info"
+                    app:layout_constraintRight_toRightOf="@+id/drug_detail_info"
+                    app:layout_constraintBottom_toBottomOf="@+id/drug_detail_info"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="용법용량"
+                            android:textSize="15sp"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/info_drug_ud_doc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="용법용량이 들어갑니다."
+                            />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

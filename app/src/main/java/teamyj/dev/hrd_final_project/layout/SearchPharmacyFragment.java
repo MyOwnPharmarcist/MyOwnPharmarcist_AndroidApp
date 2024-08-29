@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -243,30 +242,33 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                 // 이전의 레이아웃 변경 리스너 제거
                 view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                Rect rect = new Rect();
-                // 네비게이션 바 높이 계산
-                view.getWindowVisibleDisplayFrame(rect);
-                int screenY = view.getRootView().getHeight();
-                int navigationBarHeight = screenY - rect.bottom;
 
-                // 상태바 높이 계산
-                int id = getContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
-                int statusBarHeight = getContext().getResources().getDimensionPixelSize(id);
+                // fragment_main_menu xml에서 android:fitsSystemWindows="true" 적용으로 인해 사용 X
 
-                adjustMapUI(navigationBarHeight, statusBarHeight);
+//                Rect rect = new Rect();
+//                // 네비게이션 바 높이 계산
+//                view.getWindowVisibleDisplayFrame(rect);
+//                int screenY = view.getRootView().getHeight();
+//                int navigationBarHeight = screenY - rect.bottom;
+//
+//                // 상태바 높이 계산
+//                int id = getContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
+//                int statusBarHeight = getContext().getResources().getDimensionPixelSize(id);
+//
+//                adjustMapUI(navigationBarHeight, statusBarHeight);
             }
         });
     }
 
-    private void adjustMapUI(int navigationBarHeight, int statusBarHeight) {
-        View mapView = getView().findViewById(R.id.coordinator_layout);
-        if(mapView != null) {
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mapView.getLayoutParams();
-            params.bottomMargin = navigationBarHeight;
-            params.topMargin = statusBarHeight;
-            mapView.setLayoutParams(params);
-        }
-    }
+//    private void adjustMapUI(int navigationBarHeight, int statusBarHeight) {
+//        View mapView = getView().findViewById(R.id.coordinator_layout);
+//        if(mapView != null) {
+//            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mapView.getLayoutParams();
+//            params.bottomMargin = navigationBarHeight;
+//            params.topMargin = statusBarHeight;
+//            mapView.setLayoutParams(params);
+//        }
+//    }
 
     // 마커 핀 추가 메서드
     private void addMarkers(LatLng cameraPosition) {
@@ -289,8 +291,8 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                     marker.setCaptionText(strStoreName);
                     marker.setCaptionRequestedWidth(200);
                     marker.setMinZoom(10);  // 너무 멀어지면 마커 제거
-                    marker.setWidth(80);
-                    marker.setHeight(110);
+                    marker.setWidth(50);
+                    marker.setHeight(70);
                     marker.setMap(naverMap);
                     marker.setOnClickListener(overlay -> {
                         // 마커를 클릭할 때 해당 마커로 카메라 이동
@@ -335,8 +337,8 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
                     marker.setIconTintColor(Color.BLUE);
                     marker.setCaptionRequestedWidth(200);
                     marker.setMinZoom(10);  // 너무 멀어지면 마커 제거
-                    marker.setWidth(80);
-                    marker.setHeight(110);
+                    marker.setWidth(50);
+                    marker.setHeight(70);
                     marker.setMap(naverMap);
                     marker.setOnClickListener(overlay -> {
                         // 마커를 클릭할 때 해당 마커로 카메라 이동
