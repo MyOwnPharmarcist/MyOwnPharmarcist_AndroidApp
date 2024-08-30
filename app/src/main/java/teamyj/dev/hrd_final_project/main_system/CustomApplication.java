@@ -13,13 +13,14 @@ import teamyj.dev.hrd_final_project.Interface.DBHelperGettable;
 import teamyj.dev.hrd_final_project.Interface.DetailDataGettable;
 import teamyj.dev.hrd_final_project.Interface.ListDataGettable;
 import teamyj.dev.hrd_final_project.Interface.LocationDataGettable;
+import teamyj.dev.hrd_final_project.Interface.TimerSavable;
 import teamyj.dev.hrd_final_project.data_system.DataManager;
 import teamyj.dev.hrd_final_project.data_system.DrugListDBOpenHelper;
 import teamyj.dev.hrd_final_project.data_system.DrugProductsDBOpenHelper;
 import teamyj.dev.hrd_final_project.data_system.EmergencyDrugDBOpenHelper;
 import teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper;
 
-public class CustomApplication extends Application implements ApplicationGettable, DBHelperGettable {
+public class CustomApplication extends Application implements ApplicationGettable, DBHelperGettable, TimerSavable {
     /** --- 어플리케이션 인스턴스 --- */
     private static CustomApplication instance;
     public static CustomApplication getInstance() {
@@ -33,6 +34,8 @@ public class CustomApplication extends Application implements ApplicationGettabl
     private DetailDataGettable drug_products;
     private LocationDataGettable emergency_drug;
     private LocationDataGettable sales_store;
+
+    private long timerValue = 100000;
 
     /** --- Getter and Setter   --- */
     @Override
@@ -80,5 +83,15 @@ public class CustomApplication extends Application implements ApplicationGettabl
     @Override
     public LocationDataGettable getSales() {
         return sales_store;
+    }
+
+    @Override
+    public void setTimer(long time) {
+        timerValue = time;
+    }
+
+    @Override
+    public long getTimer() {
+        return timerValue;
     }
 }

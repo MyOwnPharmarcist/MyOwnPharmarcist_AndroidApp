@@ -22,8 +22,10 @@ import androidx.fragment.app.Fragment;
 
 import java.util.concurrent.TimeUnit;
 
+import teamyj.dev.hrd_final_project.Interface.TimerSavable;
 import teamyj.dev.hrd_final_project.R;
 import teamyj.dev.hrd_final_project.main_system.AlarmReceiver;
+import teamyj.dev.hrd_final_project.main_system.CustomApplication;
 
 public class TimerFragment extends Fragment implements View.OnClickListener {
 
@@ -48,6 +50,9 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_timer, container, false);
         initViews(view);
         initListeners();
+        TimerSavable timerSavable = CustomApplication.getInstance();
+        progressBarCircle.setMax((int)(timerSavable.getTimer() / 1000));
+
         return view;
     }
 
@@ -118,6 +123,9 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
                 timeCountInMilliSeconds = minutes * 60000;
                 initialTimeCountInMilliSeconds = timeCountInMilliSeconds; // 초기 타이머 값 업데이트
             }
+
+            TimerSavable timerSavable = CustomApplication.getInstance();
+            timerSavable.setTimer(timeCountInMilliSeconds);
         } else {
             Toast.makeText(getActivity(), "시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
         }
@@ -125,7 +133,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
 
     // TimerFragment.java
     private void startCountDownTimer() {
-        countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 1000) {
+        countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 200) {
             @Override
             public void onTick(long millisUntilFinished) {
                 editTextTime.setText(hmsTimeFormatter(millisUntilFinished));
@@ -142,7 +150,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
                 timerStatus = TimerStatus.STOPPED;
 
                 // 알람 시작
-                startAlarm();
+//                startAlarm();
 
                 // 알람 화면으로 전환
                 Intent intent = new Intent(getContext(), AlarmActivity.class);
@@ -180,8 +188,8 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
 
             if (alarmManager != null) {
                 alarmManager.cancel(pendingIntent); // 기존 알람 취소
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeCountInMilliSeconds, pendingIntent);
             }
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1, pendingIntent);
         }
     }
 }
