@@ -103,4 +103,12 @@ public class DrugListDBOpenHelper extends SQLiteOpenHelper implements DBWritable
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT " + DRUG_LIST_ELEMENTS[0] + " FROM " + TABLE_DRUG_LIST + " WHERE " + condition, null);
     }
+
+    @Override
+    public Cursor getSelectionDrugImage(String itemName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + DRUG_LIST_ELEMENTS[2] + " FROM " + TABLE_DRUG_LIST + " WHERE " + DRUG_LIST_ELEMENTS[0] + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{itemName});
+        return cursor;
+    }
 }

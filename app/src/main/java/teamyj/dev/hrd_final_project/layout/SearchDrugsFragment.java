@@ -125,17 +125,6 @@ public class SearchDrugsFragment extends Fragment {
         }
     }
 
-//    // DB에서 데이터를 가져오는 함수 (예시)
-//    private List<Druglist> fetchDataFromDB() {
-//        List<Druglist> list = new ArrayList<>();
-//
-//        // 예시 데이터 추가 (실제 DB 연동 필요)
-//        list.add(new Druglist("Drug 1", "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/1Muwq7fAuBq", "Red", "Round", "Tablet"));
-//        list.add(new Druglist("Drug 2", "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/151318001317200082", "Blue", "Oval", "Capsule"));
-//
-//        return list;
-//    }
-
     private void openDrugInfoFragment(String itemName) {
         // FragmentTransaction을 통해 DrugInfoFragment로 전환
         Bundle bundle = new Bundle();

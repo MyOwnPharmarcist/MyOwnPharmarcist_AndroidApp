@@ -4,4 +4,5 @@ import android.database.Cursor;
 
 public interface ListDataGettable {
     Cursor searchDrugList(String condition);
+    Cursor getSelectionDrugImage(String itemName);
 }

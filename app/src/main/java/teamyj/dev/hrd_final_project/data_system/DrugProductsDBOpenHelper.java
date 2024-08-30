@@ -92,6 +92,9 @@ public class DrugProductsDBOpenHelper extends SQLiteOpenHelper implements DBWrit
     @Override
     public Cursor getSelectionDrugInfo(String itemName) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_DRUG_PRODUCTS + " WHERE " + ITEM_NAME + " = " + itemName, null);
+//        return db.rawQuery("SELECT * FROM " + TABLE_DRUG_PRODUCTS + " WHERE " + ITEM_NAME + " = " + itemName, null);
+        String query = "SELECT * FROM " + TABLE_DRUG_PRODUCTS + " WHERE " + ITEM_NAME + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{itemName});
+        return  cursor;
     }
 }
