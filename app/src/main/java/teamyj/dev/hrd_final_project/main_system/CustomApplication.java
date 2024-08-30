@@ -1,6 +1,7 @@
 package teamyj.dev.hrd_final_project.main_system;
 
 import android.app.Application;
+import android.content.Intent;
 import android.content.res.AssetManager;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -19,6 +20,7 @@ import teamyj.dev.hrd_final_project.data_system.DrugListDBOpenHelper;
 import teamyj.dev.hrd_final_project.data_system.DrugProductsDBOpenHelper;
 import teamyj.dev.hrd_final_project.data_system.EmergencyDrugDBOpenHelper;
 import teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper;
+import teamyj.dev.hrd_final_project.layout.AlarmActivity;
 
 public class CustomApplication extends Application implements ApplicationGettable, DBHelperGettable, TimerSavable {
     /** --- 어플리케이션 인스턴스 --- */
@@ -93,5 +95,12 @@ public class CustomApplication extends Application implements ApplicationGettabl
     @Override
     public long getTimer() {
         return timerValue;
+    }
+
+    @Override
+    public void popAlarm() {
+        Intent intent = new Intent(this, AlarmActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

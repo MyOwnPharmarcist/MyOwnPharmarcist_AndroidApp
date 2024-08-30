@@ -52,6 +52,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
         initListeners();
         TimerSavable timerSavable = CustomApplication.getInstance();
         progressBarCircle.setMax((int)(timerSavable.getTimer() / 1000));
+        progressBarCircle.setProgress((int)(timerSavable.getTimer() / 1000));
 
         return view;
     }
@@ -153,9 +154,8 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
 //                startAlarm();
 
                 // 알람 화면으로 전환
-                Intent intent = new Intent(getContext(), AlarmActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                TimerSavable timerSavable = CustomApplication.getInstance();
+                timerSavable.popAlarm();
             }
         }.start();
     }
