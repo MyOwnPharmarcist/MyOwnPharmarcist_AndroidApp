@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
@@ -29,6 +30,8 @@ public class MainMenuActivity extends AppCompatActivity {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
 
     private DataManager dataManager;
+    private boolean isBackPressed = false;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +121,11 @@ public class MainMenuActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        ActivityCompat.finishAffinity(this); // app 종료
+        if(!isBackPressed) {
+            isBackPressed = true;
+            handler.postDelayed(() -> isBackPressed = false, 500);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

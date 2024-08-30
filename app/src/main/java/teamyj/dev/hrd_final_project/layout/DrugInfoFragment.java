@@ -1,6 +1,9 @@
 package teamyj.dev.hrd_final_project.layout;
 
+import static teamyj.dev.hrd_final_project.data_system.DrugProductsDBOpenHelper.ITEM_NAME;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +35,8 @@ public class DrugInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_drug_info, container, false);
 
+        Bundle bundle = getArguments();
+        Log.i("bundle", bundle.getString(ITEM_NAME));
 //        // TextView 초기화
 //        itemNameTextView = view.findViewById(R.id.item_name_text_view);
 //        entpNameTextView = view.findViewById(R.id.entp_name_text_view);

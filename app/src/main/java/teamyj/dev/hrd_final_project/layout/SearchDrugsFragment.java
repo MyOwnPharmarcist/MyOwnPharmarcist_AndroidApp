@@ -1,6 +1,7 @@
 package teamyj.dev.hrd_final_project.layout;
 
 import static teamyj.dev.hrd_final_project.data_system.DrugListDBOpenHelper.DRUG_LIST_ELEMENTS;
+import static teamyj.dev.hrd_final_project.data_system.DrugProductsDBOpenHelper.ITEM_NAME;
 
 import android.database.Cursor;
 import android.graphics.Color;
@@ -136,8 +137,12 @@ public class SearchDrugsFragment extends Fragment {
 
     private void openDrugInfoFragment(String itemName) {
         // FragmentTransaction을 통해 DrugInfoFragment로 전환
+        Bundle bundle = new Bundle();
+        bundle.putString(ITEM_NAME, itemName);
+        DrugInfoFragment drugInfoFragment = new DrugInfoFragment();
+        drugInfoFragment.setArguments(bundle);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.menu_frame_layout, new DrugInfoFragment()); // 올바른 FrameLayout ID 사용
+        transaction.replace(R.id.menu_frame_layout, drugInfoFragment); // 올바른 FrameLayout ID 사용
         transaction.addToBackStack(null);  // 뒤로가기 시 이전 Fragment로 돌아가기 위해 추가
         transaction.commit();
     }
