@@ -18,10 +18,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import teamyj.dev.hrd_final_project.Interface.ItemIDSettable;
 import teamyj.dev.hrd_final_project.R;
 import teamyj.dev.hrd_final_project.data_system.DataManager;
 
-public class MainMenuActivity extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity implements ItemIDSettable {
+    private static ItemIDSettable itemIDSettable;
+    public static ItemIDSettable getMainMenu() {
+        return itemIDSettable;
+    }
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private SearchDrugsFragment searchDrugsFragment = new SearchDrugsFragment();
@@ -33,12 +38,15 @@ public class MainMenuActivity extends AppCompatActivity {
     private boolean isBackPressed = false;
     private Handler handler = new Handler();
 
+    int itemId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_menu);
 
+        itemIDSettable = this;
         // 위치 권한 체크 메서드
         checkLocationPermission();
     }
@@ -106,8 +114,9 @@ public class MainMenuActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-            int itemId = menuItem.getItemId();
+            itemId = menuItem.getItemId();
             if (itemId == R.id.navigation_search_pharmacy) {
                 transaction.replace(R.id.menu_frame_layout, searchPharmacyFragment).commitAllowingStateLoss();
             } else if (itemId == R.id.navigation_search_drugs) {
@@ -115,17 +124,22 @@ public class MainMenuActivity extends AppCompatActivity {
             } else if (itemId == R.id.navigation_timer) {
                 transaction.replace(R.id.menu_frame_layout, timerFragment).commitAllowingStateLoss();
             }
+
             return true;
         }
     }
 
     @Override
     public void onBackPressed() {
-        if(!isBackPressed) {
+        if(isBackPressed || itemId == R.id.fragment_drug_info) {
+            super.onBackPressed();
+        } else {
             isBackPressed = true;
             handler.postDelayed(() -> isBackPressed = false, 500);
-        } else {
-            super.onBackPressed();
         }
+    }
+
+    public void setFragmentID(int id) {
+        itemId = id;
     }
 }

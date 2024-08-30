@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 import java.util.ArrayList;
 
 import teamyj.dev.hrd_final_project.Interface.DBHelperGettable;
+import teamyj.dev.hrd_final_project.Interface.ItemIDSettable;
 import teamyj.dev.hrd_final_project.Interface.ListDataGettable;
 import teamyj.dev.hrd_final_project.R;
 import teamyj.dev.hrd_final_project.main_system.CustomApplication;
@@ -141,6 +142,8 @@ public class SearchDrugsFragment extends Fragment {
         bundle.putString(ITEM_NAME, itemName);
         DrugInfoFragment drugInfoFragment = new DrugInfoFragment();
         drugInfoFragment.setArguments(bundle);
+        ItemIDSettable mainMenu = MainMenuActivity.getMainMenu();
+        mainMenu.setFragmentID(R.id.fragment_drug_info);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.menu_frame_layout, drugInfoFragment); // 올바른 FrameLayout ID 사용
         transaction.addToBackStack(null);  // 뒤로가기 시 이전 Fragment로 돌아가기 위해 추가
