@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import java.util.concurrent.TimeUnit;
 
+import teamyj.dev.hrd_final_project.Interface.TimerResettable;
 import teamyj.dev.hrd_final_project.Interface.TimerSavable;
 import teamyj.dev.hrd_final_project.R;
 import teamyj.dev.hrd_final_project.main_system.AlarmReceiver;
@@ -29,7 +30,7 @@ import teamyj.dev.hrd_final_project.main_system.CustomApplication;
 
 public class TimerFragment extends Fragment implements View.OnClickListener {
 
-    private long timeCountInMilliSeconds = 30 * 60000; // 기본값: 30분
+    private long timeCountInMilliSeconds;
     private long initialTimeCountInMilliSeconds = timeCountInMilliSeconds; // 리셋을 위한 초기 타이머 값
 
     private enum TimerStatus {
@@ -45,14 +46,23 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
     private ImageView imageViewStartStop;
     private CountDownTimer countDownTimer;
 
+    private TimerResettable mainMenu;
+    private View view;
+
+    public TimerFragment(long time, TimerResettable mainMenu) {
+        this.timeCountInMilliSeconds = time;
+        this.mainMenu = mainMenu;
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_timer, container, false);
+        view = inflater.inflate(R.layout.fragment_timer, container, false);
         initViews(view);
         initListeners();
         TimerSavable timerSavable = CustomApplication.getInstance();
         progressBarCircle.setMax((int)(timerSavable.getTimer() / 1000));
         progressBarCircle.setProgress((int)(timerSavable.getTimer() / 1000));
+        editTextTime.setText(hmsTimeFormatter(timeCountInMilliSeconds));
 
         return view;
     }
@@ -134,7 +144,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
 
     // TimerFragment.java
     private void startCountDownTimer() {
-        countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 200) {
+        countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 50) {
             @Override
             public void onTick(long millisUntilFinished) {
                 editTextTime.setText(hmsTimeFormatter(millisUntilFinished));
@@ -156,6 +166,8 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
                 // 알람 화면으로 전환
                 TimerSavable timerSavable = CustomApplication.getInstance();
                 timerSavable.popAlarm();
+
+                mainMenu.onAlarme(timeCountInMilliSeconds);
             }
         }.start();
     }

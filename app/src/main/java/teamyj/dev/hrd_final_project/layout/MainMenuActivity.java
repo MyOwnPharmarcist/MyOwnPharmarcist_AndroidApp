@@ -19,10 +19,11 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import teamyj.dev.hrd_final_project.Interface.ItemIDSettable;
+import teamyj.dev.hrd_final_project.Interface.TimerResettable;
 import teamyj.dev.hrd_final_project.R;
 import teamyj.dev.hrd_final_project.data_system.DataManager;
 
-public class MainMenuActivity extends AppCompatActivity implements ItemIDSettable {
+public class MainMenuActivity extends AppCompatActivity implements ItemIDSettable, TimerResettable {
     private static ItemIDSettable itemIDSettable;
     public static ItemIDSettable getMainMenu() {
         return itemIDSettable;
@@ -31,7 +32,7 @@ public class MainMenuActivity extends AppCompatActivity implements ItemIDSettabl
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private SearchDrugsFragment searchDrugsFragment = new SearchDrugsFragment();
     private SearchPharmacyFragment searchPharmacyFragment = new SearchPharmacyFragment();
-    private TimerFragment timerFragment = new TimerFragment();
+    private TimerFragment timerFragment = new TimerFragment(30 * 60000, this); // 30분
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
 
     private DataManager dataManager;
@@ -39,6 +40,8 @@ public class MainMenuActivity extends AppCompatActivity implements ItemIDSettabl
     private Handler handler = new Handler();
 
     int itemId;
+    long timer;
+    boolean hasAlarmed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +125,13 @@ public class MainMenuActivity extends AppCompatActivity implements ItemIDSettabl
             } else if (itemId == R.id.navigation_search_drugs) {
                 transaction.replace(R.id.menu_frame_layout, searchDrugsFragment).commitAllowingStateLoss();
             } else if (itemId == R.id.navigation_timer) {
-                transaction.replace(R.id.menu_frame_layout, timerFragment).commitAllowingStateLoss();
+                if(hasAlarmed) {
+                    timerFragment = new TimerFragment(timer, MainMenuActivity.this);
+                    transaction.replace(R.id.menu_frame_layout, timerFragment).commitAllowingStateLoss();
+                    hasAlarmed = false;
+                } else {
+                    transaction.replace(R.id.menu_frame_layout, timerFragment).commitAllowingStateLoss();
+                }
             }
 
             return true;
@@ -137,6 +146,12 @@ public class MainMenuActivity extends AppCompatActivity implements ItemIDSettabl
             isBackPressed = true;
             handler.postDelayed(() -> isBackPressed = false, 500);
         }
+    }
+
+    @Override
+    public void onAlarme(long timer) {
+        this.hasAlarmed = true;
+        this.timer = timer;
     }
 
     public void setFragmentID(int id) {
