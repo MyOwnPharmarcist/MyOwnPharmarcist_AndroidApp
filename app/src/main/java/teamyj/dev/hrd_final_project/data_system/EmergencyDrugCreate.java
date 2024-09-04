@@ -25,6 +25,7 @@ public class EmergencyDrugCreate implements DBCreatable {
     private BufferedReader bufferedReader;
 
     /**--- Emergency Drug Create --- */
+    // csv 파일에서 데이터를 읽어오는 코드
     @Override
     public void create(AssetManager assetManager, DBWritable dbWritable) {
         this.dbWritable = dbWritable;
@@ -52,6 +53,7 @@ public class EmergencyDrugCreate implements DBCreatable {
         }
     }
 
+    // 데이터 전처리
     private void processingEmergencyData(String emergency_info) {
         String[] preprocessing = emergency_info.split("\"");
         String[] temp;
@@ -89,6 +91,7 @@ public class EmergencyDrugCreate implements DBCreatable {
         addEmergencyDrugData(data, status, street_addr, name, index);
     }
 
+    // 전처리한 데이터로 db 파일 생성
     private void addEmergencyDrugData(String[] data, String status, String street_address, String name, int index) {
         SQLiteDatabase db = dbWritable.getWritableDatabase();
         ContentValues values = new ContentValues();

@@ -23,6 +23,7 @@ public class DataManager implements FileLoadable {
     public static final int BUFFER_SIZE = 1024;
 
     /** ---  Methods --- */
+    // 만들어진 데이터베이스를 디바이스에 복사
     @Override
     public void loadFile(Context context) {
         new SalesStoreDBOpenHelper(context).loadDB();
@@ -31,6 +32,7 @@ public class DataManager implements FileLoadable {
         new EmergencyDrugDBOpenHelper(context).loadDB();
     }
 
+    // csv 파일을 통해 데이터베이스 파일 생성
     public void createData(ApplicationGettable application, DBHelperGettable dbHelper, Context context) {
         this.assetManager = application.getAssetManager();
         ExecutorService excutor = application.getExecutor();

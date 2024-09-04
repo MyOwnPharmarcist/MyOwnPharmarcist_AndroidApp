@@ -2,6 +2,7 @@ package teamyj.dev.hrd_final_project.layout;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,11 +20,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import teamyj.dev.hrd_final_project.Interface.ItemIDSettable;
-import teamyj.dev.hrd_final_project.Interface.TimerResettable;
+import teamyj.dev.hrd_final_project.Interface.TimerProcessable;
 import teamyj.dev.hrd_final_project.R;
-import teamyj.dev.hrd_final_project.data_system.DataManager;
 
-public class MainMenuActivity extends AppCompatActivity implements ItemIDSettable, TimerResettable {
+public class MainMenuActivity extends AppCompatActivity implements ItemIDSettable, TimerProcessable {
     private static ItemIDSettable itemIDSettable;
     public static ItemIDSettable getMainMenu() {
         return itemIDSettable;
@@ -35,12 +35,11 @@ public class MainMenuActivity extends AppCompatActivity implements ItemIDSettabl
     private TimerFragment timerFragment = new TimerFragment(30 * 60000, this); // 30분
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
 
-    private DataManager dataManager;
     private boolean isBackPressed = false;
     private Handler handler = new Handler();
 
     int itemId;
-    long timer;
+    long timer = 30 * 60000;
     boolean hasAlarmed = false;
 
     @Override
@@ -149,9 +148,23 @@ public class MainMenuActivity extends AppCompatActivity implements ItemIDSettabl
     }
 
     @Override
-    public void onAlarme(long timer) {
+    public void onAlarm(long timer) {
         this.hasAlarmed = true;
         this.timer = timer;
+
+        Intent intent = new Intent(this, AlarmActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    @Override
+    public void setTimer(long timer) {
+        this.timer = timer;
+    }
+
+    @Override
+    public long getTimer() {
+        return timer;
     }
 
     public void setFragmentID(int id) {

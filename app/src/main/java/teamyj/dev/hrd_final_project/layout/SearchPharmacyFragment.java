@@ -47,13 +47,9 @@ import java.util.List;
 import teamyj.dev.hrd_final_project.R;
 import teamyj.dev.hrd_final_project.data_system.EmergencyDrugDBOpenHelper;
 import teamyj.dev.hrd_final_project.data_system.SalesStoreDBOpenHelper;
-import teamyj.dev.hrd_final_project.main_system.CustomApplication;
 
 public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallback {
 
-    private CustomApplication application;
-
-    private Fragment fragment;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private FusedLocationSource locationSource;
     private FusedLocationProviderClient locationClient;
@@ -98,7 +94,6 @@ public class SearchPharmacyFragment extends Fragment implements OnMapReadyCallba
         viewBottomSheet = view.findViewById(R.id.viewBottomSheet);
         behavior = BottomSheetBehavior.from(viewBottomSheet);
         behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        fragment = this;
 
         title = view.findViewById(R.id.title);
         address = view.findViewById(R.id.address);

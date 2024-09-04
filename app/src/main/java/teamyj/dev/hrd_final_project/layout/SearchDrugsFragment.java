@@ -59,6 +59,7 @@ public class SearchDrugsFragment extends Fragment {
 
         editText = view.findViewById(R.id.editSearch);
 
+        // Color.BLUE -> 현재 선택된 아이템 하이라이트
         selectedShape = view.findViewById(R.id.shape0_image);
         selectedShape.setBackgroundColor(Color.BLUE);
         selectedColor = view.findViewById(R.id.colorall_image);
@@ -139,6 +140,7 @@ public class SearchDrugsFragment extends Fragment {
         transaction.commit();
     }
 
+    // db helper에 SQL 조건 전달
     private void sendSQLCondition() {
         String result;
         stringBuilder.setLength(0);

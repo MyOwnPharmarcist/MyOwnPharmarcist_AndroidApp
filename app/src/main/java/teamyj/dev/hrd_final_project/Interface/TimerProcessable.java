@@ -1,7 +1,7 @@
 package teamyj.dev.hrd_final_project.Interface;
 
-public interface TimerSavable {
+public interface TimerProcessable {
+    void onAlarm(long timer);
     void setTimer(long time);
     long getTimer();
-    void popAlarm();
 }

@@ -22,13 +22,11 @@ import androidx.fragment.app.Fragment;
 
 import java.util.concurrent.TimeUnit;
 
-import teamyj.dev.hrd_final_project.Interface.TimerResettable;
-import teamyj.dev.hrd_final_project.Interface.TimerSavable;
+import teamyj.dev.hrd_final_project.Interface.TimerProcessable;
 import teamyj.dev.hrd_final_project.R;
 import teamyj.dev.hrd_final_project.main_system.AlarmReceiver;
-import teamyj.dev.hrd_final_project.main_system.CustomApplication;
 
-public class TimerFragment extends Fragment implements View.OnClickListener {
+public class TimerFragment extends Fragment implements View.OnClickListener{
 
     private long timeCountInMilliSeconds;
     private long initialTimeCountInMilliSeconds = timeCountInMilliSeconds; // 리셋을 위한 초기 타이머 값
@@ -46,10 +44,10 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
     private ImageView imageViewStartStop;
     private CountDownTimer countDownTimer;
 
-    private TimerResettable mainMenu;
+    private TimerProcessable mainMenu;
     private View view;
 
-    public TimerFragment(long time, TimerResettable mainMenu) {
+    public TimerFragment(long time, TimerProcessable mainMenu) {
         this.timeCountInMilliSeconds = time;
         this.mainMenu = mainMenu;
     }
@@ -59,9 +57,8 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_timer, container, false);
         initViews(view);
         initListeners();
-        TimerSavable timerSavable = CustomApplication.getInstance();
-        progressBarCircle.setMax((int)(timerSavable.getTimer() / 1000));
-        progressBarCircle.setProgress((int)(timerSavable.getTimer() / 1000));
+        progressBarCircle.setMax((int)(mainMenu.getTimer() / 1000));
+        progressBarCircle.setProgress((int)(mainMenu.getTimer() / 1000));
         editTextTime.setText(hmsTimeFormatter(timeCountInMilliSeconds));
 
         return view;
@@ -135,8 +132,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
                 initialTimeCountInMilliSeconds = timeCountInMilliSeconds; // 초기 타이머 값 업데이트
             }
 
-            TimerSavable timerSavable = CustomApplication.getInstance();
-            timerSavable.setTimer(timeCountInMilliSeconds);
+            mainMenu.setTimer(timeCountInMilliSeconds);
         } else {
             Toast.makeText(getActivity(), "시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
         }
@@ -164,10 +160,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
 //                startAlarm();
 
                 // 알람 화면으로 전환
-                TimerSavable timerSavable = CustomApplication.getInstance();
-                timerSavable.popAlarm();
-
-                mainMenu.onAlarme(timeCountInMilliSeconds);
+                mainMenu.onAlarm(timeCountInMilliSeconds);
             }
         }.start();
     }

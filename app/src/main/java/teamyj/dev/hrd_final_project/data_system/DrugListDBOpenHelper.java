@@ -53,6 +53,7 @@ public class DrugListDBOpenHelper extends SQLiteOpenHelper implements DBWritable
         this.context = context;
     }
 
+    // 테이블 생성
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         stringBuilder.setLength(0);
@@ -73,11 +74,14 @@ public class DrugListDBOpenHelper extends SQLiteOpenHelper implements DBWritable
 
     @Override
     public void loadDB() {
+        // 기존 db 파일 삭제
         context.deleteDatabase(DRUG_LIST_DB_NAME);
+
         this.getReadableDatabase();
         copyDB();
     }
 
+    // db 파일 복사
     private void copyDB() {
         try {
             InputStream inputStream = context.getAssets().open("drug_list/" + DRUG_LIST_DB_NAME);
@@ -98,6 +102,7 @@ public class DrugListDBOpenHelper extends SQLiteOpenHelper implements DBWritable
         }
     }
 
+    /** ---     db 검색 후 반환하는 코드     ----- */
     @Override
     public Cursor searchDrugList(String condition) {
         SQLiteDatabase db = this.getReadableDatabase();

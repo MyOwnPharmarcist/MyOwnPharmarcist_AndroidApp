@@ -30,6 +30,7 @@ public class DrugProductsCreate implements DBCreatable {
     private StringBuilder stringBuilder = new StringBuilder();
 
     /** --- Drug Products Create --- */
+    // csv 파일에서 데이터를 읽어오는 코드
     @Override
     public void create(AssetManager assetManager, DBWritable dbWritable) {
         this.dbWritable = dbWritable;
@@ -94,6 +95,7 @@ public class DrugProductsCreate implements DBCreatable {
         }
     }
 
+    // 데이터 전처리
     private void processingDrugProductsData(String product_info) {
         // 전처리
         String[] preproessing = product_info.split("\"\"\"");
@@ -110,6 +112,7 @@ public class DrugProductsCreate implements DBCreatable {
         addDrugProductsData(preproessing, ud);
     }
 
+    // 전처리한 데이터로 db 파일 생성
     private void addDrugProductsData(String[] data, String ud)  {
         SQLiteDatabase db = dbWritable.getWritableDatabase();
         ContentValues values = new ContentValues();

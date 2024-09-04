@@ -27,6 +27,7 @@ public class SalesStoreCreate implements DBCreatable {
     private BufferedReader bufferedReader;
 
     /** --- Sales Store Create --- */
+    // csv 파일에서 데이터를 읽어오는 코드
     @Override
     public void create(AssetManager assetManager, DBWritable dbWritable) {
         this.dbWritable = dbWritable;
@@ -52,6 +53,7 @@ public class SalesStoreCreate implements DBCreatable {
         }
     }
 
+    // 데이터 전처리
     private void processingSalesStoreData(String store_info) {
         // info를 분리하여 저장할 객체
         String[] data = null;
@@ -90,6 +92,7 @@ public class SalesStoreCreate implements DBCreatable {
         addSalesStoreData(data, addr, name);
     }
 
+    // 전처리한 데이터로 db 파일 생성
     // 영업 시작, 종료 시간을 문자열로 정리
     // ex) 1800, 900 -> 월요일: 09:00 ~ 18:00
     private void addSalesStoreData(String[] data, String addr, String name) {
@@ -106,6 +109,7 @@ public class SalesStoreCreate implements DBCreatable {
 //        Log.i("sales_store", name);
     }
 
+    // 영업 시간 데이터 정리
     private String organizeOpenCloseTime(String[] data) {
         // data[4] = 월요일 영업 시작 시간, data[3] = 월요일 영업 시작 시간
         // 24시간 : xx시 x0분 시작, xx시 x1분 종료로 기록

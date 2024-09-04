@@ -62,11 +62,14 @@ public class SalesStoreDBOpenHelper extends SQLiteOpenHelper implements DBWritab
 
     @Override
     public void loadDB() {
+        // 기존 db 파일 삭제
         context.deleteDatabase(SALES_STORE_DB_NAME);
+
         this.getReadableDatabase();
         copyDB();
     }
 
+    // db 파일 복사
     private boolean checkDBExist() {
         String db_Path = FILE_PATH + SALES_STORE_DB_NAME;
         try (SQLiteDatabase checkDB = SQLiteDatabase.openDatabase(db_Path, null, SQLiteDatabase.OPEN_READONLY)) {
@@ -97,6 +100,7 @@ public class SalesStoreDBOpenHelper extends SQLiteOpenHelper implements DBWritab
         }
     }
 
+    /** ---     db 검색 후 반환하는 코드     ----- */
     // 위도, 경도 값 가져오는 메서드
     @Override
     public Cursor getLocations(LatLng cameraPosition) {

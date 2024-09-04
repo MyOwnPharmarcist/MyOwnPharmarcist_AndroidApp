@@ -58,11 +58,14 @@ public class EmergencyDrugDBOpenHelper extends SQLiteOpenHelper implements DBWri
 
     @Override
     public void loadDB() {
+        // 기존 db 파일 삭제
         context.deleteDatabase(EMERGENCY_DRUG_DB_NAME);
+
         this.getReadableDatabase();
         copyDB();
     }
 
+    // db 파일 복사
     private void copyDB() {
         try {
             InputStream inputStream = context.getAssets().open("emergency_drug/" + EMERGENCY_DRUG_DB_NAME);
@@ -83,6 +86,7 @@ public class EmergencyDrugDBOpenHelper extends SQLiteOpenHelper implements DBWri
         }
     }
 
+    /** ---     db 검색 후 반환하는 코드     ----- */
     // 위도, 경도 값 가져오는 메서드
     @Override
     public Cursor getLocations(LatLng cameraPosition) {

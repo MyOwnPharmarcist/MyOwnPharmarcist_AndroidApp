@@ -64,11 +64,14 @@ public class DrugProductsDBOpenHelper extends SQLiteOpenHelper implements DBWrit
 
     @Override
     public void loadDB() {
+        // 기존 db 파일 삭제
         context.deleteDatabase(DRUG_PRODUCTS_DB_NAME);
+
         this.getReadableDatabase();
         copyDB();
     }
 
+    // db 파일 복사
     private void copyDB() {
         try {
             InputStream inputStream = context.getAssets().open("drug_products/" + DRUG_PRODUCTS_DB_NAME);
@@ -89,6 +92,7 @@ public class DrugProductsDBOpenHelper extends SQLiteOpenHelper implements DBWrit
         }
     }
 
+    /** ---     db 검색 후 반환하는 코드     ----- */
     @Override
     public Cursor getSelectionDrugInfo(String itemName) {
         SQLiteDatabase db = this.getReadableDatabase();

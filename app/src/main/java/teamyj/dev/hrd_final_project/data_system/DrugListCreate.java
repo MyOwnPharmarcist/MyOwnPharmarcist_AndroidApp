@@ -21,6 +21,7 @@ public class DrugListCreate implements DBCreatable {
     private BufferedReader bufferedReader;
 
     /** --- Drug List Create --- */
+    // csv 파일에서 데이터를 읽어오는 코드
     @Override
     public void create(AssetManager assetManager, DBWritable dbWritable) {
         this.dbWritable = dbWritable;
@@ -49,13 +50,14 @@ public class DrugListCreate implements DBCreatable {
         }
     }
 
+    // 데이터 전처리
     private void processingDrugListData(String product_info) {
-        // 전처리
         String[] preproessing = product_info.split(",");
 
         addDrugListData(preproessing);
     }
 
+    // 전처리한 데이터로 db 파일 생성
     private void addDrugListData(String[] data)  {
         SQLiteDatabase db = dbWritable.getWritableDatabase();
         ContentValues values = new ContentValues();
