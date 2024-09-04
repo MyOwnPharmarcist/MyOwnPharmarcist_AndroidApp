@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- 앱에 필요한 권한들 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -9,6 +8,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".main_system.CustomApplication"
@@ -21,36 +21,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hrd_final_project"
         tools:targetApi="31">
+        <activity
+            android:name=".layout.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!-- 앱 시작 액티비티 -->
         <activity
             android:name=".layout.MainMenuActivity"
             android:exported="true"
             android:theme="@style/Theme.Hrd_final_project">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-        <!-- 알람 액티비티 -->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity> <!-- 알람 액티비티 -->
         <activity
             android:name=".layout.AlarmActivity"
-            android:launchMode="singleTask"
             android:exported="true"
-            android:theme="@style/Theme.Hrd_final_project" />
-
-        <!-- 알람 리시버 -->
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Hrd_final_project" /> <!-- 알람 리시버 -->
         <receiver
             android:name=".main_system.AlarmReceiver"
-            android:exported="true" />
-
-        <!-- 네이버 지도 API 키 -->
+            android:exported="true" /> <!-- 네이버 지도 API 키 -->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="we7grllraz" />
-
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
